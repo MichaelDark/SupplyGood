@@ -88,6 +88,7 @@
             this.btnSignIn.TabIndex = 5;
             this.btnSignIn.Text = "Войти";
             this.btnSignIn.UseVisualStyleBackColor = false;
+            this.btnSignIn.Click += new System.EventHandler(this.btnSignIn_Click);
             // 
             // LogForm
             // 

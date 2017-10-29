@@ -18,7 +18,9 @@ namespace supplyGood
 
         private void btnSignIn_Click(object sender, EventArgs e)
         {
-
+            var NextForm = new AdminForm();
+            NextForm.Show();
+            this.Hide();
         }
     }
 }

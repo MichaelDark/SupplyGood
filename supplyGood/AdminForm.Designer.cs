@@ -31,22 +31,21 @@
             this.components = new System.ComponentModel.Container();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.suppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goodsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.employeesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.storagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlTools = new System.Windows.Forms.Panel();
             this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.userTableAdapter = new supplyGood.MainDataSetTableAdapters.UserTableAdapter();
             this.mainDataSet = new supplyGood.MainDataSet();
+            this.userTableAdapter = new supplyGood.MainDataSetTableAdapters.UserTableAdapter();
             this.btnSignIn = new System.Windows.Forms.Button();
-            this.pnlMain = new System.Windows.Forms.Panel();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataSet)).BeginInit();
@@ -74,6 +73,18 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.fileToolStripMenuItem.Text = "Файл";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.saveToolStripMenuItem.Text = "Сохранить";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.exitToolStripMenuItem.Text = "Выход";
             // 
             // managementToolStripMenuItem
             // 
@@ -113,12 +124,6 @@
             this.employeesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.employeesToolStripMenuItem.Text = "Работники";
             // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Выход";
-            // 
             // carsToolStripMenuItem
             // 
             this.carsToolStripMenuItem.Name = "carsToolStripMenuItem";
@@ -130,12 +135,6 @@
             this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
             this.storagesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.storagesToolStripMenuItem.Text = "Склады";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveToolStripMenuItem.Text = "Сохранить";
             // 
             // label1
             // 
@@ -160,14 +159,14 @@
             this.userBindingSource.DataMember = "User";
             this.userBindingSource.DataSource = this.mainDataSet;
             // 
-            // userTableAdapter
-            // 
-            this.userTableAdapter.ClearBeforeFill = true;
-            // 
             // mainDataSet
             // 
             this.mainDataSet.DataSetName = "MainDataSet";
             this.mainDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // userTableAdapter
+            // 
+            this.userTableAdapter.ClearBeforeFill = true;
             // 
             // btnSignIn
             // 
@@ -180,18 +179,10 @@
             this.btnSignIn.Text = "Добавить пользователя";
             this.btnSignIn.UseVisualStyleBackColor = false;
             // 
-            // pnlMain
-            // 
-            this.pnlMain.Location = new System.Drawing.Point(256, 74);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(916, 432);
-            this.pnlMain.TabIndex = 7;
-            // 
             // AdminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1184, 562);
-            this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.pnlTools);
             this.Controls.Add(this.label1);
@@ -233,6 +224,5 @@
         private MainDataSet mainDataSet;
         private MainDataSetTableAdapters.UserTableAdapter userTableAdapter;
         private System.Windows.Forms.Button btnSignIn;
-        private System.Windows.Forms.Panel pnlMain;
     }
 }

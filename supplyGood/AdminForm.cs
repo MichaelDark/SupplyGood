@@ -8,12 +8,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace supplyGood
 {
     public partial class AdminForm : Form
     {
-        const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\supplyGood\supplyGood\supplyGood\MainDB.mdf;Integrated Security=True";
         public AdminForm()
         {
             InitializeComponent();
@@ -32,7 +32,25 @@ namespace supplyGood
 
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            string myConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection(myConnectionString);
+            myConnection.Open();
+            try
+            {
+                SqlDataReader myReader = null;
+                SqlCommand myCommand = new SqlCommand("Select * from [User]",
+                                                         myConnection);
+                myReader = myCommand.ExecuteReader();
+                while (myReader.Read())
+                {
+                    MessageBox.Show(myReader["login"].ToString() + " " + myReader["password"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            myConnection.Close();
         }
     }
 

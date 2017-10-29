@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,7 @@ namespace supplyGood
 {
     public partial class AdminForm : Form
     {
+        const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\supplyGood\supplyGood\supplyGood\MainDB.mdf;Integrated Security=True";
         public AdminForm()
         {
             InitializeComponent();
@@ -23,7 +26,13 @@ namespace supplyGood
 
         private void AdminForm_Load(object sender, EventArgs e)
         {
+            this.userTableAdapter.Fill(this.mainDataSet.User);
             mainMenuStrip.Renderer = new MainStripRenderer();
+        }
+
+        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 

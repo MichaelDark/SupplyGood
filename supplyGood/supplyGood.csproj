@@ -78,6 +78,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserBox.Designer.cs">
+      <DependentUpon>UserBox.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,6 +99,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserBox.resx">
+      <DependentUpon>UserBox.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="MainDataSet.xsc">
       <DependentUpon>MainDataSet.xsd</DependentUpon>

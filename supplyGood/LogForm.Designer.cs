@@ -34,6 +34,7 @@
             this.lblLogIn = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.btnSignIn = new System.Windows.Forms.Button();
+            this.lblError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtLogin
@@ -90,14 +91,25 @@
             this.btnSignIn.UseVisualStyleBackColor = false;
             this.btnSignIn.Click += new System.EventHandler(this.btnSignIn_Click);
             // 
+            // lblError
+            // 
+            this.lblError.BackColor = System.Drawing.SystemColors.Control;
+            this.lblError.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblError.ForeColor = System.Drawing.Color.Maroon;
+            this.lblError.Location = new System.Drawing.Point(233, 120);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(201, 16);
+            this.lblError.TabIndex = 6;
+            // 
             // LogForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(584, 270);
+            this.Controls.Add(this.logo);
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblLogIn);
-            this.Controls.Add(this.logo);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtLogin);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -121,6 +133,7 @@
         private System.Windows.Forms.Label lblLogIn;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Button btnSignIn;
+        private System.Windows.Forms.Label lblError;
     }
 }
 

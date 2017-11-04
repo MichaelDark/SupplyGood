@@ -40,15 +40,16 @@
             this.employeesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.storagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblMain = new System.Windows.Forms.Label();
             this.pnlTools = new System.Windows.Forms.Panel();
             this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mainDataSet = new supplyGood.MainDataSet();
             this.userTableAdapter = new supplyGood.MainDataSetTableAdapters.UserTableAdapter();
-            this.btnSignIn = new System.Windows.Forms.Button();
+            this.dgvMain = new System.Windows.Forms.DataGridView();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -77,14 +78,15 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Сохранить";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Выход";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // managementToolStripMenuItem
             // 
@@ -136,15 +138,15 @@
             this.storagesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.storagesToolStripMenuItem.Text = "Склады";
             // 
-            // label1
+            // lblMain
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(256, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(246, 47);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Пользователи";
+            this.lblMain.AutoSize = true;
+            this.lblMain.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblMain.Location = new System.Drawing.Point(256, 24);
+            this.lblMain.Name = "lblMain";
+            this.lblMain.Size = new System.Drawing.Size(330, 47);
+            this.lblMain.TabIndex = 3;
+            this.lblMain.Text = "Выберите действие";
             // 
             // pnlTools
             // 
@@ -168,24 +170,32 @@
             // 
             this.userTableAdapter.ClearBeforeFill = true;
             // 
-            // btnSignIn
+            // dgvMain
             // 
-            this.btnSignIn.BackColor = System.Drawing.Color.Honeydew;
-            this.btnSignIn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSignIn.Location = new System.Drawing.Point(906, 512);
-            this.btnSignIn.Name = "btnSignIn";
-            this.btnSignIn.Size = new System.Drawing.Size(266, 38);
-            this.btnSignIn.TabIndex = 6;
-            this.btnSignIn.Text = "Добавить пользователя";
-            this.btnSignIn.UseVisualStyleBackColor = false;
+            this.dgvMain.AllowUserToResizeRows = false;
+            this.dgvMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvMain.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvMain.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvMain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMain.Location = new System.Drawing.Point(264, 74);
+            this.dgvMain.MultiSelect = false;
+            this.dgvMain.Name = "dgvMain";
+            this.dgvMain.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvMain.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvMain.ShowCellToolTips = false;
+            this.dgvMain.Size = new System.Drawing.Size(908, 476);
+            this.dgvMain.TabIndex = 9;
             // 
             // AdminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1184, 562);
-            this.Controls.Add(this.btnSignIn);
+            this.Controls.Add(this.dgvMain);
             this.Controls.Add(this.pnlTools);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblMain);
             this.Controls.Add(this.mainMenuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -194,12 +204,14 @@
             this.Name = "AdminForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Администратор";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdminForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AdminForm_FormClosed);
             this.Load += new System.EventHandler(this.AdminForm_Load);
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,11 +230,11 @@
         private System.Windows.Forms.ToolStripMenuItem employeesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem carsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem storagesToolStripMenuItem;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblMain;
         private System.Windows.Forms.Panel pnlTools;
         private System.Windows.Forms.BindingSource userBindingSource;
         private MainDataSet mainDataSet;
         private MainDataSetTableAdapters.UserTableAdapter userTableAdapter;
-        private System.Windows.Forms.Button btnSignIn;
+        private System.Windows.Forms.DataGridView dgvMain;
     }
 }

@@ -41,7 +41,6 @@
             this.storagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMain = new System.Windows.Forms.Label();
             this.pnlTools = new System.Windows.Forms.Panel();
-            this.mainDataSet = new supplyGood.MainDataSet();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.cmsViewEditDelete = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.detailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,8 +48,9 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFunc = new System.Windows.Forms.Button();
             this.lblHint = new System.Windows.Forms.Label();
+            this.employeeTableAdapter = new supplyGood.MainDBDataSetTableAdapters.EmployeeTableAdapter();
+            this.personalInfoTableAdapter = new supplyGood.MainDBDataSetTableAdapters.PersonalInfoTableAdapter();
             this.mainMenuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.cmsViewEditDelete.SuspendLayout();
             this.SuspendLayout();
@@ -152,11 +152,6 @@
             this.pnlTools.Size = new System.Drawing.Size(200, 538);
             this.pnlTools.TabIndex = 4;
             // 
-            // mainDataSet
-            // 
-            this.mainDataSet.DataSetName = "MainDataSet";
-            this.mainDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // dgvMain
             // 
             this.dgvMain.AllowUserToAddRows = false;
@@ -169,6 +164,7 @@
             this.dgvMain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.Location = new System.Drawing.Point(206, 74);
+            this.dgvMain.MultiSelect = false;
             this.dgvMain.Name = "dgvMain";
             this.dgvMain.ReadOnly = true;
             this.dgvMain.RowHeadersVisible = false;
@@ -220,6 +216,7 @@
             this.btnFunc.TabIndex = 10;
             this.btnFunc.Text = "Добавить пользователя";
             this.btnFunc.UseVisualStyleBackColor = false;
+            this.btnFunc.Click += new System.EventHandler(this.btnFunc_Click);
             // 
             // lblHint
             // 
@@ -229,6 +226,14 @@
             this.lblHint.Size = new System.Drawing.Size(722, 63);
             this.lblHint.TabIndex = 11;
             this.lblHint.Text = "Подсказка";
+            // 
+            // employeeTableAdapter
+            // 
+            this.employeeTableAdapter.ClearBeforeFill = true;
+            // 
+            // personalInfoTableAdapter
+            // 
+            this.personalInfoTableAdapter.ClearBeforeFill = true;
             // 
             // MainForm
             // 
@@ -252,7 +257,6 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.cmsViewEditDelete.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -274,7 +278,6 @@
         private System.Windows.Forms.ToolStripMenuItem storagesToolStripMenuItem;
         private System.Windows.Forms.Label lblMain;
         private System.Windows.Forms.Panel pnlTools;
-        private MainDataSet mainDataSet;
         private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.ContextMenuStrip cmsViewEditDelete;
         private System.Windows.Forms.ToolStripMenuItem detailsToolStripMenuItem;
@@ -282,5 +285,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Button btnFunc;
         private System.Windows.Forms.Label lblHint;
+        private MainDBDataSetTableAdapters.EmployeeTableAdapter employeeTableAdapter;
+        private MainDBDataSetTableAdapters.PersonalInfoTableAdapter personalInfoTableAdapter;
     }
 }

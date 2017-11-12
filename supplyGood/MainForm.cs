@@ -15,11 +15,33 @@ namespace supplyGood
 {
     public partial class MainForm : Form
     {
-        delegate void CurrentAction();
+        string _Rights = "";
+        string[] _headerEmployee = new string[] 
+        {
+                "ID",
+                "Фамилия",
+                "Имя",
+                "Отчество",
+                "Дата зачисления",
+                "Дата увольнения",
+                "Оклад",
+        };
+
+
         public MainForm()
         {
             InitializeComponent();
+            _Rights = "Администратор";
+            Text = _Rights;
         }
+        public MainForm(string cRights)
+        {
+            InitializeComponent();
+            _Rights = cRights;
+            Text = _Rights;
+        }
+
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             mainMenuStrip.Renderer = new MainStripRenderer();
@@ -35,7 +57,7 @@ namespace supplyGood
 
 
 
-        private bool UpdateDataGridView(string query, DataGridView dgv, params string[] headers)
+        private bool UpdateDataGridView(string query, DataGridView dgv, string[] headers, int selectedRow = 0)
         {
             try
             {
@@ -58,6 +80,7 @@ namespace supplyGood
                 {
                     dgv.Rows[i].ContextMenuStrip = cmsViewEditDelete;
                 }
+                dgv.Rows[selectedRow].Selected = true;
                 return true;
             }
             catch (Exception ex)
@@ -84,47 +107,12 @@ namespace supplyGood
                 "информации о сотруднике, её редактирования и удаления сотрудника. " +
                 "Для этого необходимо выбрать сотрудника в таблице, нажать по нему " +
                 "правой кнопкой мыши и выбрать необходимое действие";
-            var captions = new string[]
-            {
-                "ID",
-                "Фамилия",
-                "Имя",
-                "Отчество",
-                "Дата зачисления",
-                "Дата увольнения",
-                "Оклад",
-            };
+            Text = lblMain.Text + " - " + _Rights;
             UpdateDataGridView(
                 @"SELECT * FROM EMPLOYEE", 
                 dgvMain,
-                captions);
-
-
-            //string myConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
-            //SqlConnection myConnection = new SqlConnection(myConnectionString);
-            //myConnection.Open();
-            //try
-            //{
-            //    SqlDataReader myReader = null;
-            //    SqlCommand myCommand = new SqlCommand("Select * from [User]",
-            //                                             myConnection);
-            //    myReader = myCommand.ExecuteReader();
-            //    flpMain.Controls.Clear();
-            //    while (myReader.Read())
-            //    {
-            //        UserBox user = new UserBox();
-            //        user.Login.Text = myReader["login"].ToString();
-            //        user.Password.Text = myReader["password"].ToString();
-            //        user.Rights.Text = myReader["rights"].ToString();
-            //        user.SendToBack();
-            //        flpMain.Controls.Add(user);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString());
-            //}
-            //myConnection.Close();
+                _headerEmployee,
+                0);
         }
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -134,22 +122,49 @@ namespace supplyGood
 
         private void detailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var curr = dgvMain.SelectedCells[0];
-            MessageBox.Show(dgvMain.Rows[curr.RowIndex].Cells[0].Value.ToString());
-        }
+            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+            var NextForm = new DetailsEmployee(currID, DetailsEmployeeMode.View);
+            NextForm.ShowDialog();
 
+            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+            usersToolStripMenuItem_Click(sender, e);
+            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+            dgvMain.Rows[currRowIndex].Selected = true;
+        }
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var curr = dgvMain.SelectedCells[0];
-            MessageBox.Show(dgvMain.Rows[curr.RowIndex].Cells[0].Value.ToString());
-        }
+            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+            var NextForm = new DetailsEmployee(currID, DetailsEmployeeMode.Edit);
+            NextForm.ShowDialog();
 
+            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+            usersToolStripMenuItem_Click(sender, e);
+            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+            dgvMain.Rows[currRowIndex].Selected = true;
+        }
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var curr = dgvMain.SelectedCells[0];
-            MessageBox.Show(dgvMain.Rows[curr.RowIndex].Cells[0].Value.ToString());
-        }
+            var curr = dgvMain.SelectedCells[0].RowIndex;
+            int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
+            string name = "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " + 
+                dgvMain.Rows[curr].Cells[1].Value.ToString() + " " + 
+                dgvMain.Rows[curr].Cells[2].Value.ToString();
+            if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + name + "?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            { 
+                personalInfoTableAdapter.DeleteQuery(currID);
+                employeeTableAdapter.DeleteQuery(currID);
 
+                int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
+                usersToolStripMenuItem_Click(sender, e);
+                try
+                {
+                    dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                }
+                catch (Exception ex) { }
+            }
+        }
         private void dgvMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.ColumnIndex < dgvMain.ColumnCount && e.RowIndex < dgvMain.RowCount && e.Button == MouseButtons.Right)
@@ -159,6 +174,12 @@ namespace supplyGood
                     dgvMain.CurrentCell = dgvMain.Rows[e.RowIndex].Cells[e.ColumnIndex];
                 } catch (Exception ex) { }
             }
+        }
+
+        private void btnFunc_Click(object sender, EventArgs e)
+        {
+            var NextForm = new DetailsEmployee();
+            NextForm.ShowDialog();
         }
     }
 

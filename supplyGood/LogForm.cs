@@ -67,5 +67,13 @@ namespace supplyGood
             }
             myConnection.Close();
         }
+
+        private void Field_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                btnSignIn_Click(sender, EventArgs.Empty);
+            }
+        }
     }
 }

@@ -13,18 +13,28 @@ using System.Configuration;
 
 namespace supplyGood
 {
+    public enum SubFormMode { Empty, View, Edit, Add }
+    public enum TableView { Empty, Supply, Good, Car, Storage, Client, Employee}
     public partial class MainForm : Form
     {
         string _Rights = "";
-        string[] _headerEmployee = new string[] 
+        TableView _View = TableView.Empty;
+        string[] _headerEmployee = new string[]
         {
                 "ID",
                 "Фамилия",
                 "Имя",
                 "Отчество",
-                "Дата зачисления",
-                "Дата увольнения",
+                "Зачисление",
+                "Увольнение",
                 "Оклад",
+        };
+        string[] _headerGood = new string[]
+        {
+                "ID",
+                "Наименование",
+                "Ед. измерения",
+                "Цена за ед. (грн)"
         };
 
 
@@ -33,12 +43,14 @@ namespace supplyGood
             InitializeComponent();
             _Rights = "Администратор";
             Text = _Rights;
+            _View = TableView.Empty;
         }
         public MainForm(string cRights)
         {
             InitializeComponent();
             _Rights = cRights;
             Text = _Rights;
+            _View = TableView.Empty;
         }
 
 
@@ -54,10 +66,9 @@ namespace supplyGood
         {
             Application.Exit();
         }
+        
 
-
-
-        private bool UpdateDataGridView(string query, DataGridView dgv, string[] headers, int selectedRow = 0)
+        private bool UpdateDataGridView(string query, DataGridView dgv, string[] headers, ContextMenuStrip menuStrip, int selectedRow = 0)
         {
             try
             {
@@ -78,7 +89,7 @@ namespace supplyGood
                 }
                 for (int i = 0; i < dgv.Rows.Count; i++)
                 {
-                    dgv.Rows[i].ContextMenuStrip = cmsViewEditDelete;
+                    dgv.Rows[i].ContextMenuStrip = menuStrip;
                 }
                 dgv.Rows[selectedRow].Selected = true;
                 return true;
@@ -100,71 +111,161 @@ namespace supplyGood
         }
 
 
-        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void UsersToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _View = TableView.Employee;
             lblMain.Text = "Сотрудники";
             lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
                 "информации о сотруднике, её редактирования и удаления сотрудника. " +
                 "Для этого необходимо выбрать сотрудника в таблице, нажать по нему " +
                 "правой кнопкой мыши и выбрать необходимое действие";
+            ClearAllHandlers(btnFunc);
+            btnFunc.Text = "Добавить сотрудника";
+            btnFunc.Click += btnFunc_AddEmployee;
             Text = lblMain.Text + " - " + _Rights;
             UpdateDataGridView(
-                @"SELECT * FROM EMPLOYEE", 
+                @"SELECT * FROM Employee",
                 dgvMain,
                 _headerEmployee,
+                contextDGV,
                 0);
         }
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GoodsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _View = TableView.Good;
+            lblMain.Text = "Товары";
+            lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
+                "информации о товаре, её редактирования и удаления товара. " +
+                "Для этого необходимо выбрать товар в таблице, нажать по нему " +
+                "правой кнопкой мыши и выбрать необходимое действие";
+            ClearAllHandlers(btnFunc);
+            btnFunc.Text = "Добавить товар";
+            btnFunc.Click += btnFunc_AddGood;
+            Text = lblMain.Text + " - " + _Rights;
+            UpdateDataGridView(
+                @"SELECT * FROM Good",
+                dgvMain,
+                _headerGood,
+                contextDGV,
+                0);
+            dgvMain.Columns[0].Width = 75;
+        }
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
 
-        private void detailsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Context_DetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-            var NextForm = new DetailsEmployee(currID, DetailsEmployeeMode.View);
-            NextForm.ShowDialog();
-
-            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-            usersToolStripMenuItem_Click(sender, e);
-            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-            dgvMain.Rows[currRowIndex].Selected = true;
+            Context_ViewEdit(SubFormMode.View);
         }
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Context_EditToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-            var NextForm = new DetailsEmployee(currID, DetailsEmployeeMode.Edit);
-            NextForm.ShowDialog();
-
-            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-            usersToolStripMenuItem_Click(sender, e);
-            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-            dgvMain.Rows[currRowIndex].Selected = true;
+            Context_ViewEdit(SubFormMode.Edit);
         }
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Context_DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var curr = dgvMain.SelectedCells[0].RowIndex;
-            int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
-            string name = "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " + 
-                dgvMain.Rows[curr].Cells[1].Value.ToString() + " " + 
-                dgvMain.Rows[curr].Cells[2].Value.ToString();
-            if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + name + "?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-            { 
-                personalInfoTableAdapter.DeleteQuery(currID);
-                employeeTableAdapter.DeleteQuery(currID);
+            Context_Delete();
+        }
 
-                int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
-                usersToolStripMenuItem_Click(sender, e);
-                try
-                {
-                    dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-                }
-                catch (Exception ex) { }
+
+        private void Context_ViewEdit(SubFormMode mode)
+        {
+            switch (_View)
+            {
+                case TableView.Employee:
+                    {
+                        var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+                        int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+
+                        var NextForm = new ViewEmployee(currID, mode);
+                        NextForm.ShowDialog();
+
+                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+                        UsersToolStripMenuItem_Click(new object(), EventArgs.Empty);
+                        dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                        dgvMain.Rows[currRowIndex].Selected = true;
+                        break;
+                    }
+                case TableView.Good:
+                    {
+                        var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+                        int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+
+                        var NextForm = new ViewGood(currID, mode);
+                        NextForm.ShowDialog();
+
+                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+                        GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
+                        dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                        dgvMain.Rows[currRowIndex].Selected = true;
+                        break;
+                    }
+                default:
+                    {
+
+                        break;
+                    }
             }
         }
+        private void Context_Delete()
+        {
+            switch (_View)
+            {
+                case TableView.Employee:
+                    {
+                        var curr = dgvMain.SelectedCells[0].RowIndex;
+                        int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
+                        string name = "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
+                            dgvMain.Rows[curr].Cells[1].Value.ToString() + " " +
+                            dgvMain.Rows[curr].Cells[2].Value.ToString();
+                        if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + name + "?", "Удаление",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        {
+                            personalInfoTableAdapter.DeleteQuery(currID);
+                            employeeTableAdapter.DeleteQuery(currID);
+
+                            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
+                            UsersToolStripMenuItem_Click(new object(), EventArgs.Empty);
+                            try
+                            {
+                                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                            }
+                            catch (Exception ex) { }
+                        }
+                        break;
+                    }
+                case TableView.Good:
+                    {
+                        var curr = dgvMain.SelectedCells[0].RowIndex;
+                        int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
+                        string name = "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
+                            dgvMain.Rows[curr].Cells[1].Value.ToString();
+                        if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + name + "?", "Удаление",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        {
+                            goodTableAdapter.DeleteQuery(currID);
+
+                            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
+                            GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
+                            try
+                            {
+                                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                            }
+                            catch (Exception ex) { }
+                        }
+                        break;
+                    }
+                default:
+                    {
+
+                        break;
+                    }
+            }
+        }
+
+
         private void dgvMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.ColumnIndex < dgvMain.ColumnCount && e.RowIndex < dgvMain.RowCount && e.Button == MouseButtons.Right)
@@ -176,10 +277,33 @@ namespace supplyGood
             }
         }
 
-        private void btnFunc_Click(object sender, EventArgs e)
+
+        private void btnFunc_AddEmployee(object sender, EventArgs e)
         {
-            var NextForm = new DetailsEmployee();
+            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+
+            var NextForm = new ViewEmployee();
             NextForm.ShowDialog();
+
+            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+            UsersToolStripMenuItem_Click(new object(), EventArgs.Empty);
+            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+            dgvMain.Rows[currRowIndex].Selected = true;
+
+        }
+        private void btnFunc_AddGood(object sender, EventArgs e)
+        {
+            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+
+            var NextForm = new ViewGood();
+            NextForm.ShowDialog();
+
+            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+            GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
+            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+            dgvMain.Rows[currRowIndex].Selected = true;
         }
     }
 

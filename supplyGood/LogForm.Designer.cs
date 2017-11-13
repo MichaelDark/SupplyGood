@@ -43,6 +43,7 @@
             this.txtLogin.Name = "txtLogin";
             this.txtLogin.Size = new System.Drawing.Size(201, 35);
             this.txtLogin.TabIndex = 0;
+            this.txtLogin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Field_KeyPress);
             // 
             // txtPassword
             // 
@@ -50,6 +51,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(201, 35);
             this.txtPassword.TabIndex = 1;
+            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Field_KeyPress);
             // 
             // logo
             // 

@@ -35,24 +35,26 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.suppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goodsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.suppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.storagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMain = new System.Windows.Forms.Label();
             this.pnlTools = new System.Windows.Forms.Panel();
             this.dgvMain = new System.Windows.Forms.DataGridView();
-            this.cmsViewEditDelete = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextDGV = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.detailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFunc = new System.Windows.Forms.Button();
             this.lblHint = new System.Windows.Forms.Label();
+            this.заказчикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.employeeTableAdapter = new supplyGood.MainDBDataSetTableAdapters.EmployeeTableAdapter();
             this.personalInfoTableAdapter = new supplyGood.MainDBDataSetTableAdapters.PersonalInfoTableAdapter();
+            this.goodTableAdapter = new supplyGood.MainDBDataSetTableAdapters.GoodTableAdapter();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
-            this.cmsViewEditDelete.SuspendLayout();
+            this.contextDGV.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -89,16 +91,17 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.exitToolStripMenuItem.Text = "Выход";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // managementToolStripMenuItem
             // 
             this.managementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.usersToolStripMenuItem,
             this.suppliesToolStripMenuItem,
             this.goodsToolStripMenuItem,
             this.carsToolStripMenuItem,
-            this.storagesToolStripMenuItem});
+            this.storagesToolStripMenuItem,
+            this.заказчикиToolStripMenuItem,
+            this.usersToolStripMenuItem});
             this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
             this.managementToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.managementToolStripMenuItem.Text = "Просмотр";
@@ -106,33 +109,34 @@
             // usersToolStripMenuItem
             // 
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.usersToolStripMenuItem.Text = "Сотрудники";
-            this.usersToolStripMenuItem.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
-            // 
-            // suppliesToolStripMenuItem
-            // 
-            this.suppliesToolStripMenuItem.Name = "suppliesToolStripMenuItem";
-            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.suppliesToolStripMenuItem.Text = "Поставки";
+            this.usersToolStripMenuItem.Click += new System.EventHandler(this.UsersToolStripMenuItem_Click);
             // 
             // goodsToolStripMenuItem
             // 
             this.goodsToolStripMenuItem.Name = "goodsToolStripMenuItem";
-            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.goodsToolStripMenuItem.Text = "Товары";
+            this.goodsToolStripMenuItem.Click += new System.EventHandler(this.GoodsToolStripMenuItem_Click);
+            // 
+            // suppliesToolStripMenuItem
+            // 
+            this.suppliesToolStripMenuItem.Name = "suppliesToolStripMenuItem";
+            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.suppliesToolStripMenuItem.Text = "-Поставки";
             // 
             // carsToolStripMenuItem
             // 
             this.carsToolStripMenuItem.Name = "carsToolStripMenuItem";
-            this.carsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.carsToolStripMenuItem.Text = "Машины";
+            this.carsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.carsToolStripMenuItem.Text = "-Машины";
             // 
             // storagesToolStripMenuItem
             // 
             this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
-            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.storagesToolStripMenuItem.Text = "Склады";
+            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.storagesToolStripMenuItem.Text = "-Склады";
             // 
             // lblMain
             // 
@@ -176,35 +180,35 @@
             this.dgvMain.TabIndex = 9;
             this.dgvMain.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseDown);
             // 
-            // cmsViewEditDelete
+            // contextDGV
             // 
-            this.cmsViewEditDelete.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextDGV.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.detailsToolStripMenuItem,
             this.editToolStripMenuItem,
             this.deleteToolStripMenuItem});
-            this.cmsViewEditDelete.Name = "cmsViewEditDelete";
-            this.cmsViewEditDelete.Size = new System.Drawing.Size(155, 70);
+            this.contextDGV.Name = "cmsViewEditDelete";
+            this.contextDGV.Size = new System.Drawing.Size(155, 70);
             // 
             // detailsToolStripMenuItem
             // 
             this.detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
             this.detailsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.detailsToolStripMenuItem.Text = "Просмотреть";
-            this.detailsToolStripMenuItem.Click += new System.EventHandler(this.detailsToolStripMenuItem_Click);
+            this.detailsToolStripMenuItem.Click += new System.EventHandler(this.Context_DetailsToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.editToolStripMenuItem.Text = "Редактировать";
-            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.Context_EditToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.deleteToolStripMenuItem.Text = "Удалить";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.Context_DeleteToolStripMenuItem_Click);
             // 
             // btnFunc
             // 
@@ -216,7 +220,6 @@
             this.btnFunc.TabIndex = 10;
             this.btnFunc.Text = "Добавить пользователя";
             this.btnFunc.UseVisualStyleBackColor = false;
-            this.btnFunc.Click += new System.EventHandler(this.btnFunc_Click);
             // 
             // lblHint
             // 
@@ -227,6 +230,12 @@
             this.lblHint.TabIndex = 11;
             this.lblHint.Text = "Подсказка";
             // 
+            // заказчикиToolStripMenuItem
+            // 
+            this.заказчикиToolStripMenuItem.Name = "заказчикиToolStripMenuItem";
+            this.заказчикиToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.заказчикиToolStripMenuItem.Text = "-Заказчики";
+            // 
             // employeeTableAdapter
             // 
             this.employeeTableAdapter.ClearBeforeFill = true;
@@ -234,6 +243,10 @@
             // personalInfoTableAdapter
             // 
             this.personalInfoTableAdapter.ClearBeforeFill = true;
+            // 
+            // goodTableAdapter
+            // 
+            this.goodTableAdapter.ClearBeforeFill = true;
             // 
             // MainForm
             // 
@@ -258,7 +271,7 @@
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
-            this.cmsViewEditDelete.ResumeLayout(false);
+            this.contextDGV.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -279,7 +292,7 @@
         private System.Windows.Forms.Label lblMain;
         private System.Windows.Forms.Panel pnlTools;
         private System.Windows.Forms.DataGridView dgvMain;
-        private System.Windows.Forms.ContextMenuStrip cmsViewEditDelete;
+        private System.Windows.Forms.ContextMenuStrip contextDGV;
         private System.Windows.Forms.ToolStripMenuItem detailsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
@@ -287,5 +300,7 @@
         private System.Windows.Forms.Label lblHint;
         private MainDBDataSetTableAdapters.EmployeeTableAdapter employeeTableAdapter;
         private MainDBDataSetTableAdapters.PersonalInfoTableAdapter personalInfoTableAdapter;
+        private System.Windows.Forms.ToolStripMenuItem заказчикиToolStripMenuItem;
+        private MainDBDataSetTableAdapters.GoodTableAdapter goodTableAdapter;
     }
 }

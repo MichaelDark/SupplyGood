@@ -36,6 +36,14 @@ namespace supplyGood
                 "Ед. измерения",
                 "Цена за ед. (грн)"
         };
+        string[] _headerCar = new string[]
+        {
+                "ID",
+                "ID Водителя",
+                "Гос. номер",
+                "Модель",
+                "Цвет"
+        };
 
 
         public MainForm()
@@ -150,6 +158,26 @@ namespace supplyGood
                 0);
             dgvMain.Columns[0].Width = 75;
         }
+        private void CarsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _View = TableView.Car;
+            lblMain.Text = "Машины";
+            lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
+                "информации о машине, её редактирования и удаления машины. " +
+                "Для этого необходимо выбрать машину в таблице, нажать по ней " +
+                "правой кнопкой мыши и выбрать необходимое действие";
+            ClearAllHandlers(btnFunc);
+            btnFunc.Text = "Добавить машину";
+            btnFunc.Click += btnFunc_AddCar;
+            Text = lblMain.Text + " - " + _Rights;
+            UpdateDataGridView(
+                @"SELECT * FROM Car",
+                dgvMain,
+                _headerCar,
+                contextDGV,
+                0);
+            dgvMain.Columns[0].Width = 75;
+        }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -202,6 +230,20 @@ namespace supplyGood
                         dgvMain.Rows[currRowIndex].Selected = true;
                         break;
                     }
+                case TableView.Car:
+                    {
+                        var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+                        int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+
+                        var NextForm = new ViewCar(currID, mode);
+                        NextForm.ShowDialog();
+
+                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+                        CarsToolStripMenuItem_Click(new object(), EventArgs.Empty);
+                        dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                        dgvMain.Rows[currRowIndex].Selected = true;
+                        break;
+                    }
                 default:
                     {
 
@@ -241,14 +283,36 @@ namespace supplyGood
                         var curr = dgvMain.SelectedCells[0].RowIndex;
                         int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
                         string name = "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
+                            dgvMain.Rows[curr].Cells[3].Value.ToString() + " " +
+                            dgvMain.Rows[curr].Cells[2].Value.ToString();
+                        if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + name + "?", "Удаление",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        {
+                            //car.DeleteQuery(currID);
+
+                            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
+                            GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
+                            try
+                            {
+                                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                            }
+                            catch (Exception ex) { }
+                        }
+                        break;
+                    }
+                case TableView.Car:
+                    {
+                        var curr = dgvMain.SelectedCells[0].RowIndex;
+                        int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
+                        string name = "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
                             dgvMain.Rows[curr].Cells[1].Value.ToString();
                         if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + name + "?", "Удаление",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                         {
-                            goodTableAdapter.DeleteQuery(currID);
+                            carTableAdapter.DeleteQuery(currID);
 
                             int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
-                            GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
+                            CarsToolStripMenuItem_Click(new object(), EventArgs.Empty);
                             try
                             {
                                 dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
@@ -302,6 +366,19 @@ namespace supplyGood
 
             int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
             GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
+            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+            dgvMain.Rows[currRowIndex].Selected = true;
+        }
+        private void btnFunc_AddCar(object sender, EventArgs e)
+        {
+            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+
+            var NextForm = new ViewCar();
+            NextForm.ShowDialog();
+
+            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+            CarsToolStripMenuItem_Click(new object(), EventArgs.Empty);
             dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
             dgvMain.Rows[currRowIndex].Selected = true;
         }

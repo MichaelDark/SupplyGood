@@ -51,6 +51,7 @@
             this.employeeTableAdapter = new supplyGood.MainDBDataSetTableAdapters.EmployeeTableAdapter();
             this.personalInfoTableAdapter = new supplyGood.MainDBDataSetTableAdapters.PersonalInfoTableAdapter();
             this.goodTableAdapter = new supplyGood.MainDBDataSetTableAdapters.GoodTableAdapter();
+            this.carTableAdapter = new supplyGood.MainDBDataSetTableAdapters.CarTableAdapter();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.contextDGV.SuspendLayout();
@@ -122,7 +123,8 @@
             // 
             this.carsToolStripMenuItem.Name = "carsToolStripMenuItem";
             this.carsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.carsToolStripMenuItem.Text = "-Машины";
+            this.carsToolStripMenuItem.Text = "Машины";
+            this.carsToolStripMenuItem.Click += new System.EventHandler(this.CarsToolStripMenuItem_Click);
             // 
             // storagesToolStripMenuItem
             // 
@@ -217,6 +219,7 @@
             this.btnFunc.TabIndex = 10;
             this.btnFunc.Text = "Добавить пользователя";
             this.btnFunc.UseVisualStyleBackColor = false;
+            this.btnFunc.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // lblHint
             // 
@@ -238,6 +241,10 @@
             // goodTableAdapter
             // 
             this.goodTableAdapter.ClearBeforeFill = true;
+            // 
+            // carTableAdapter
+            // 
+            this.carTableAdapter.ClearBeforeFill = true;
             // 
             // MainForm
             // 
@@ -291,5 +298,6 @@
         private MainDBDataSetTableAdapters.PersonalInfoTableAdapter personalInfoTableAdapter;
         private System.Windows.Forms.ToolStripMenuItem заказчикиToolStripMenuItem;
         private MainDBDataSetTableAdapters.GoodTableAdapter goodTableAdapter;
+        private MainDBDataSetTableAdapters.CarTableAdapter carTableAdapter;
     }
 }

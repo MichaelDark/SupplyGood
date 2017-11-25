@@ -15,6 +15,7 @@ namespace supplyGood
 {
     public enum SubFormMode { Empty, View, Edit, Add }
     public enum TableView { Empty, Supply, Good, Car, Storage, Client, Employee}
+
     public partial class MainForm : Form
     {
         string _Rights = "";
@@ -107,6 +108,47 @@ namespace supplyGood
                 return false;
             }
         }
+        private void UpdateCurrentData()
+        {
+            switch (_View)
+            {
+                case TableView.Employee:
+                    {
+                        UpdateDataGridView(
+                            @"SELECT * FROM Employee",
+                            dgvMain,
+                            _headerEmployee,
+                            contextDGV,
+                            0);
+                        break;
+                    }
+                case TableView.Good:
+                    {
+                        UpdateDataGridView(
+                            @"SELECT * FROM Good",
+                            dgvMain,
+                            _headerGood,
+                            contextDGV,
+                            0);
+                        break;
+                    }
+                case TableView.Car:
+                    {
+                        UpdateDataGridView(
+                            @"SELECT * FROM Car",
+                            dgvMain,
+                            _headerCar,
+                            contextDGV,
+                            0);
+                        break;
+                    }
+                default:
+                    {
+
+                        break;
+                    }
+            }
+        }
         private void ClearAllHandlers(Control control)
         {
             FieldInfo f1 = typeof(Control).GetField("EventClick",
@@ -116,6 +158,67 @@ namespace supplyGood
                 BindingFlags.NonPublic | BindingFlags.Instance);
             EventHandlerList list = (EventHandlerList)pi.GetValue(control, null);
             list.RemoveHandler(obj, list[obj]);
+        }
+        private void Context_ViewEdit(SubFormMode mode)
+        {
+            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+            var NextForm = new Form();
+
+            switch (_View)
+            {
+                case TableView.Employee:
+                    {
+
+                        NextForm = new ViewEmployee(currID, mode);
+                        break;
+                    }
+                case TableView.Good:
+                    {
+                        NextForm = new ViewGood(currID, mode);
+                        break;
+                    }
+                case TableView.Car:
+                    {
+                        NextForm = new ViewCar(currID, mode);
+                        break;
+                    }
+            }
+
+            NextForm.ShowDialog();
+
+            UpdateCurrentData();
+
+            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+            dgvMain.Rows[currRowIndex].Selected = true;
+        }
+        private string GetDeletingName(int curr, int currID)
+        {
+            switch (_View)
+            {
+                case TableView.Employee:
+                    {
+                        return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
+                            dgvMain.Rows[curr].Cells[1].Value.ToString() + " " +
+                            dgvMain.Rows[curr].Cells[2].Value.ToString();
+                    }
+                case TableView.Good:
+                    {
+                        return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
+                            dgvMain.Rows[curr].Cells[1].Value.ToString();
+                    }
+                case TableView.Car:
+                    {
+                        return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
+                            dgvMain.Rows[curr].Cells[3].Value.ToString() + " " +
+                            dgvMain.Rows[curr].Cells[2].Value.ToString();
+                    }
+                default:
+                    {
+                        return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") ";
+                    }
+            }
         }
 
 
@@ -127,16 +230,9 @@ namespace supplyGood
                 "информации о сотруднике, её редактирования и удаления сотрудника. " +
                 "Для этого необходимо выбрать сотрудника в таблице, нажать по нему " +
                 "правой кнопкой мыши и выбрать необходимое действие";
-            ClearAllHandlers(btnFunc);
             btnFunc.Text = "Добавить сотрудника";
-            btnFunc.Click += btnFunc_AddEmployee;
             Text = lblMain.Text + " - " + _Rights;
-            UpdateDataGridView(
-                @"SELECT * FROM Employee",
-                dgvMain,
-                _headerEmployee,
-                contextDGV,
-                0);
+            UpdateCurrentData();
         }
         private void GoodsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -146,16 +242,9 @@ namespace supplyGood
                 "информации о товаре, её редактирования и удаления товара. " +
                 "Для этого необходимо выбрать товар в таблице, нажать по нему " +
                 "правой кнопкой мыши и выбрать необходимое действие";
-            ClearAllHandlers(btnFunc);
             btnFunc.Text = "Добавить товар";
-            btnFunc.Click += btnFunc_AddGood;
             Text = lblMain.Text + " - " + _Rights;
-            UpdateDataGridView(
-                @"SELECT * FROM Good",
-                dgvMain,
-                _headerGood,
-                contextDGV,
-                0);
+            UpdateCurrentData();
             dgvMain.Columns[0].Width = 75;
         }
         private void CarsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -166,24 +255,53 @@ namespace supplyGood
                 "информации о машине, её редактирования и удаления машины. " +
                 "Для этого необходимо выбрать машину в таблице, нажать по ней " +
                 "правой кнопкой мыши и выбрать необходимое действие";
-            ClearAllHandlers(btnFunc);
             btnFunc.Text = "Добавить машину";
-            btnFunc.Click += btnFunc_AddCar;
             Text = lblMain.Text + " - " + _Rights;
-            UpdateDataGridView(
-                @"SELECT * FROM Car",
-                dgvMain,
-                _headerCar,
-                contextDGV,
-                0);
+            UpdateCurrentData();
             dgvMain.Columns[0].Width = 75;
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
 
+            var NextForm = new Form();
 
+            switch (_View)
+            {
+                case TableView.Employee:
+                    {
+                        NextForm = new ViewEmployee();
+                        break;
+                    }
+                case TableView.Good:
+                    {
+                        NextForm = new ViewGood();
+                        break;
+                    }
+                case TableView.Car:
+                    {
+                        NextForm = new ViewCar();
+                        break;
+                    }
+            }
+
+            NextForm.ShowDialog();
+
+            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+
+            UpdateCurrentData();
+
+            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+            dgvMain.Rows[currRowIndex].Selected = true;
+
+        }
+
+        
         private void Context_DetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Context_ViewEdit(SubFormMode.View);
@@ -194,147 +312,41 @@ namespace supplyGood
         }
         private void Context_DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Context_Delete();
-        }
-
-
-        private void Context_ViewEdit(SubFormMode mode)
-        {
-            switch (_View)
-            {
-                case TableView.Employee:
-                    {
-                        var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-                        int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-
-                        var NextForm = new ViewEmployee(currID, mode);
-
-                        NextForm.ShowDialog();
-
-                        UsersToolStripMenuItem_Click(new object(), EventArgs.Empty);
-
-                        dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-                        dgvMain.Rows[currRowIndex].Selected = true;
-                        break;
-                    }
-                case TableView.Good:
-                    {
-                        var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-                        int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-                        
-                        var NextForm = new ViewGood(currID, mode);
-
-                        NextForm.ShowDialog();
-
-
-                        GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
-
-                        dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-                        dgvMain.Rows[currRowIndex].Selected = true;
-                        break;
-                    }
-                case TableView.Car:
-                    {
-                        var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-                        int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-
-                        var NextForm = new ViewCar(currID, mode);
-                        NextForm.ShowDialog();
-
-                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-                        CarsToolStripMenuItem_Click(new object(), EventArgs.Empty);
-                        dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-                        dgvMain.Rows[currRowIndex].Selected = true;
-                        break;
-                    }
-                default:
-                    {
-
-                        break;
-                    }
-            }
-        }
-        private void Context_Delete()
-        {
-            switch (_View)
-            {
-                case TableView.Employee:
-                    {
-                        var curr = dgvMain.SelectedCells[0].RowIndex;
-                        int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
-                        string name = "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
-                            dgvMain.Rows[curr].Cells[1].Value.ToString() + " " +
-                            dgvMain.Rows[curr].Cells[2].Value.ToString();
-                        if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + name + "?", "Удаление",
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            var curr = dgvMain.SelectedCells[0].RowIndex;
+            int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
+            string NameOfDeletingItem = GetDeletingName(curr, currID);
+            if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + NameOfDeletingItem + "?", "Удаление",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                switch (_View)
+                {
+                    case TableView.Employee:
                         {
                             personalInfoTableAdapter.DeleteQuery(currID);
                             employeeTableAdapter.DeleteQuery(currID);
-
-                            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
-                            UsersToolStripMenuItem_Click(new object(), EventArgs.Empty);
-                            try
-                            {
-                                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-                            }
-                            catch (Exception ex) { }
+                            break;
                         }
-                        break;
-                    }
-                case TableView.Good:
-                    {
-                        var curr = dgvMain.SelectedCells[0].RowIndex;
-                        int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
-                        string name = "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
-                            dgvMain.Rows[curr].Cells[3].Value.ToString() + " " +
-                            dgvMain.Rows[curr].Cells[2].Value.ToString();
-                        if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + name + "?", "Удаление",
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    case TableView.Good:
                         {
-                            //car.DeleteQuery(currID);
-
-                            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
-                            GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
-                            try
-                            {
-                                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-                            }
-                            catch (Exception ex) { }
+                            goodTableAdapter.DeleteQuery(currID);
+                            break;
                         }
-                        break;
-                    }
-                case TableView.Car:
-                    {
-                        var curr = dgvMain.SelectedCells[0].RowIndex;
-                        int currID = Convert.ToInt32(dgvMain.Rows[curr].Cells[0].Value);
-                        string name = "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
-                            dgvMain.Rows[curr].Cells[1].Value.ToString();
-                        if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + name + "?", "Удаление",
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    case TableView.Car:
                         {
                             carTableAdapter.DeleteQuery(currID);
-
-                            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
-                            CarsToolStripMenuItem_Click(new object(), EventArgs.Empty);
-                            try
-                            {
-                                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-                            }
-                            catch (Exception ex) { }
+                            break;
                         }
-                        break;
-                    }
-                default:
-                    {
+                }
 
-                        break;
-                    }
+            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
+
+            UpdateCurrentData();
+
+            try
+            {
+                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
             }
+            catch (Exception ex) { }
         }
-
-
         private void dgvMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.ColumnIndex < dgvMain.ColumnCount && e.RowIndex < dgvMain.RowCount && e.Button == MouseButtons.Right)
@@ -342,50 +354,9 @@ namespace supplyGood
                 try
                 {
                     dgvMain.CurrentCell = dgvMain.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                } catch (Exception ex) { }
+                }
+                catch (Exception ex) { }
             }
-        }
-
-
-        private void btnFunc_AddEmployee(object sender, EventArgs e)
-        {
-            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-
-            var NextForm = new ViewEmployee();
-            NextForm.ShowDialog();
-
-            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-            UsersToolStripMenuItem_Click(new object(), EventArgs.Empty);
-            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-            dgvMain.Rows[currRowIndex].Selected = true;
-
-        }
-        private void btnFunc_AddGood(object sender, EventArgs e)
-        {
-            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-
-            var NextForm = new ViewGood();
-            NextForm.ShowDialog();
-
-            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-            GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
-            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-            dgvMain.Rows[currRowIndex].Selected = true;
-        }
-        private void btnFunc_AddCar(object sender, EventArgs e)
-        {
-            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-
-            var NextForm = new ViewCar();
-            NextForm.ShowDialog();
-
-            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-            CarsToolStripMenuItem_Click(new object(), EventArgs.Empty);
-            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-            dgvMain.Rows[currRowIndex].Selected = true;
         }
     }
 

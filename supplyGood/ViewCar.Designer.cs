@@ -43,6 +43,7 @@
             this.cbxEmployee = new System.Windows.Forms.ComboBox();
             this.mainDBDataSet = new supplyGood.MainDBDataSet();
             this.employeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.carTableAdapter = new supplyGood.MainDBDataSetTableAdapters.CarTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -156,6 +157,10 @@
             this.employeeBindingSource.DataMember = "Employee";
             this.employeeBindingSource.DataSource = this.mainDBDataSet;
             // 
+            // carTableAdapter
+            // 
+            this.carTableAdapter.ClearBeforeFill = true;
+            // 
             // ViewCar
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -198,5 +203,6 @@
         private System.Windows.Forms.ComboBox cbxEmployee;
         private MainDBDataSet mainDBDataSet;
         private System.Windows.Forms.BindingSource employeeBindingSource;
+        private MainDBDataSetTableAdapters.CarTableAdapter carTableAdapter;
     }
 }

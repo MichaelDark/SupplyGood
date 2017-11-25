@@ -19,23 +19,23 @@ namespace supplyGood
         bool HasObligatoryNullFields => _Fields.Exists(x => (String.IsNullOrEmpty(x.Text) || String.IsNullOrWhiteSpace(x.Text)) && x.Name != "txtChildren" && x.Name != "txtFamily" && x.Name != "txtConvictions");
 
 
-        public ViewCar(int ID, SubFormMode Mode)
+        public ViewCar()
         {
             InitializeComponent();
 
-            _ID = ID;
-            _Mode = Mode;
+            _Mode = SubFormMode.Add;
 
             _Fields = new List<TextBox>();
             _Fields.Add(txtGov);
             _Fields.Add(txtColor);
             _Fields.Add(txtModel);
         }
-        public ViewCar()
+        public ViewCar(int ID, SubFormMode Mode)
         {
             InitializeComponent();
 
-            _Mode = SubFormMode.Add;
+            _ID = ID;
+            _Mode = Mode;
 
             _Fields = new List<TextBox>();
             _Fields.Add(txtGov);
@@ -112,8 +112,11 @@ namespace supplyGood
                     myConnection);
                 myReader = myCommand.ExecuteReader();
 
+                cbxEmployee.Items.Clear();
+
                 string currentEmp = "Нет закрепленного сотрудника";
                 cbxEmployee.Items.Add(currentEmp);
+
                 while (myReader.Read())
                 {
                     cbxEmployee.Items.Add("#" + myReader["id"].ToString() + ", " + myReader["em_surname"].ToString() + " " + myReader["em_name"].ToString());
@@ -129,6 +132,12 @@ namespace supplyGood
             }
             myConnection.Close();
         }
+        private int GetID(string text)
+        {
+            text = text.Split(',')[0];
+            return Convert.ToInt32(text.Remove(0, 1).Trim());
+        }
+
 
         private void ViewCar_Load(object sender, EventArgs e)
         {
@@ -139,10 +148,8 @@ namespace supplyGood
             LoadEmployees();
             SetMode();
         }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
-            bool close = false;
             if (_Mode == SubFormMode.Add || _Mode == SubFormMode.Edit)
             {
                 if (HasObligatoryNullFields)
@@ -150,50 +157,48 @@ namespace supplyGood
                     MessageBox.Show("Заполните все обязательные поля (помечены звездочкой - *)", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                int? driverID;
+
+                if (cbxEmployee.Text == "Нет закрепленного сотрудника")
+                {
+                    driverID = null;
+                }
+                else
+                {
+                    driverID = GetID(cbxEmployee.Text);
+                }
+
+                _ID_DRIVER = driverID == null ? -1 : (int)driverID;
+
+                if (_Mode == SubFormMode.Add)
+                {
+                    carTableAdapter.InsertQuery(driverID,
+                        txtGov.Text,
+                        txtModel.Text,
+                        txtColor.Text);
+                    Close();
+                }
+                else
+                {
+                    carTableAdapter.UpdateQuery(driverID,
+                        txtGov.Text,
+                        txtModel.Text,
+                        txtColor.Text,
+                        _ID);
+                }
+
                 _Mode = SubFormMode.View;
-                
-                //if ((int)employeeTableAdapter.ExistsQuery(_ID) > 0 && _Mode != SubFormMode.Add)
-                //{
-                //    employeeTableAdapter.UpdateQuery(
-                //        txtSurname.Text,
-                //        txtName.Text,
-                //        txtPatron.Text,
-                //        dateIn.Value.Date,
-                //        dateO,
-                //        (float)Convert.ToDouble(txtSalary.Text),
-                //        _ID);
-                //}
-                //else
-                //{
-                //    employeeTableAdapter.Insert(
-                //           txtSurname.Text,
-                //           txtName.Text,
-                //           txtPatron.Text,
-                //           dateIn.Value,
-                //           dateO,
-                //           (float)Convert.ToDouble(txtSalary.Text));
-                //    string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
-                //    SqlConnection sqlconn = new SqlConnection(ConnectionString);
-                //    sqlconn.Open();
-                //    SqlCommand oda = new SqlCommand("SELECT TOP 1 id FROM Employee ORDER BY id DESC", sqlconn);
-                //    _ID = Convert.ToInt32(oda.ExecuteScalar());
-                //    sqlconn.Close();
-                //    close = true;
-                //}
             }
             else
             {
                 _Mode = SubFormMode.Edit;
             }
 
-            if (close)
-            {
-                Close();
-            }
-
             LoadEmployees();
             SetMode();
         }
+
 
     }
 }

@@ -134,6 +134,7 @@ namespace supplyGood
             myConnection.Close();
         }
         
+
         private void ViewEmployee_Load(object sender, EventArgs e)
         {
             if (_Mode != SubFormMode.Add)
@@ -142,7 +143,6 @@ namespace supplyGood
             }
             SetMode();
         }
-        
         private void btnSave_Click(object sender, EventArgs e)
         {
             bool close = false;
@@ -222,7 +222,6 @@ namespace supplyGood
 
             SetMode();
         }
-
         private void cbxDischarged_CheckedChanged(object sender, EventArgs e)
         {
             dateOut.Visible = cbxDischarged.Checked;

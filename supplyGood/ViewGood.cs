@@ -18,23 +18,23 @@ namespace supplyGood
         bool HasObligatoryNullFields => _Fields.Exists(x => String.IsNullOrEmpty(x.Text) || String.IsNullOrWhiteSpace(x.Text));
 
 
-        public ViewGood(int ID, SubFormMode Mode)
+        public ViewGood()
         {
             InitializeComponent();
 
-            _ID = ID;
-            _Mode = Mode;
+            _Mode = SubFormMode.Add;
 
             _Fields = new List<TextBox>();
             _Fields.Add(txtName);
             _Fields.Add(txtUnit);
             _Fields.Add(txtPrice);
         }
-        public ViewGood()
+        public ViewGood(int ID, SubFormMode Mode)
         {
             InitializeComponent();
 
-            _Mode = SubFormMode.Add;
+            _ID = ID;
+            _Mode = Mode;
 
             _Fields = new List<TextBox>();
             _Fields.Add(txtName);
@@ -96,6 +96,7 @@ namespace supplyGood
             myConnection.Close();
         }
 
+
         private void ViewGood_Load(object sender, EventArgs e)
         {
             if (_Mode != SubFormMode.Add)
@@ -104,7 +105,6 @@ namespace supplyGood
             }
             SetMode();
         }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (_Mode == SubFormMode.Add || _Mode == SubFormMode.Edit)

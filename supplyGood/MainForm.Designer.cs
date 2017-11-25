@@ -38,9 +38,9 @@
             this.goodsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.storagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.заказчикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.employeeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.пользователиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMain = new System.Windows.Forms.Label();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.contextDGV = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -93,7 +93,7 @@
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.managementToolStripMenuItem,
-            this.пользователиToolStripMenuItem});
+            this.usersToolStripMenuItem});
             this.mainMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
@@ -130,8 +130,8 @@
             this.goodsToolStripMenuItem,
             this.carsToolStripMenuItem,
             this.storagesToolStripMenuItem,
-            this.заказчикиToolStripMenuItem,
-            this.usersToolStripMenuItem});
+            this.clientsToolStripMenuItem,
+            this.employeeToolStripMenuItem});
             this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
             this.managementToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.managementToolStripMenuItem.Text = "Просмотр";
@@ -139,48 +139,49 @@
             // suppliesToolStripMenuItem
             // 
             this.suppliesToolStripMenuItem.Name = "suppliesToolStripMenuItem";
-            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.suppliesToolStripMenuItem.Text = "-Поставки";
+            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.suppliesToolStripMenuItem.Text = "Поставки";
+            this.suppliesToolStripMenuItem.Click += new System.EventHandler(this.SuppliesToolStripMenuItem_Click);
             // 
             // goodsToolStripMenuItem
             // 
             this.goodsToolStripMenuItem.Name = "goodsToolStripMenuItem";
-            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.goodsToolStripMenuItem.Text = "Товары";
             this.goodsToolStripMenuItem.Click += new System.EventHandler(this.GoodsToolStripMenuItem_Click);
             // 
             // carsToolStripMenuItem
             // 
             this.carsToolStripMenuItem.Name = "carsToolStripMenuItem";
-            this.carsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.carsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.carsToolStripMenuItem.Text = "Машины";
             this.carsToolStripMenuItem.Click += new System.EventHandler(this.CarsToolStripMenuItem_Click);
             // 
             // storagesToolStripMenuItem
             // 
             this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
-            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.storagesToolStripMenuItem.Text = "-Склады";
             // 
-            // заказчикиToolStripMenuItem
+            // clientsToolStripMenuItem
             // 
-            this.заказчикиToolStripMenuItem.Name = "заказчикиToolStripMenuItem";
-            this.заказчикиToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.заказчикиToolStripMenuItem.Text = "-Заказчики";
+            this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
+            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clientsToolStripMenuItem.Text = "-Заказчики";
+            // 
+            // employeeToolStripMenuItem
+            // 
+            this.employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
+            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.employeeToolStripMenuItem.Text = "Сотрудники";
+            this.employeeToolStripMenuItem.Click += new System.EventHandler(this.EmployeeToolStripMenuItem_Click);
             // 
             // usersToolStripMenuItem
             // 
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.usersToolStripMenuItem.Text = "Сотрудники";
-            this.usersToolStripMenuItem.Click += new System.EventHandler(this.EmployeeToolStripMenuItem_Click);
-            // 
-            // пользователиToolStripMenuItem
-            // 
-            this.пользователиToolStripMenuItem.Name = "пользователиToolStripMenuItem";
-            this.пользователиToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
-            this.пользователиToolStripMenuItem.Text = "Пользователи";
-            this.пользователиToolStripMenuItem.Click += new System.EventHandler(this.UsersToolStripMenuItem_Click);
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
+            this.usersToolStripMenuItem.Text = "Пользователи";
+            this.usersToolStripMenuItem.Click += new System.EventHandler(this.UsersToolStripMenuItem_Click);
             // 
             // lblMain
             // 
@@ -575,7 +576,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem managementToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem employeeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem suppliesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem goodsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem carsToolStripMenuItem;
@@ -590,10 +591,10 @@
         private System.Windows.Forms.Label lblHint;
         private MainDBDataSetTableAdapters.EmployeeTableAdapter employeeTableAdapter;
         private MainDBDataSetTableAdapters.PersonalInfoTableAdapter personalInfoTableAdapter;
-        private System.Windows.Forms.ToolStripMenuItem заказчикиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clientsToolStripMenuItem;
         private MainDBDataSetTableAdapters.GoodTableAdapter goodTableAdapter;
         private MainDBDataSetTableAdapters.CarTableAdapter carTableAdapter;
-        private System.Windows.Forms.ToolStripMenuItem пользователиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem;
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.Panel panel1;
         private MainDBDataSet mainDBDataSet;

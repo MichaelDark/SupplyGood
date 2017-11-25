@@ -13,12 +13,43 @@ using System.Configuration;
 
 namespace supplyGood
 {
+    public enum Rights { Admin, HR, Manager, Storage }
     public enum SubFormMode { Empty, View, Edit, Add }
     public enum TableView { Empty, Supply, Good, Car, Storage, Client, Employee, User }
 
     public partial class MainForm : Form
     {
-        string _Rights = "";
+        Rights _Rights;
+        string RightsCaption
+        {
+            get
+            {
+                switch(_Rights)
+                {
+                    case Rights.Admin:
+                        {
+                            return "Администратор";
+                        }
+                    case Rights.HR:
+                        {
+                            return "Отдел кадров";
+                        }
+                    case Rights.Manager:
+                        {
+                            return "Менеджер по продажам";
+                        }
+                    case Rights.Storage:
+                        {
+                            return "Менеджер по продажам";
+                        }
+                    default:
+                        {
+                            return "";
+                        }
+                }
+            }
+        }
+
         bool Filtering;
         TableView _View = TableView.Empty;
         List<TextBox> txtFilters = new List<TextBox>();
@@ -91,14 +122,32 @@ namespace supplyGood
         };
 
         
-        public MainForm(string cRights = "Администратор")
+        public MainForm(Rights cRights = Rights.Admin)
         {
             InitializeComponent();
             Width = 1000;
             _Rights = cRights;
-            Text = _Rights;
+            Text = RightsCaption;
             _View = TableView.Empty;
             Filtering = false;
+
+            if (_Rights == Rights.HR)
+            {
+                suppliesToolStripMenuItem.Visible = false;
+                goodsToolStripMenuItem.Visible = false;
+                clientsToolStripMenuItem.Visible = false;
+            }
+            else if (_Rights == Rights.Manager)
+            {
+                employeeToolStripMenuItem.Visible = false;
+            }
+            else if (_Rights == Rights.Storage)
+            {
+                suppliesToolStripMenuItem.Visible = false;
+                carsToolStripMenuItem.Visible = false;
+                clientsToolStripMenuItem.Visible = false;
+                employeeToolStripMenuItem.Visible = false;
+            }
 
             //Init filters' UI
             {
@@ -495,6 +544,19 @@ namespace supplyGood
         }
 
 
+        private void SuppliesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _View = TableView.Supply;
+
+            lblMain.Text = "Поставки";
+            lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
+                "информации о поставке, её редактирования и удаления поставки. " +
+                "Для этого необходимо выбрать поставку в таблице, нажать по нему " +
+                "правой кнопкой мыши и выбрать необходимое действие";
+            btnFunc.Text = "Добавить поставку";
+            Text = lblMain.Text + " - " + RightsCaption;
+            UpdateCurrentData();
+        }
         private void EmployeeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Employee;
@@ -505,9 +567,8 @@ namespace supplyGood
                 "Для этого необходимо выбрать сотрудника в таблице, нажать по нему " +
                 "правой кнопкой мыши и выбрать необходимое действие";
             btnFunc.Text = "Добавить сотрудника";
-            Text = lblMain.Text + " - " + _Rights;
+            Text = lblMain.Text + " - " + RightsCaption;
             UpdateCurrentData();
-
         }
         private void GoodsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -519,7 +580,7 @@ namespace supplyGood
                 "Для этого необходимо выбрать товар в таблице, нажать по нему " +
                 "правой кнопкой мыши и выбрать необходимое действие";
             btnFunc.Text = "Добавить товар";
-            Text = lblMain.Text + " - " + _Rights;
+            Text = lblMain.Text + " - " + RightsCaption;
             UpdateCurrentData();
         }
         private void CarsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -532,7 +593,7 @@ namespace supplyGood
                 "Для этого необходимо выбрать машину в таблице, нажать по ней " +
                 "правой кнопкой мыши и выбрать необходимое действие";
             btnFunc.Text = "Добавить машину";
-            Text = lblMain.Text + " - " + _Rights;
+            Text = lblMain.Text + " - " + RightsCaption;
             UpdateCurrentData();
         }
         private void UsersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -541,7 +602,7 @@ namespace supplyGood
 
             lblMain.Text = "Пользователи";
             lblHint.Text = "Подсказка: редактирование доступно прямо в таблицу. Все поля обязательны для заполнения";
-            Text = lblMain.Text + " - " + _Rights;
+            Text = lblMain.Text + " - " + RightsCaption;
             UpdateCurrentData();
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)

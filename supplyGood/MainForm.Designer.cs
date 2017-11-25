@@ -51,6 +51,26 @@
             this.lblHint = new System.Windows.Forms.Label();
             this.btnFilter = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnClearFilters = new System.Windows.Forms.Button();
+            this.lblFilter9 = new System.Windows.Forms.Label();
+            this.txtFilter9 = new System.Windows.Forms.TextBox();
+            this.lblFilter8 = new System.Windows.Forms.Label();
+            this.txtFilter8 = new System.Windows.Forms.TextBox();
+            this.lblFilter7 = new System.Windows.Forms.Label();
+            this.txtFilter7 = new System.Windows.Forms.TextBox();
+            this.lblFilter6 = new System.Windows.Forms.Label();
+            this.txtFilter6 = new System.Windows.Forms.TextBox();
+            this.lblFilter5 = new System.Windows.Forms.Label();
+            this.txtFilter5 = new System.Windows.Forms.TextBox();
+            this.lblFilter4 = new System.Windows.Forms.Label();
+            this.txtFilter4 = new System.Windows.Forms.TextBox();
+            this.lblFilter3 = new System.Windows.Forms.Label();
+            this.txtFilter3 = new System.Windows.Forms.TextBox();
+            this.lblFilter2 = new System.Windows.Forms.Label();
+            this.txtFilter2 = new System.Windows.Forms.TextBox();
+            this.lblFilter1 = new System.Windows.Forms.Label();
+            this.txtFilter1 = new System.Windows.Forms.TextBox();
+            this.lbl1 = new System.Windows.Forms.Label();
             this.employeeTableAdapter = new supplyGood.MainDBDataSetTableAdapters.EmployeeTableAdapter();
             this.personalInfoTableAdapter = new supplyGood.MainDBDataSetTableAdapters.PersonalInfoTableAdapter();
             this.goodTableAdapter = new supplyGood.MainDBDataSetTableAdapters.GoodTableAdapter();
@@ -58,26 +78,6 @@
             this.mainDBDataSet = new supplyGood.MainDBDataSet();
             this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.userTableAdapter = new supplyGood.MainDBDataSetTableAdapters.UserTableAdapter();
-            this.lbl1 = new System.Windows.Forms.Label();
-            this.txtFilter1 = new System.Windows.Forms.TextBox();
-            this.lblFilter1 = new System.Windows.Forms.Label();
-            this.lblFilter2 = new System.Windows.Forms.Label();
-            this.txtFilter2 = new System.Windows.Forms.TextBox();
-            this.lblFilter3 = new System.Windows.Forms.Label();
-            this.txtFilter3 = new System.Windows.Forms.TextBox();
-            this.lblFilter4 = new System.Windows.Forms.Label();
-            this.txtFilter4 = new System.Windows.Forms.TextBox();
-            this.lblFilter5 = new System.Windows.Forms.Label();
-            this.txtFilter5 = new System.Windows.Forms.TextBox();
-            this.lblFilter6 = new System.Windows.Forms.Label();
-            this.txtFilter6 = new System.Windows.Forms.TextBox();
-            this.lblFilter7 = new System.Windows.Forms.Label();
-            this.txtFilter7 = new System.Windows.Forms.TextBox();
-            this.lblFilter8 = new System.Windows.Forms.Label();
-            this.txtFilter8 = new System.Windows.Forms.TextBox();
-            this.lblFilter9 = new System.Windows.Forms.Label();
-            this.txtFilter9 = new System.Windows.Forms.TextBox();
-            this.btnClearFilters = new System.Windows.Forms.Button();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.contextDGV.SuspendLayout();
@@ -309,6 +309,201 @@
             this.panel1.Size = new System.Drawing.Size(190, 538);
             this.panel1.TabIndex = 13;
             // 
+            // btnClearFilters
+            // 
+            this.btnClearFilters.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnClearFilters.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnClearFilters.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnClearFilters.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnClearFilters.Location = new System.Drawing.Point(0, 511);
+            this.btnClearFilters.Name = "btnClearFilters";
+            this.btnClearFilters.Size = new System.Drawing.Size(188, 25);
+            this.btnClearFilters.TabIndex = 19;
+            this.btnClearFilters.Text = "Сбросить фильтры";
+            this.btnClearFilters.UseVisualStyleBackColor = false;
+            this.btnClearFilters.Click += new System.EventHandler(this.btnClearFilters_Click);
+            // 
+            // lblFilter9
+            // 
+            this.lblFilter9.AutoSize = true;
+            this.lblFilter9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFilter9.Location = new System.Drawing.Point(3, 435);
+            this.lblFilter9.Name = "lblFilter9";
+            this.lblFilter9.Size = new System.Drawing.Size(43, 17);
+            this.lblFilter9.TabIndex = 18;
+            this.lblFilter9.Text = "label9";
+            // 
+            // txtFilter9
+            // 
+            this.txtFilter9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtFilter9.Location = new System.Drawing.Point(3, 452);
+            this.txtFilter9.Name = "txtFilter9";
+            this.txtFilter9.Size = new System.Drawing.Size(182, 29);
+            this.txtFilter9.TabIndex = 17;
+            this.txtFilter9.TextChanged += new System.EventHandler(this.Filter_TextChanged);
+            // 
+            // lblFilter8
+            // 
+            this.lblFilter8.AutoSize = true;
+            this.lblFilter8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFilter8.Location = new System.Drawing.Point(3, 386);
+            this.lblFilter8.Name = "lblFilter8";
+            this.lblFilter8.Size = new System.Drawing.Size(43, 17);
+            this.lblFilter8.TabIndex = 16;
+            this.lblFilter8.Text = "label8";
+            // 
+            // txtFilter8
+            // 
+            this.txtFilter8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtFilter8.Location = new System.Drawing.Point(3, 403);
+            this.txtFilter8.Name = "txtFilter8";
+            this.txtFilter8.Size = new System.Drawing.Size(182, 29);
+            this.txtFilter8.TabIndex = 15;
+            this.txtFilter8.TextChanged += new System.EventHandler(this.Filter_TextChanged);
+            // 
+            // lblFilter7
+            // 
+            this.lblFilter7.AutoSize = true;
+            this.lblFilter7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFilter7.Location = new System.Drawing.Point(3, 337);
+            this.lblFilter7.Name = "lblFilter7";
+            this.lblFilter7.Size = new System.Drawing.Size(43, 17);
+            this.lblFilter7.TabIndex = 14;
+            this.lblFilter7.Text = "label7";
+            // 
+            // txtFilter7
+            // 
+            this.txtFilter7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtFilter7.Location = new System.Drawing.Point(3, 354);
+            this.txtFilter7.Name = "txtFilter7";
+            this.txtFilter7.Size = new System.Drawing.Size(182, 29);
+            this.txtFilter7.TabIndex = 13;
+            this.txtFilter7.TextChanged += new System.EventHandler(this.Filter_TextChanged);
+            // 
+            // lblFilter6
+            // 
+            this.lblFilter6.AutoSize = true;
+            this.lblFilter6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFilter6.Location = new System.Drawing.Point(3, 288);
+            this.lblFilter6.Name = "lblFilter6";
+            this.lblFilter6.Size = new System.Drawing.Size(43, 17);
+            this.lblFilter6.TabIndex = 12;
+            this.lblFilter6.Text = "label6";
+            // 
+            // txtFilter6
+            // 
+            this.txtFilter6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtFilter6.Location = new System.Drawing.Point(3, 305);
+            this.txtFilter6.Name = "txtFilter6";
+            this.txtFilter6.Size = new System.Drawing.Size(182, 29);
+            this.txtFilter6.TabIndex = 11;
+            this.txtFilter6.TextChanged += new System.EventHandler(this.Filter_TextChanged);
+            // 
+            // lblFilter5
+            // 
+            this.lblFilter5.AutoSize = true;
+            this.lblFilter5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFilter5.Location = new System.Drawing.Point(3, 239);
+            this.lblFilter5.Name = "lblFilter5";
+            this.lblFilter5.Size = new System.Drawing.Size(43, 17);
+            this.lblFilter5.TabIndex = 10;
+            this.lblFilter5.Text = "label5";
+            // 
+            // txtFilter5
+            // 
+            this.txtFilter5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtFilter5.Location = new System.Drawing.Point(3, 256);
+            this.txtFilter5.Name = "txtFilter5";
+            this.txtFilter5.Size = new System.Drawing.Size(182, 29);
+            this.txtFilter5.TabIndex = 9;
+            this.txtFilter5.TextChanged += new System.EventHandler(this.Filter_TextChanged);
+            // 
+            // lblFilter4
+            // 
+            this.lblFilter4.AutoSize = true;
+            this.lblFilter4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFilter4.Location = new System.Drawing.Point(3, 190);
+            this.lblFilter4.Name = "lblFilter4";
+            this.lblFilter4.Size = new System.Drawing.Size(43, 17);
+            this.lblFilter4.TabIndex = 8;
+            this.lblFilter4.Text = "label4";
+            // 
+            // txtFilter4
+            // 
+            this.txtFilter4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtFilter4.Location = new System.Drawing.Point(3, 207);
+            this.txtFilter4.Name = "txtFilter4";
+            this.txtFilter4.Size = new System.Drawing.Size(182, 29);
+            this.txtFilter4.TabIndex = 7;
+            this.txtFilter4.TextChanged += new System.EventHandler(this.Filter_TextChanged);
+            // 
+            // lblFilter3
+            // 
+            this.lblFilter3.AutoSize = true;
+            this.lblFilter3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFilter3.Location = new System.Drawing.Point(3, 141);
+            this.lblFilter3.Name = "lblFilter3";
+            this.lblFilter3.Size = new System.Drawing.Size(43, 17);
+            this.lblFilter3.TabIndex = 6;
+            this.lblFilter3.Text = "label3";
+            // 
+            // txtFilter3
+            // 
+            this.txtFilter3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtFilter3.Location = new System.Drawing.Point(3, 158);
+            this.txtFilter3.Name = "txtFilter3";
+            this.txtFilter3.Size = new System.Drawing.Size(182, 29);
+            this.txtFilter3.TabIndex = 5;
+            this.txtFilter3.TextChanged += new System.EventHandler(this.Filter_TextChanged);
+            // 
+            // lblFilter2
+            // 
+            this.lblFilter2.AutoSize = true;
+            this.lblFilter2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFilter2.Location = new System.Drawing.Point(3, 92);
+            this.lblFilter2.Name = "lblFilter2";
+            this.lblFilter2.Size = new System.Drawing.Size(43, 17);
+            this.lblFilter2.TabIndex = 4;
+            this.lblFilter2.Text = "label2";
+            // 
+            // txtFilter2
+            // 
+            this.txtFilter2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtFilter2.Location = new System.Drawing.Point(3, 109);
+            this.txtFilter2.Name = "txtFilter2";
+            this.txtFilter2.Size = new System.Drawing.Size(182, 29);
+            this.txtFilter2.TabIndex = 3;
+            this.txtFilter2.TextChanged += new System.EventHandler(this.Filter_TextChanged);
+            // 
+            // lblFilter1
+            // 
+            this.lblFilter1.AutoSize = true;
+            this.lblFilter1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFilter1.Location = new System.Drawing.Point(3, 43);
+            this.lblFilter1.Name = "lblFilter1";
+            this.lblFilter1.Size = new System.Drawing.Size(43, 17);
+            this.lblFilter1.TabIndex = 2;
+            this.lblFilter1.Text = "label1";
+            // 
+            // txtFilter1
+            // 
+            this.txtFilter1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtFilter1.Location = new System.Drawing.Point(3, 60);
+            this.txtFilter1.Name = "txtFilter1";
+            this.txtFilter1.Size = new System.Drawing.Size(182, 29);
+            this.txtFilter1.TabIndex = 1;
+            this.txtFilter1.TextChanged += new System.EventHandler(this.Filter_TextChanged);
+            // 
+            // lbl1
+            // 
+            this.lbl1.AutoSize = true;
+            this.lbl1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbl1.Location = new System.Drawing.Point(47, 13);
+            this.lbl1.Name = "lbl1";
+            this.lbl1.Size = new System.Drawing.Size(98, 30);
+            this.lbl1.TabIndex = 0;
+            this.lbl1.Text = "Фильтры";
+            // 
             // employeeTableAdapter
             // 
             this.employeeTableAdapter.ClearBeforeFill = true;
@@ -338,192 +533,6 @@
             // userTableAdapter
             // 
             this.userTableAdapter.ClearBeforeFill = true;
-            // 
-            // lbl1
-            // 
-            this.lbl1.AutoSize = true;
-            this.lbl1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lbl1.Location = new System.Drawing.Point(47, 13);
-            this.lbl1.Name = "lbl1";
-            this.lbl1.Size = new System.Drawing.Size(98, 30);
-            this.lbl1.TabIndex = 0;
-            this.lbl1.Text = "Фильтры";
-            // 
-            // txtFilter1
-            // 
-            this.txtFilter1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter1.Location = new System.Drawing.Point(3, 60);
-            this.txtFilter1.Name = "txtFilter1";
-            this.txtFilter1.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter1.TabIndex = 1;
-            // 
-            // lblFilter1
-            // 
-            this.lblFilter1.AutoSize = true;
-            this.lblFilter1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter1.Location = new System.Drawing.Point(3, 43);
-            this.lblFilter1.Name = "lblFilter1";
-            this.lblFilter1.Size = new System.Drawing.Size(43, 17);
-            this.lblFilter1.TabIndex = 2;
-            this.lblFilter1.Text = "label1";
-            // 
-            // lblFilter2
-            // 
-            this.lblFilter2.AutoSize = true;
-            this.lblFilter2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter2.Location = new System.Drawing.Point(3, 92);
-            this.lblFilter2.Name = "lblFilter2";
-            this.lblFilter2.Size = new System.Drawing.Size(43, 17);
-            this.lblFilter2.TabIndex = 4;
-            this.lblFilter2.Text = "label2";
-            // 
-            // txtFilter2
-            // 
-            this.txtFilter2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter2.Location = new System.Drawing.Point(3, 109);
-            this.txtFilter2.Name = "txtFilter2";
-            this.txtFilter2.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter2.TabIndex = 3;
-            // 
-            // lblFilter3
-            // 
-            this.lblFilter3.AutoSize = true;
-            this.lblFilter3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter3.Location = new System.Drawing.Point(3, 141);
-            this.lblFilter3.Name = "lblFilter3";
-            this.lblFilter3.Size = new System.Drawing.Size(43, 17);
-            this.lblFilter3.TabIndex = 6;
-            this.lblFilter3.Text = "label3";
-            // 
-            // txtFilter3
-            // 
-            this.txtFilter3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter3.Location = new System.Drawing.Point(3, 158);
-            this.txtFilter3.Name = "txtFilter3";
-            this.txtFilter3.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter3.TabIndex = 5;
-            // 
-            // lblFilter4
-            // 
-            this.lblFilter4.AutoSize = true;
-            this.lblFilter4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter4.Location = new System.Drawing.Point(3, 190);
-            this.lblFilter4.Name = "lblFilter4";
-            this.lblFilter4.Size = new System.Drawing.Size(43, 17);
-            this.lblFilter4.TabIndex = 8;
-            this.lblFilter4.Text = "label4";
-            // 
-            // txtFilter4
-            // 
-            this.txtFilter4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter4.Location = new System.Drawing.Point(3, 207);
-            this.txtFilter4.Name = "txtFilter4";
-            this.txtFilter4.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter4.TabIndex = 7;
-            // 
-            // lblFilter5
-            // 
-            this.lblFilter5.AutoSize = true;
-            this.lblFilter5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter5.Location = new System.Drawing.Point(3, 239);
-            this.lblFilter5.Name = "lblFilter5";
-            this.lblFilter5.Size = new System.Drawing.Size(43, 17);
-            this.lblFilter5.TabIndex = 10;
-            this.lblFilter5.Text = "label5";
-            // 
-            // txtFilter5
-            // 
-            this.txtFilter5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter5.Location = new System.Drawing.Point(3, 256);
-            this.txtFilter5.Name = "txtFilter5";
-            this.txtFilter5.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter5.TabIndex = 9;
-            // 
-            // lblFilter6
-            // 
-            this.lblFilter6.AutoSize = true;
-            this.lblFilter6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter6.Location = new System.Drawing.Point(3, 288);
-            this.lblFilter6.Name = "lblFilter6";
-            this.lblFilter6.Size = new System.Drawing.Size(43, 17);
-            this.lblFilter6.TabIndex = 12;
-            this.lblFilter6.Text = "label6";
-            // 
-            // txtFilter6
-            // 
-            this.txtFilter6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter6.Location = new System.Drawing.Point(3, 305);
-            this.txtFilter6.Name = "txtFilter6";
-            this.txtFilter6.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter6.TabIndex = 11;
-            // 
-            // lblFilter7
-            // 
-            this.lblFilter7.AutoSize = true;
-            this.lblFilter7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter7.Location = new System.Drawing.Point(3, 337);
-            this.lblFilter7.Name = "lblFilter7";
-            this.lblFilter7.Size = new System.Drawing.Size(43, 17);
-            this.lblFilter7.TabIndex = 14;
-            this.lblFilter7.Text = "label7";
-            // 
-            // txtFilter7
-            // 
-            this.txtFilter7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter7.Location = new System.Drawing.Point(3, 354);
-            this.txtFilter7.Name = "txtFilter7";
-            this.txtFilter7.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter7.TabIndex = 13;
-            // 
-            // lblFilter8
-            // 
-            this.lblFilter8.AutoSize = true;
-            this.lblFilter8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter8.Location = new System.Drawing.Point(3, 386);
-            this.lblFilter8.Name = "lblFilter8";
-            this.lblFilter8.Size = new System.Drawing.Size(43, 17);
-            this.lblFilter8.TabIndex = 16;
-            this.lblFilter8.Text = "label8";
-            // 
-            // txtFilter8
-            // 
-            this.txtFilter8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter8.Location = new System.Drawing.Point(3, 403);
-            this.txtFilter8.Name = "txtFilter8";
-            this.txtFilter8.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter8.TabIndex = 15;
-            // 
-            // lblFilter9
-            // 
-            this.lblFilter9.AutoSize = true;
-            this.lblFilter9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter9.Location = new System.Drawing.Point(3, 435);
-            this.lblFilter9.Name = "lblFilter9";
-            this.lblFilter9.Size = new System.Drawing.Size(43, 17);
-            this.lblFilter9.TabIndex = 18;
-            this.lblFilter9.Text = "label9";
-            // 
-            // txtFilter9
-            // 
-            this.txtFilter9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter9.Location = new System.Drawing.Point(3, 452);
-            this.txtFilter9.Name = "txtFilter9";
-            this.txtFilter9.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter9.TabIndex = 17;
-            // 
-            // btnClearFilters
-            // 
-            this.btnClearFilters.BackColor = System.Drawing.Color.Gainsboro;
-            this.btnClearFilters.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnClearFilters.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnClearFilters.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnClearFilters.Location = new System.Drawing.Point(0, 511);
-            this.btnClearFilters.Name = "btnClearFilters";
-            this.btnClearFilters.Size = new System.Drawing.Size(188, 25);
-            this.btnClearFilters.TabIndex = 19;
-            this.btnClearFilters.Text = "Сбросить фильтры";
-            this.btnClearFilters.UseVisualStyleBackColor = false;
-            this.btnClearFilters.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 

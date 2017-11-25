@@ -19,6 +19,7 @@ namespace supplyGood
     public partial class MainForm : Form
     {
         string _Rights = "";
+        bool Filtering;
         TableView _View = TableView.Empty;
         List<TextBox> txtFilters = new List<TextBox>();
         List<Label> lblFilters = new List<Label>();
@@ -41,7 +42,7 @@ namespace supplyGood
                 "em_patron",
                 "em_acceptance",
                 "em_discharge",
-                "em_dalary",
+                "em_salary"
         };
 
         string[] _headerGood = new string[]
@@ -97,6 +98,7 @@ namespace supplyGood
             _Rights = cRights;
             Text = _Rights;
             _View = TableView.Empty;
+            Filtering = false;
 
             //Init filters' UI
             {
@@ -138,6 +140,17 @@ namespace supplyGood
             Application.Exit();
         }
         
+        //switch (_View)
+        //    {
+        //        case TableView.Good:
+        //        case TableView.Car:
+        //        case TableView.Employee:
+        //        case TableView.User:
+        //            {
+                        
+        //                break;
+        //            }
+        //    }
 
         private bool UpdateDataGridView(string query, DataGridView dgv, string[] headers, ContextMenuStrip menuStrip, int selectedRow = 0)
         {
@@ -218,6 +231,8 @@ namespace supplyGood
             {
                 dgvMain.Columns[0].Width = 75;
             }
+
+            SetFilters();
         }
         private void ApplyVisualAppearence()
         {
@@ -322,6 +337,162 @@ namespace supplyGood
                     }
             }
         }
+        private void SetFilters()
+        {
+            string[] head = null;
+            ClearFilters();
+            switch (_View)
+            {
+                case TableView.Good:
+                    {
+                        head = _headerGood;
+                        break;
+                    }
+                case TableView.Car:
+                    {
+                        head = _headerCar;
+                        break;
+                    }
+                case TableView.Employee:
+                    {
+                        head = _headerEmployee;
+                        break;
+                    }
+                case TableView.User:
+                    {
+                        head = _headerUser;
+                        break;
+                    }
+            }
+            for (int i = 0; i < 9; i++)
+            {
+                try
+                {
+                    lblFilters[i].Text = head[i];
+                    lblFilters[i].Visible = true;
+                    txtFilters[i].Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    if ((_View == TableView.Good || _View == TableView.Employee) && i == head.Length)
+                    {
+                        string text = lblFilters[i - 1].Text;
+                        lblFilters[i - 1].Text = text + " (от)";
+                        lblFilters[i].Text = text + " (до)";
+                        lblFilters[i].Visible = true;
+                        txtFilters[i].Visible = true;
+                    }
+                    else
+                    {
+                        lblFilters[i].Visible = false;
+                        txtFilters[i].Visible = false;
+                    }
+                }
+            }
+        }
+        private void PerformFiltering()
+        {
+            switch (_View)
+            {
+                case TableView.Good:
+                    {
+                        string filter = "";
+                        for (int i = 0; i < _headerGood.Length - 1; i++)
+                        {
+                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
+                            {
+                                if (filter.Length > 0) filter += " AND ";
+                                filter += string.Format("{0} LIKE '%{1}%'", _fieldsGood[i], txtFilters[i].Text.Trim());
+                            }
+                        }
+                        int from = _headerGood.Length - 1;
+                        int to = _headerGood.Length;
+                        if (!String.IsNullOrEmpty(txtFilters[from].Text.Trim()) && !String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
+                        {
+                            if (filter.Length > 0) filter += " AND ";
+                            filter += string.Format("{0} >= {1} AND {0} <= {2}", _fieldsGood[from], txtFilters[from].Text.Trim(), txtFilters[to].Text.Trim());
+                        }
+                        else if (!String.IsNullOrEmpty(txtFilters[from].Text.Trim()))
+                        {
+                            if (filter.Length > 0) filter += " AND ";
+                            filter += string.Format("{0} >= {1}", _fieldsGood[from], txtFilters[from].Text.Trim());
+                        }
+                        else if (!String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
+                        {
+                            if (filter.Length > 0) filter += " AND ";
+                            filter += string.Format("{0} >= {1}", _fieldsGood[from], txtFilters[to].Text.Trim());
+                        }
+                        (dgvMain.DataSource as DataTable).DefaultView.RowFilter = filter;
+                        break;
+                    }
+                case TableView.Car:
+                    {
+                        string filter = "";
+                        for (int i = 0; i < _headerCar.Length; i++)
+                        {
+                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
+                            {
+                                if (filter.Length > 0) filter += " AND ";
+                                filter += string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsCar[i], txtFilters[i].Text.Trim());
+                            }
+                        }
+                        (dgvMain.DataSource as DataTable).DefaultView.RowFilter = filter;
+                        break;
+                    }
+                case TableView.Employee:
+                    {
+                        string filter = "";
+                        for (int i = 0; i < _headerEmployee.Length - 1; i++)
+                        {
+                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
+                            {
+                                if (filter.Length > 0) filter += " AND ";
+                                filter = string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsEmployee[i], txtFilters[i].Text.Trim());
+                            }
+                        }
+                        int from = _headerEmployee.Length - 1;
+                        int to = _headerEmployee.Length;
+                        if (!String.IsNullOrEmpty(txtFilters[from].Text.Trim()) && !String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
+                        {
+                            if (filter.Length > 0) filter += " AND ";
+                            filter = string.Format("{0} >= {1} AND {0} <= {2}", _fieldsEmployee[from], txtFilters[from].Text.Trim(), txtFilters[to].Text.Trim());
+                        }
+                        else if (!String.IsNullOrEmpty(txtFilters[from].Text.Trim()))
+                        {
+                            if (filter.Length > 0) filter += " AND ";
+                            filter = string.Format("{0} >= {1}", _fieldsEmployee[from], txtFilters[from].Text.Trim());
+                        }
+                        else if (!String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
+                        {
+                            if (filter.Length > 0) filter += " AND ";
+                            filter = string.Format("{0} >= {1}", _fieldsEmployee[from], txtFilters[to].Text.Trim());
+                        }
+                        (dgvMain.DataSource as DataTable).DefaultView.RowFilter = filter;
+                        break;
+                    }
+                case TableView.User:
+                    {
+                        string filter = "";
+                        for (int i = 0; i < _headerUser.Length; i++)
+                        {
+                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
+                            {
+                                if (filter.Length > 0) filter += " AND ";
+                                filter = string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsUser[i], txtFilters[i].Text.Trim());
+                            }
+                        }
+                        userBindingSource.Filter = filter;
+                        break;
+                    }
+            }
+        }
+        private void ClearFilters()
+        {
+            foreach (TextBox t in txtFilters)
+            {
+                t.Text = "";
+            }
+        }
 
 
         private void EmployeeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -336,7 +507,6 @@ namespace supplyGood
             btnFunc.Text = "Добавить сотрудника";
             Text = lblMain.Text + " - " + _Rights;
             UpdateCurrentData();
-            //(dgvMain.DataSource as DataTable).DefaultView.RowFilter = string.Format("em_surname LIKE '%{0}%'", "Лук");
 
         }
         private void GoodsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -416,7 +586,7 @@ namespace supplyGood
         }
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            if (Width == 1000)
+            if (!Filtering)
             {
                 Width = 1200;
             }
@@ -424,6 +594,15 @@ namespace supplyGood
             {
                 Width = 1000;
             }
+            Filtering = !Filtering;
+        }
+        private void btnClearFilters_Click(object sender, EventArgs e)
+        {
+            ClearFilters();
+        }
+        private void Filter_TextChanged(object sender, EventArgs e)
+        {
+            if (Filtering) PerformFiltering();
         }
 
 
@@ -483,20 +662,13 @@ namespace supplyGood
                 catch (Exception ex) { }
             }
         }
-
-        private void dgvMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            MessageBox.Show("Вы не заполнили все необходимые поля" + Environment.NewLine + "Повторите ввод данных");
-        }
-
         private void dgvMain_DoubleClick(object sender, EventArgs e)
         {
             Context_DetailsToolStripMenuItem_Click(null, null);
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void dgvMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-
+            MessageBox.Show("Вы не заполнили все необходимые поля" + Environment.NewLine + "Повторите ввод данных");
         }
     }
 

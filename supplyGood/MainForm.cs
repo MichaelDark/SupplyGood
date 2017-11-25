@@ -14,12 +14,15 @@ using System.Configuration;
 namespace supplyGood
 {
     public enum SubFormMode { Empty, View, Edit, Add }
-    public enum TableView { Empty, Supply, Good, Car, Storage, Client, Employee}
+    public enum TableView { Empty, Supply, Good, Car, Storage, Client, Employee, User }
 
     public partial class MainForm : Form
     {
         string _Rights = "";
         TableView _View = TableView.Empty;
+        List<TextBox> txtFilters = new List<TextBox>();
+        List<Label> lblFilters = new List<Label>();
+
         string[] _headerEmployee = new string[]
         {
                 "ID",
@@ -30,6 +33,17 @@ namespace supplyGood
                 "Увольнение",
                 "Оклад",
         };
+        string[] _fieldsEmployee = new string[]
+        {
+                "id",
+                "em_surname",
+                "em_name",
+                "em_patron",
+                "em_acceptance",
+                "em_discharge",
+                "em_dalary",
+        };
+
         string[] _headerGood = new string[]
         {
                 "ID",
@@ -37,6 +51,14 @@ namespace supplyGood
                 "Ед. измерения",
                 "Цена за ед. (грн)"
         };
+        string[] _fieldsGood = new string[]
+        {
+                "id",
+                "g_name",
+                "g_unit",
+                "g_price"
+        };
+
         string[] _headerCar = new string[]
         {
                 "ID",
@@ -45,31 +67,71 @@ namespace supplyGood
                 "Модель",
                 "Цвет"
         };
+        string[] _fieldsCar = new string[]
+        {
+                "id",
+                "id_driver",
+                "car_number",
+                "car_model",
+                "car_color"
+        };
 
+        string[] _headerUser = new string[]
+        {
+                "Логин",
+                "Пароль",
+                "Права"
+        };
+        string[] _fieldsUser = new string[]
+        {
+                "login",
+                "password",
+                "rights"
+        };
 
-        public MainForm()
+        
+        public MainForm(string cRights = "Администратор")
         {
             InitializeComponent();
-            _Rights = "Администратор";
-            Text = _Rights;
-            _View = TableView.Empty;
-        }
-        public MainForm(string cRights)
-        {
-            InitializeComponent();
+            Width = 1000;
             _Rights = cRights;
             Text = _Rights;
             _View = TableView.Empty;
+
+            //Init filters' UI
+            {
+                txtFilters.Add(txtFilter1);
+                txtFilters.Add(txtFilter2);
+                txtFilters.Add(txtFilter3);
+                txtFilters.Add(txtFilter4);
+                txtFilters.Add(txtFilter5);
+                txtFilters.Add(txtFilter6);
+                txtFilters.Add(txtFilter7);
+                txtFilters.Add(txtFilter8);
+                txtFilters.Add(txtFilter9);
+            }
+            {
+                lblFilters.Add(lblFilter1);
+                lblFilters.Add(lblFilter2);
+                lblFilters.Add(lblFilter3);
+                lblFilters.Add(lblFilter4);
+                lblFilters.Add(lblFilter5);
+                lblFilters.Add(lblFilter6);
+                lblFilters.Add(lblFilter7);
+                lblFilters.Add(lblFilter8);
+                lblFilters.Add(lblFilter9);
+            }
         }
 
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            userTableAdapter.Fill(this.mainDBDataSet.User);
             mainMenuStrip.Renderer = new MainStripRenderer();
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            userTableAdapter.Update(mainDBDataSet.User);
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -114,6 +176,7 @@ namespace supplyGood
             {
                 case TableView.Employee:
                     {
+                        ApplyVisualAppearence();
                         UpdateDataGridView(
                             @"SELECT * FROM Employee",
                             dgvMain,
@@ -124,6 +187,7 @@ namespace supplyGood
                     }
                 case TableView.Good:
                     {
+                        ApplyVisualAppearence();
                         UpdateDataGridView(
                             @"SELECT * FROM Good",
                             dgvMain,
@@ -134,6 +198,7 @@ namespace supplyGood
                     }
                 case TableView.Car:
                     {
+                        ApplyVisualAppearence();
                         UpdateDataGridView(
                             @"SELECT * FROM Car",
                             dgvMain,
@@ -142,9 +207,42 @@ namespace supplyGood
                             0);
                         break;
                     }
-                default:
+                case TableView.User:
                     {
+                        ApplyVisualAppearence();
+                        break;
+                    }
+            }
 
+            if(_View == TableView.Car || _View == TableView.Good)
+            {
+                dgvMain.Columns[0].Width = 75;
+            }
+        }
+        private void ApplyVisualAppearence()
+        {
+            switch (_View)
+            {
+                case TableView.Good:
+                case TableView.Car:
+                case TableView.Employee:
+                    {
+                        dgvMain.DataSource = null;
+                        btnFunc.Visible = true;
+                        dgvMain.ReadOnly = true;
+                        dgvMain.AllowUserToAddRows = false;
+                        dgvMain.AllowUserToDeleteRows = false;
+                        dgvMain.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                        break;
+                    }
+                case TableView.User:
+                    {
+                        dgvMain.DataSource = userBindingSource;
+                        btnFunc.Visible = false;
+                        dgvMain.ReadOnly = false;
+                        dgvMain.AllowUserToAddRows = true;
+                        dgvMain.AllowUserToDeleteRows = true;
+                        dgvMain.SelectionMode = DataGridViewSelectionMode.CellSelect;
                         break;
                     }
             }
@@ -161,37 +259,41 @@ namespace supplyGood
         }
         private void Context_ViewEdit(SubFormMode mode)
         {
-            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-            int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-            var NextForm = new Form();
-
-            switch (_View)
+            try
             {
-                case TableView.Employee:
-                    {
+                var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+                int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+                int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+                var NextForm = new Form();
 
-                        NextForm = new ViewEmployee(currID, mode);
-                        break;
-                    }
-                case TableView.Good:
-                    {
-                        NextForm = new ViewGood(currID, mode);
-                        break;
-                    }
-                case TableView.Car:
-                    {
-                        NextForm = new ViewCar(currID, mode);
-                        break;
-                    }
+                switch (_View)
+                {
+                    case TableView.Employee:
+                        {
+
+                            NextForm = new ViewEmployee(currID, mode);
+                            break;
+                        }
+                    case TableView.Good:
+                        {
+                            NextForm = new ViewGood(currID, mode);
+                            break;
+                        }
+                    case TableView.Car:
+                        {
+                            NextForm = new ViewCar(currID, mode);
+                            break;
+                        }
+                }
+
+                NextForm.ShowDialog();
+
+                UpdateCurrentData();
+
+                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                dgvMain.Rows[currRowIndex].Selected = true;
             }
-
-            NextForm.ShowDialog();
-
-            UpdateCurrentData();
-
-            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-            dgvMain.Rows[currRowIndex].Selected = true;
+            catch (Exception ex) { }
         }
         private string GetDeletingName(int curr, int currID)
         {
@@ -222,9 +324,10 @@ namespace supplyGood
         }
 
 
-        private void UsersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EmployeeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Employee;
+
             lblMain.Text = "Сотрудники";
             lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
                 "информации о сотруднике, её редактирования и удаления сотрудника. " +
@@ -233,10 +336,13 @@ namespace supplyGood
             btnFunc.Text = "Добавить сотрудника";
             Text = lblMain.Text + " - " + _Rights;
             UpdateCurrentData();
+            //(dgvMain.DataSource as DataTable).DefaultView.RowFilter = string.Format("em_surname LIKE '%{0}%'", "Лук");
+
         }
         private void GoodsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Good;
+
             lblMain.Text = "Товары";
             lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
                 "информации о товаре, её редактирования и удаления товара. " +
@@ -245,11 +351,11 @@ namespace supplyGood
             btnFunc.Text = "Добавить товар";
             Text = lblMain.Text + " - " + _Rights;
             UpdateCurrentData();
-            dgvMain.Columns[0].Width = 75;
         }
         private void CarsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Car;
+
             lblMain.Text = "Машины";
             lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
                 "информации о машине, её редактирования и удаления машины. " +
@@ -258,7 +364,15 @@ namespace supplyGood
             btnFunc.Text = "Добавить машину";
             Text = lblMain.Text + " - " + _Rights;
             UpdateCurrentData();
-            dgvMain.Columns[0].Width = 75;
+        }
+        private void UsersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _View = TableView.User;
+
+            lblMain.Text = "Пользователи";
+            lblHint.Text = "Подсказка: редактирование доступно прямо в таблицу. Все поля обязательны для заполнения";
+            Text = lblMain.Text + " - " + _Rights;
+            UpdateCurrentData();
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -300,8 +414,19 @@ namespace supplyGood
             dgvMain.Rows[currRowIndex].Selected = true;
 
         }
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            if (Width == 1000)
+            {
+                Width = 1200;
+            }
+            else
+            {
+                Width = 1000;
+            }
+        }
 
-        
+
         private void Context_DetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Context_ViewEdit(SubFormMode.View);
@@ -357,6 +482,21 @@ namespace supplyGood
                 }
                 catch (Exception ex) { }
             }
+        }
+
+        private void dgvMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show("Вы не заполнили все необходимые поля" + Environment.NewLine + "Повторите ввод данных");
+        }
+
+        private void dgvMain_DoubleClick(object sender, EventArgs e)
+        {
+            Context_DetailsToolStripMenuItem_Click(null, null);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

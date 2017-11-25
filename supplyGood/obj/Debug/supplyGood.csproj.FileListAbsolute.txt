@@ -12,4 +12,3 @@ D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.pdb
 D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.csprojResolveAssemblyReference.cache
 D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.ViewEmployee.resources
 D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.ViewGood.resources
-D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.ViewCar.resources

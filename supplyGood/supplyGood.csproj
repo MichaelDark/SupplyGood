@@ -59,12 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ViewCar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewCar.Designer.cs">
-      <DependentUpon>ViewCar.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,9 +93,6 @@
     <Compile Include="ViewGood.Designer.cs">
       <DependentUpon>ViewGood.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ViewCar.resx">
-      <DependentUpon>ViewCar.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ViewEmployee.resx">
       <DependentUpon>ViewEmployee.cs</DependentUpon>
     </EmbeddedResource>

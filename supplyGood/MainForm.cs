@@ -178,12 +178,14 @@ namespace supplyGood
                     {
                         var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
                         int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
 
                         var NextForm = new ViewEmployee(currID, mode);
+
                         NextForm.ShowDialog();
 
-                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
                         UsersToolStripMenuItem_Click(new object(), EventArgs.Empty);
+
                         dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
                         dgvMain.Rows[currRowIndex].Selected = true;
                         break;
@@ -192,12 +194,15 @@ namespace supplyGood
                     {
                         var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
                         int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-
+                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+                        
                         var NextForm = new ViewGood(currID, mode);
+
                         NextForm.ShowDialog();
 
-                        int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+
                         GoodsToolStripMenuItem_Click(new object(), EventArgs.Empty);
+
                         dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
                         dgvMain.Rows[currRowIndex].Selected = true;
                         break;

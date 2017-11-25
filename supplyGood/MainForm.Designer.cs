@@ -34,13 +34,13 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.goodsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.suppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.goodsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.storagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.заказчикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMain = new System.Windows.Forms.Label();
-            this.pnlTools = new System.Windows.Forms.Panel();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.contextDGV = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.detailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +48,6 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFunc = new System.Windows.Forms.Button();
             this.lblHint = new System.Windows.Forms.Label();
-            this.заказчикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.employeeTableAdapter = new supplyGood.MainDBDataSetTableAdapters.EmployeeTableAdapter();
             this.personalInfoTableAdapter = new supplyGood.MainDBDataSetTableAdapters.PersonalInfoTableAdapter();
             this.goodTableAdapter = new supplyGood.MainDBDataSetTableAdapters.GoodTableAdapter();
@@ -68,7 +67,7 @@
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
             this.mainMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mainMenuStrip.Size = new System.Drawing.Size(1184, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(984, 24);
             this.mainMenuStrip.TabIndex = 0;
             // 
             // fileToolStripMenuItem
@@ -106,55 +105,53 @@
             this.managementToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.managementToolStripMenuItem.Text = "Просмотр";
             // 
-            // usersToolStripMenuItem
+            // suppliesToolStripMenuItem
             // 
-            this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.usersToolStripMenuItem.Text = "Сотрудники";
-            this.usersToolStripMenuItem.Click += new System.EventHandler(this.UsersToolStripMenuItem_Click);
+            this.suppliesToolStripMenuItem.Name = "suppliesToolStripMenuItem";
+            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.suppliesToolStripMenuItem.Text = "-Поставки";
             // 
             // goodsToolStripMenuItem
             // 
             this.goodsToolStripMenuItem.Name = "goodsToolStripMenuItem";
-            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.goodsToolStripMenuItem.Text = "Товары";
             this.goodsToolStripMenuItem.Click += new System.EventHandler(this.GoodsToolStripMenuItem_Click);
-            // 
-            // suppliesToolStripMenuItem
-            // 
-            this.suppliesToolStripMenuItem.Name = "suppliesToolStripMenuItem";
-            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.suppliesToolStripMenuItem.Text = "-Поставки";
             // 
             // carsToolStripMenuItem
             // 
             this.carsToolStripMenuItem.Name = "carsToolStripMenuItem";
-            this.carsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.carsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.carsToolStripMenuItem.Text = "-Машины";
             // 
             // storagesToolStripMenuItem
             // 
             this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
-            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.storagesToolStripMenuItem.Text = "-Склады";
+            // 
+            // заказчикиToolStripMenuItem
+            // 
+            this.заказчикиToolStripMenuItem.Name = "заказчикиToolStripMenuItem";
+            this.заказчикиToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.заказчикиToolStripMenuItem.Text = "-Заказчики";
+            // 
+            // usersToolStripMenuItem
+            // 
+            this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.usersToolStripMenuItem.Text = "Сотрудники";
+            this.usersToolStripMenuItem.Click += new System.EventHandler(this.UsersToolStripMenuItem_Click);
             // 
             // lblMain
             // 
             this.lblMain.AutoSize = true;
             this.lblMain.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMain.Location = new System.Drawing.Point(206, 24);
+            this.lblMain.Location = new System.Drawing.Point(12, 24);
             this.lblMain.Name = "lblMain";
             this.lblMain.Size = new System.Drawing.Size(330, 47);
             this.lblMain.TabIndex = 3;
             this.lblMain.Text = "Выберите действие";
-            // 
-            // pnlTools
-            // 
-            this.pnlTools.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlTools.Location = new System.Drawing.Point(0, 24);
-            this.pnlTools.Name = "pnlTools";
-            this.pnlTools.Size = new System.Drawing.Size(200, 538);
-            this.pnlTools.TabIndex = 4;
             // 
             // dgvMain
             // 
@@ -167,7 +164,7 @@
             this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMain.Location = new System.Drawing.Point(206, 74);
+            this.dgvMain.Location = new System.Drawing.Point(12, 74);
             this.dgvMain.MultiSelect = false;
             this.dgvMain.Name = "dgvMain";
             this.dgvMain.ReadOnly = true;
@@ -214,7 +211,7 @@
             // 
             this.btnFunc.BackColor = System.Drawing.Color.Azure;
             this.btnFunc.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnFunc.Location = new System.Drawing.Point(934, 502);
+            this.btnFunc.Location = new System.Drawing.Point(740, 502);
             this.btnFunc.Name = "btnFunc";
             this.btnFunc.Size = new System.Drawing.Size(238, 48);
             this.btnFunc.TabIndex = 10;
@@ -224,17 +221,11 @@
             // lblHint
             // 
             this.lblHint.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblHint.Location = new System.Drawing.Point(206, 499);
+            this.lblHint.Location = new System.Drawing.Point(12, 499);
             this.lblHint.Name = "lblHint";
             this.lblHint.Size = new System.Drawing.Size(722, 63);
             this.lblHint.TabIndex = 11;
             this.lblHint.Text = "Подсказка";
-            // 
-            // заказчикиToolStripMenuItem
-            // 
-            this.заказчикиToolStripMenuItem.Name = "заказчикиToolStripMenuItem";
-            this.заказчикиToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.заказчикиToolStripMenuItem.Text = "-Заказчики";
             // 
             // employeeTableAdapter
             // 
@@ -251,11 +242,10 @@
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1184, 562);
+            this.ClientSize = new System.Drawing.Size(984, 562);
             this.Controls.Add(this.lblHint);
             this.Controls.Add(this.btnFunc);
             this.Controls.Add(this.dgvMain);
-            this.Controls.Add(this.pnlTools);
             this.Controls.Add(this.lblMain);
             this.Controls.Add(this.mainMenuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -290,7 +280,6 @@
         private System.Windows.Forms.ToolStripMenuItem carsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem storagesToolStripMenuItem;
         private System.Windows.Forms.Label lblMain;
-        private System.Windows.Forms.Panel pnlTools;
         private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.ContextMenuStrip contextDGV;
         private System.Windows.Forms.ToolStripMenuItem detailsToolStripMenuItem;

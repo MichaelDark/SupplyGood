@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.suppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,17 +103,10 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.fileToolStripMenuItem.Text = "Файл";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.saveToolStripMenuItem.Text = "Сохранить";
             // 
             // exitToolStripMenuItem
             // 
@@ -139,40 +131,40 @@
             // suppliesToolStripMenuItem
             // 
             this.suppliesToolStripMenuItem.Name = "suppliesToolStripMenuItem";
-            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.suppliesToolStripMenuItem.Text = "Поставки";
             this.suppliesToolStripMenuItem.Click += new System.EventHandler(this.SuppliesToolStripMenuItem_Click);
             // 
             // goodsToolStripMenuItem
             // 
             this.goodsToolStripMenuItem.Name = "goodsToolStripMenuItem";
-            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.goodsToolStripMenuItem.Text = "Товары";
             this.goodsToolStripMenuItem.Click += new System.EventHandler(this.GoodsToolStripMenuItem_Click);
             // 
             // carsToolStripMenuItem
             // 
             this.carsToolStripMenuItem.Name = "carsToolStripMenuItem";
-            this.carsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.carsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.carsToolStripMenuItem.Text = "Машины";
             this.carsToolStripMenuItem.Click += new System.EventHandler(this.CarsToolStripMenuItem_Click);
             // 
             // storagesToolStripMenuItem
             // 
             this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
-            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.storagesToolStripMenuItem.Text = "-Склады";
             // 
             // clientsToolStripMenuItem
             // 
             this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
-            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.clientsToolStripMenuItem.Text = "-Заказчики";
             // 
             // employeeToolStripMenuItem
             // 
             this.employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
-            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.employeeToolStripMenuItem.Text = "Сотрудники";
             this.employeeToolStripMenuItem.Click += new System.EventHandler(this.EmployeeToolStripMenuItem_Click);
             // 
@@ -272,6 +264,8 @@
             // 
             // btnFilter
             // 
+            this.btnFilter.BackColor = System.Drawing.Color.Honeydew;
+            this.btnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnFilter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnFilter.Location = new System.Drawing.Point(862, 27);
             this.btnFilter.Name = "btnFilter";
@@ -279,12 +273,11 @@
             this.btnFilter.TabIndex = 12;
             this.btnFilter.Text = "Фильтры >>";
             this.btnFilter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFilter.UseVisualStyleBackColor = true;
+            this.btnFilter.UseVisualStyleBackColor = false;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
             // panel1
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.btnClearFilters);
             this.panel1.Controls.Add(this.lblFilter9);
             this.panel1.Controls.Add(this.txtFilter9);
@@ -313,12 +306,11 @@
             // btnClearFilters
             // 
             this.btnClearFilters.BackColor = System.Drawing.Color.Gainsboro;
-            this.btnClearFilters.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnClearFilters.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnClearFilters.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnClearFilters.Location = new System.Drawing.Point(0, 511);
+            this.btnClearFilters.Location = new System.Drawing.Point(0, 478);
             this.btnClearFilters.Name = "btnClearFilters";
-            this.btnClearFilters.Size = new System.Drawing.Size(188, 25);
+            this.btnClearFilters.Size = new System.Drawing.Size(188, 48);
             this.btnClearFilters.TabIndex = 19;
             this.btnClearFilters.Text = "Сбросить фильтры";
             this.btnClearFilters.UseVisualStyleBackColor = false;
@@ -328,7 +320,7 @@
             // 
             this.lblFilter9.AutoSize = true;
             this.lblFilter9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter9.Location = new System.Drawing.Point(3, 435);
+            this.lblFilter9.Location = new System.Drawing.Point(3, 424);
             this.lblFilter9.Name = "lblFilter9";
             this.lblFilter9.Size = new System.Drawing.Size(43, 17);
             this.lblFilter9.TabIndex = 18;
@@ -337,7 +329,7 @@
             // txtFilter9
             // 
             this.txtFilter9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter9.Location = new System.Drawing.Point(3, 452);
+            this.txtFilter9.Location = new System.Drawing.Point(3, 441);
             this.txtFilter9.Name = "txtFilter9";
             this.txtFilter9.Size = new System.Drawing.Size(182, 29);
             this.txtFilter9.TabIndex = 17;
@@ -347,7 +339,7 @@
             // 
             this.lblFilter8.AutoSize = true;
             this.lblFilter8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter8.Location = new System.Drawing.Point(3, 386);
+            this.lblFilter8.Location = new System.Drawing.Point(3, 375);
             this.lblFilter8.Name = "lblFilter8";
             this.lblFilter8.Size = new System.Drawing.Size(43, 17);
             this.lblFilter8.TabIndex = 16;
@@ -356,7 +348,7 @@
             // txtFilter8
             // 
             this.txtFilter8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter8.Location = new System.Drawing.Point(3, 403);
+            this.txtFilter8.Location = new System.Drawing.Point(3, 392);
             this.txtFilter8.Name = "txtFilter8";
             this.txtFilter8.Size = new System.Drawing.Size(182, 29);
             this.txtFilter8.TabIndex = 15;
@@ -366,7 +358,7 @@
             // 
             this.lblFilter7.AutoSize = true;
             this.lblFilter7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter7.Location = new System.Drawing.Point(3, 337);
+            this.lblFilter7.Location = new System.Drawing.Point(3, 326);
             this.lblFilter7.Name = "lblFilter7";
             this.lblFilter7.Size = new System.Drawing.Size(43, 17);
             this.lblFilter7.TabIndex = 14;
@@ -375,7 +367,7 @@
             // txtFilter7
             // 
             this.txtFilter7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter7.Location = new System.Drawing.Point(3, 354);
+            this.txtFilter7.Location = new System.Drawing.Point(3, 343);
             this.txtFilter7.Name = "txtFilter7";
             this.txtFilter7.Size = new System.Drawing.Size(182, 29);
             this.txtFilter7.TabIndex = 13;
@@ -385,7 +377,7 @@
             // 
             this.lblFilter6.AutoSize = true;
             this.lblFilter6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter6.Location = new System.Drawing.Point(3, 288);
+            this.lblFilter6.Location = new System.Drawing.Point(3, 277);
             this.lblFilter6.Name = "lblFilter6";
             this.lblFilter6.Size = new System.Drawing.Size(43, 17);
             this.lblFilter6.TabIndex = 12;
@@ -394,7 +386,7 @@
             // txtFilter6
             // 
             this.txtFilter6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter6.Location = new System.Drawing.Point(3, 305);
+            this.txtFilter6.Location = new System.Drawing.Point(3, 294);
             this.txtFilter6.Name = "txtFilter6";
             this.txtFilter6.Size = new System.Drawing.Size(182, 29);
             this.txtFilter6.TabIndex = 11;
@@ -404,7 +396,7 @@
             // 
             this.lblFilter5.AutoSize = true;
             this.lblFilter5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter5.Location = new System.Drawing.Point(3, 239);
+            this.lblFilter5.Location = new System.Drawing.Point(3, 228);
             this.lblFilter5.Name = "lblFilter5";
             this.lblFilter5.Size = new System.Drawing.Size(43, 17);
             this.lblFilter5.TabIndex = 10;
@@ -413,7 +405,7 @@
             // txtFilter5
             // 
             this.txtFilter5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter5.Location = new System.Drawing.Point(3, 256);
+            this.txtFilter5.Location = new System.Drawing.Point(3, 245);
             this.txtFilter5.Name = "txtFilter5";
             this.txtFilter5.Size = new System.Drawing.Size(182, 29);
             this.txtFilter5.TabIndex = 9;
@@ -423,7 +415,7 @@
             // 
             this.lblFilter4.AutoSize = true;
             this.lblFilter4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter4.Location = new System.Drawing.Point(3, 190);
+            this.lblFilter4.Location = new System.Drawing.Point(3, 179);
             this.lblFilter4.Name = "lblFilter4";
             this.lblFilter4.Size = new System.Drawing.Size(43, 17);
             this.lblFilter4.TabIndex = 8;
@@ -432,7 +424,7 @@
             // txtFilter4
             // 
             this.txtFilter4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter4.Location = new System.Drawing.Point(3, 207);
+            this.txtFilter4.Location = new System.Drawing.Point(3, 196);
             this.txtFilter4.Name = "txtFilter4";
             this.txtFilter4.Size = new System.Drawing.Size(182, 29);
             this.txtFilter4.TabIndex = 7;
@@ -442,7 +434,7 @@
             // 
             this.lblFilter3.AutoSize = true;
             this.lblFilter3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter3.Location = new System.Drawing.Point(3, 141);
+            this.lblFilter3.Location = new System.Drawing.Point(3, 130);
             this.lblFilter3.Name = "lblFilter3";
             this.lblFilter3.Size = new System.Drawing.Size(43, 17);
             this.lblFilter3.TabIndex = 6;
@@ -451,7 +443,7 @@
             // txtFilter3
             // 
             this.txtFilter3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter3.Location = new System.Drawing.Point(3, 158);
+            this.txtFilter3.Location = new System.Drawing.Point(3, 147);
             this.txtFilter3.Name = "txtFilter3";
             this.txtFilter3.Size = new System.Drawing.Size(182, 29);
             this.txtFilter3.TabIndex = 5;
@@ -461,7 +453,7 @@
             // 
             this.lblFilter2.AutoSize = true;
             this.lblFilter2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter2.Location = new System.Drawing.Point(3, 92);
+            this.lblFilter2.Location = new System.Drawing.Point(3, 81);
             this.lblFilter2.Name = "lblFilter2";
             this.lblFilter2.Size = new System.Drawing.Size(43, 17);
             this.lblFilter2.TabIndex = 4;
@@ -470,7 +462,7 @@
             // txtFilter2
             // 
             this.txtFilter2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter2.Location = new System.Drawing.Point(3, 109);
+            this.txtFilter2.Location = new System.Drawing.Point(3, 98);
             this.txtFilter2.Name = "txtFilter2";
             this.txtFilter2.Size = new System.Drawing.Size(182, 29);
             this.txtFilter2.TabIndex = 3;
@@ -480,7 +472,7 @@
             // 
             this.lblFilter1.AutoSize = true;
             this.lblFilter1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFilter1.Location = new System.Drawing.Point(3, 43);
+            this.lblFilter1.Location = new System.Drawing.Point(3, 32);
             this.lblFilter1.Name = "lblFilter1";
             this.lblFilter1.Size = new System.Drawing.Size(43, 17);
             this.lblFilter1.TabIndex = 2;
@@ -489,7 +481,7 @@
             // txtFilter1
             // 
             this.txtFilter1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtFilter1.Location = new System.Drawing.Point(3, 60);
+            this.txtFilter1.Location = new System.Drawing.Point(3, 49);
             this.txtFilter1.Name = "txtFilter1";
             this.txtFilter1.Size = new System.Drawing.Size(182, 29);
             this.txtFilter1.TabIndex = 1;
@@ -499,7 +491,7 @@
             // 
             this.lbl1.AutoSize = true;
             this.lbl1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lbl1.Location = new System.Drawing.Point(47, 13);
+            this.lbl1.Location = new System.Drawing.Point(47, 2);
             this.lbl1.Name = "lbl1";
             this.lbl1.Size = new System.Drawing.Size(98, 30);
             this.lbl1.TabIndex = 0;
@@ -573,7 +565,6 @@
 
         private System.Windows.Forms.MenuStrip mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem managementToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem employeeToolStripMenuItem;

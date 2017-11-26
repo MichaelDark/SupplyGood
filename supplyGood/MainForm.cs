@@ -611,8 +611,14 @@ namespace supplyGood
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-            int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+            int currRowIndex = -1;
+            int currID;
+            try
+            {
+                currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+                currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+            }
+            catch (Exception ex) { }
 
             var NextForm = new Form();
 
@@ -633,6 +639,11 @@ namespace supplyGood
                         NextForm = new ViewCar();
                         break;
                     }
+                case TableView.Supply:
+                    {
+                        NextForm = new ViewSupply();
+                        break;
+                    }
             }
 
             NextForm.ShowDialog();
@@ -640,20 +651,25 @@ namespace supplyGood
             int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
 
             UpdateCurrentData();
+            try
+            {
+                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                dgvMain.Rows[currRowIndex].Selected = true;
+            }
+            catch (Exception ex) { }
 
-            dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-            dgvMain.Rows[currRowIndex].Selected = true;
-
-        }
+}
         private void btnFilter_Click(object sender, EventArgs e)
         {
             if (!Filtering)
             {
                 Width = 1200;
+                btnFilter.Text = "Фильтры <<";
             }
             else
             {
                 Width = 1000;
+                btnFilter.Text = "Фильтры >>";
             }
             Filtering = !Filtering;
         }

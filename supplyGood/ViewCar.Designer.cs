@@ -114,12 +114,14 @@
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSave.Location = new System.Drawing.Point(19, 327);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(391, 46);
             this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Редактировать";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // txtColor

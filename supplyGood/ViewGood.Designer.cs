@@ -48,12 +48,14 @@
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSave.Location = new System.Drawing.Point(19, 256);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(258, 46);
             this.btnSave.TabIndex = 55;
             this.btnSave.Text = "Редактировать";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // label6
@@ -117,7 +119,7 @@
             // ViewGood
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(294, 322);
+            this.ClientSize = new System.Drawing.Size(294, 317);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label6);

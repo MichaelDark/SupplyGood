@@ -99,6 +99,12 @@
     <Compile Include="ViewGood.Designer.cs">
       <DependentUpon>ViewGood.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewSupply.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewSupply.Designer.cs">
+      <DependentUpon>ViewSupply.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ViewCar.resx">
       <DependentUpon>ViewCar.cs</DependentUpon>
     </EmbeddedResource>
@@ -122,6 +128,9 @@
     </Compile>
     <EmbeddedResource Include="ViewGood.resx">
       <DependentUpon>ViewGood.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewSupply.resx">
+      <DependentUpon>ViewSupply.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="MainDBDataSet.xsc">

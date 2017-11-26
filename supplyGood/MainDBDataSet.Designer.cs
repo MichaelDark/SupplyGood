@@ -6376,7 +6376,7 @@ SELECT id_supply, id_good, con_amount, con_price FROM Consignment WHERE (id_good
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT SUM(con_price) FROM Consignment WHERE id_supply=@id";
+            this._commandCollection[1].CommandText = "SELECT SUM(con_price) FROM Consignment WHERE id_supply=@id;";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_supply", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -6524,7 +6524,7 @@ SELECT id_supply, id_good, con_amount, con_price FROM Consignment WHERE (id_good
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual global::System.Nullable<double> SumBySupply(int id) {
+        public virtual object SumBySupply(int id) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
             command.Parameters[0].Value = ((int)(id));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
@@ -6543,10 +6543,10 @@ SELECT id_supply, id_good, con_amount, con_price FROM Consignment WHERE (id_good
             }
             if (((returnValue == null) 
                         || (returnValue.GetType() == typeof(global::System.DBNull)))) {
-                return new global::System.Nullable<double>();
+                return null;
             }
             else {
-                return new global::System.Nullable<double>(((double)(returnValue)));
+                return ((object)(returnValue));
             }
         }
     }
@@ -8791,7 +8791,7 @@ SELECT id, id_client, id_car, id_storage, s_address, s_contract, s_period, s_del
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT id, id_client, id_car, id_storage, s_address, s_contract, s_period, s_deli" +
@@ -8804,9 +8804,10 @@ SELECT id, id_client, id_car, id_storage, s_address, s_contract, s_period, s_del
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "INSERT INTO [Supply] ([id_client], [id_car], [id_storage], [s_address], [s_contra" +
-                "ct], [s_period], [s_delivered], [s_shipped]) VALUES (@id_client, @id_car, @id_st" +
-                "orage, @s_address, @s_contract, @s_period, @s_delivered, @s_shipped);";
+            this._commandCollection[2].CommandText = "SELECT id FROM Supply WHERE [id_client] = @id_client AND [id_car] = @id_car AND [" +
+                "id_storage] = @id_storage AND [s_address] = @s_address AND [s_contract] = @s_con" +
+                "tract AND [s_period] = @s_period AND [s_delivered] = @s_delivered AND [s_shipped" +
+                "] = @s_shipped";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id_client", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_client", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id_car", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_car", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -8818,10 +8819,9 @@ SELECT id, id_client, id_car, id_storage, s_address, s_contract, s_period, s_del
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_shipped", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "s_shipped", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "UPDATE [Supply] SET [id_client] = @id_client, [id_car] = @id_car, [id_storage] = " +
-                "@id_storage, [s_address] = @s_address, [s_contract] = @s_contract, [s_period] = " +
-                "@s_period, [s_delivered] = @s_delivered, [s_shipped] = @s_shipped WHERE [id] = @" +
-                "id";
+            this._commandCollection[3].CommandText = "INSERT INTO [Supply] ([id_client], [id_car], [id_storage], [s_address], [s_contra" +
+                "ct], [s_period], [s_delivered], [s_shipped]) VALUES (@id_client, @id_car, @id_st" +
+                "orage, @s_address, @s_contract, @s_period, @s_delivered, @s_shipped);";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id_client", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_client", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id_car", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_car", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -8831,7 +8831,22 @@ SELECT id, id_client, id_car, id_storage, s_address, s_contract, s_period, s_del
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_period", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "s_period", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_delivered", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "s_delivered", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_shipped", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "s_shipped", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[4].Connection = this.Connection;
+            this._commandCollection[4].CommandText = "UPDATE [Supply] SET [id_client] = @id_client, [id_car] = @id_car, [id_storage] = " +
+                "@id_storage, [s_address] = @s_address, [s_contract] = @s_contract, [s_period] = " +
+                "@s_period, [s_delivered] = @s_delivered, [s_shipped] = @s_shipped WHERE [id] = @" +
+                "id";
+            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id_client", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_client", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id_car", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_car", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id_storage", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_storage", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_address", global::System.Data.SqlDbType.NVarChar, 2147483647, global::System.Data.ParameterDirection.Input, 0, 0, "s_address", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_contract", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 0, 0, "s_contract", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_period", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "s_period", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_delivered", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "s_delivered", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@s_shipped", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "s_shipped", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9061,9 +9076,50 @@ SELECT id, id_client, id_car, id_storage, s_address, s_contract, s_period, s_del
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual object GetIDByAllAttributes(int id_client, int id_car, int id_storage, string s_address, System.DateTime s_contract, int s_period, bool s_delivered, bool s_shipped) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
+            command.Parameters[0].Value = ((int)(id_client));
+            command.Parameters[1].Value = ((int)(id_car));
+            command.Parameters[2].Value = ((int)(id_storage));
+            if ((s_address == null)) {
+                throw new global::System.ArgumentNullException("s_address");
+            }
+            else {
+                command.Parameters[3].Value = ((string)(s_address));
+            }
+            command.Parameters[4].Value = ((System.DateTime)(s_contract));
+            command.Parameters[5].Value = ((int)(s_period));
+            command.Parameters[6].Value = ((bool)(s_delivered));
+            command.Parameters[7].Value = ((bool)(s_shipped));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return null;
+            }
+            else {
+                return ((object)(returnValue));
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
         public virtual int InsertQuery(int id_client, int id_car, int id_storage, string s_address, System.DateTime s_contract, int s_period, bool s_delivered, bool s_shipped) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
             command.Parameters[0].Value = ((int)(id_client));
             command.Parameters[1].Value = ((int)(id_car));
             command.Parameters[2].Value = ((int)(id_storage));
@@ -9099,7 +9155,7 @@ SELECT id, id_client, id_car, id_storage, s_address, s_contract, s_period, s_del
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
         public virtual int UpdateQuery(int id_client, int id_car, int id_storage, string s_address, System.DateTime s_contract, int s_period, bool s_delivered, bool s_shipped, int id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[4];
             command.Parameters[0].Value = ((int)(id_client));
             command.Parameters[1].Value = ((int)(id_car));
             command.Parameters[2].Value = ((int)(id_storage));

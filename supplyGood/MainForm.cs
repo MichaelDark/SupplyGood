@@ -121,7 +121,32 @@ namespace supplyGood
                 "rights"
         };
 
-        
+        string[] _headerSupply = new string[]
+        {
+                "ID поставки",
+                "ID заказчика",
+                "ID склада",
+                "ID машины",
+                "Адрес доставки",
+                "Дата договора",
+                "Срок поставки, мес",
+                "Отгр.",
+                "Дост."
+        };
+        string[] _fieldsSupply = new string[]
+        {
+                "id",
+                "id_client",
+                "id_storage",
+                "id_car",
+                "s_address",
+                "s_contract",
+                "s_period",
+                "s_shipped",
+                "s_delivered"
+        };
+
+
         public MainForm(Rights cRights = Rights.Admin)
         {
             InitializeComponent();
@@ -269,6 +294,17 @@ namespace supplyGood
                             0);
                         break;
                     }
+                case TableView.Supply:
+                    {
+                        ApplyVisualAppearence();
+                        UpdateDataGridView(
+                            @"SELECT * FROM Supply",
+                            dgvMain,
+                            _headerSupply,
+                            contextDGV,
+                            0);
+                        break;
+                    }
                 case TableView.User:
                     {
                         ApplyVisualAppearence();
@@ -276,9 +312,21 @@ namespace supplyGood
                     }
             }
 
-            if(_View == TableView.Car || _View == TableView.Good)
+            if (_View == TableView.Car || _View == TableView.Good)
             {
                 dgvMain.Columns[0].Width = 75;
+            }
+
+            if (_View == TableView.Supply)
+            {
+                dgvMain.Columns[0].Width = 40;
+                dgvMain.Columns[1].Width = 40;
+                dgvMain.Columns[2].Width = 40;
+                dgvMain.Columns[3].Width = 40;
+
+                dgvMain.Columns[6].Width = 70;
+                dgvMain.Columns[7].Width = 40;
+                dgvMain.Columns[8].Width = 60;
             }
 
             SetFilters();
@@ -290,6 +338,7 @@ namespace supplyGood
                 case TableView.Good:
                 case TableView.Car:
                 case TableView.Employee:
+                case TableView.Supply:
                     {
                         dgvMain.DataSource = null;
                         btnFunc.Visible = true;
@@ -332,10 +381,9 @@ namespace supplyGood
 
                 switch (_View)
                 {
-                    case TableView.Employee:
+                    case TableView.Supply:
                         {
-
-                            NextForm = new ViewEmployee(currID, mode);
+                            NextForm = new ViewSupply(currID, mode);
                             break;
                         }
                     case TableView.Good:
@@ -346,6 +394,12 @@ namespace supplyGood
                     case TableView.Car:
                         {
                             NextForm = new ViewCar(currID, mode);
+                            break;
+                        }
+                    case TableView.Employee:
+                        {
+
+                            NextForm = new ViewEmployee(currID, mode);
                             break;
                         }
                 }
@@ -363,11 +417,9 @@ namespace supplyGood
         {
             switch (_View)
             {
-                case TableView.Employee:
+                case TableView.Supply:
                     {
-                        return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
-                            dgvMain.Rows[curr].Cells[1].Value.ToString() + " " +
-                            dgvMain.Rows[curr].Cells[2].Value.ToString();
+                        return " поставку (" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") ";
                     }
                 case TableView.Good:
                     {
@@ -378,6 +430,12 @@ namespace supplyGood
                     {
                         return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
                             dgvMain.Rows[curr].Cells[3].Value.ToString() + " " +
+                            dgvMain.Rows[curr].Cells[2].Value.ToString();
+                    }
+                case TableView.Employee:
+                    {
+                        return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
+                            dgvMain.Rows[curr].Cells[1].Value.ToString() + " " +
                             dgvMain.Rows[curr].Cells[2].Value.ToString();
                     }
                 default:
@@ -392,6 +450,11 @@ namespace supplyGood
             ClearFilters();
             switch (_View)
             {
+                case TableView.Supply:
+                    {
+                        head = _headerSupply;
+                        break;
+                    }
                 case TableView.Good:
                     {
                         head = _headerGood;
@@ -443,6 +506,20 @@ namespace supplyGood
         {
             switch (_View)
             {
+                case TableView.Supply:
+                    {
+                        string filter = "";
+                        for (int i = 0; i < _headerSupply.Length; i++)
+                        {
+                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
+                            {
+                                if (filter.Length > 0) filter += " AND ";
+                                filter += string.Format("{0} LIKE '%{1}%'", _fieldsSupply[i], txtFilters[i].Text.Trim());
+                            }
+                        }
+                        (dgvMain.DataSource as DataTable).DefaultView.RowFilter = filter;
+                        break;
+                    }
                 case TableView.Good:
                     {
                         string filter = "";
@@ -624,9 +701,9 @@ namespace supplyGood
 
             switch (_View)
             {
-                case TableView.Employee:
+                case TableView.Supply:
                     {
-                        NextForm = new ViewEmployee();
+                        NextForm = new ViewSupply();
                         break;
                     }
                 case TableView.Good:
@@ -639,9 +716,9 @@ namespace supplyGood
                         NextForm = new ViewCar();
                         break;
                     }
-                case TableView.Supply:
+                case TableView.Employee:
                     {
-                        NextForm = new ViewSupply();
+                        NextForm = new ViewEmployee();
                         break;
                     }
             }
@@ -700,10 +777,9 @@ namespace supplyGood
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                 switch (_View)
                 {
-                    case TableView.Employee:
+                    case TableView.Supply:
                         {
-                            personalInfoTableAdapter.DeleteQuery(currID);
-                            employeeTableAdapter.DeleteQuery(currID);
+                            supplyTableAdapter.DeleteQuery(currID);
                             break;
                         }
                     case TableView.Good:
@@ -714,6 +790,12 @@ namespace supplyGood
                     case TableView.Car:
                         {
                             carTableAdapter.DeleteQuery(currID);
+                            break;
+                        }
+                    case TableView.Employee:
+                        {
+                            personalInfoTableAdapter.DeleteQuery(currID);
+                            employeeTableAdapter.DeleteQuery(currID);
                             break;
                         }
                 }

@@ -77,6 +77,7 @@
             this.mainDBDataSet = new supplyGood.MainDBDataSet();
             this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.userTableAdapter = new supplyGood.MainDBDataSetTableAdapters.UserTableAdapter();
+            this.supplyTableAdapter = new supplyGood.MainDBDataSetTableAdapters.SupplyTableAdapter();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.contextDGV.SuspendLayout();
@@ -111,7 +112,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Выход";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -527,6 +528,10 @@
             // 
             this.userTableAdapter.ClearBeforeFill = true;
             // 
+            // supplyTableAdapter
+            // 
+            this.supplyTableAdapter.ClearBeforeFill = true;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -611,5 +616,6 @@
         private System.Windows.Forms.Label lblFilter1;
         private System.Windows.Forms.TextBox txtFilter1;
         private System.Windows.Forms.Label lbl1;
+        private MainDBDataSetTableAdapters.SupplyTableAdapter supplyTableAdapter;
     }
 }

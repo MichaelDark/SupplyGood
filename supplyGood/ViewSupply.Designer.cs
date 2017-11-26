@@ -50,14 +50,15 @@
             this.cbxDelivered = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.dgvGoods = new System.Windows.Forms.DataGridView();
-            this.consignmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.mainDBDataSet = new supplyGood.MainDBDataSet();
-            this.consignmentTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ConsignmentTableAdapter();
-            this.lblTotalSum = new System.Windows.Forms.Label();
             this.idsupplyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idgoodDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.conamountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.conpriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.consignmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.mainDBDataSet = new supplyGood.MainDBDataSet();
+            this.consignmentTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ConsignmentTableAdapter();
+            this.lblTotalSum = new System.Windows.Forms.Label();
+            this.supplyTableAdapter = new supplyGood.MainDBDataSetTableAdapters.SupplyTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoods)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.consignmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
@@ -260,36 +261,12 @@
             this.dgvGoods.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvGoods.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dgvGoods.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvGoods.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvGoods.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvGoods.ShowCellToolTips = false;
             this.dgvGoods.Size = new System.Drawing.Size(565, 487);
             this.dgvGoods.TabIndex = 9;
             this.dgvGoods.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvGoods_DefaultValuesNeeded);
             this.dgvGoods.SelectionChanged += new System.EventHandler(this.dgvGoods_SelectionChanged);
-            // 
-            // consignmentBindingSource
-            // 
-            this.consignmentBindingSource.DataMember = "Consignment";
-            this.consignmentBindingSource.DataSource = this.mainDBDataSet;
-            // 
-            // mainDBDataSet
-            // 
-            this.mainDBDataSet.DataSetName = "MainDBDataSet";
-            this.mainDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // consignmentTableAdapter
-            // 
-            this.consignmentTableAdapter.ClearBeforeFill = true;
-            // 
-            // lblTotalSum
-            // 
-            this.lblTotalSum.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTotalSum.Location = new System.Drawing.Point(498, 46);
-            this.lblTotalSum.Name = "lblTotalSum";
-            this.lblTotalSum.Size = new System.Drawing.Size(506, 17);
-            this.lblTotalSum.TabIndex = 51;
-            this.lblTotalSum.Text = "Общая сумма:";
-            this.lblTotalSum.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // idsupplyDataGridViewTextBoxColumn
             // 
@@ -315,6 +292,34 @@
             this.conpriceDataGridViewTextBoxColumn.DataPropertyName = "con_price";
             this.conpriceDataGridViewTextBoxColumn.HeaderText = "Цена за ед.";
             this.conpriceDataGridViewTextBoxColumn.Name = "conpriceDataGridViewTextBoxColumn";
+            // 
+            // consignmentBindingSource
+            // 
+            this.consignmentBindingSource.DataMember = "Consignment";
+            this.consignmentBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // mainDBDataSet
+            // 
+            this.mainDBDataSet.DataSetName = "MainDBDataSet";
+            this.mainDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // consignmentTableAdapter
+            // 
+            this.consignmentTableAdapter.ClearBeforeFill = true;
+            // 
+            // lblTotalSum
+            // 
+            this.lblTotalSum.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTotalSum.Location = new System.Drawing.Point(498, 46);
+            this.lblTotalSum.Name = "lblTotalSum";
+            this.lblTotalSum.Size = new System.Drawing.Size(506, 17);
+            this.lblTotalSum.TabIndex = 51;
+            this.lblTotalSum.Text = "Общая сумма:";
+            this.lblTotalSum.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // supplyTableAdapter
+            // 
+            this.supplyTableAdapter.ClearBeforeFill = true;
             // 
             // ViewSupply
             // 
@@ -344,6 +349,7 @@
             this.Name = "ViewSupply";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Просмотр - Поставка";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ViewSupply_FormClosing);
             this.Load += new System.EventHandler(this.ViewSupply_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoods)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.consignmentBindingSource)).EndInit();
@@ -382,5 +388,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn idgoodDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn conamountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn conpriceDataGridViewTextBoxColumn;
+        private MainDBDataSetTableAdapters.SupplyTableAdapter supplyTableAdapter;
     }
 }

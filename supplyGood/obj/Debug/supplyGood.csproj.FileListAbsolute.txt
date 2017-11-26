@@ -3,6 +3,7 @@ D:\supplyGood\supplyGood\supplyGood\bin\Debug\MainDB_log.ldf
 D:\supplyGood\supplyGood\supplyGood\bin\Debug\supplyGood.exe.config
 D:\supplyGood\supplyGood\supplyGood\bin\Debug\supplyGood.exe
 D:\supplyGood\supplyGood\supplyGood\bin\Debug\supplyGood.pdb
+D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.csprojResolveAssemblyReference.cache
 D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.ViewCar.resources
 D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.ViewEmployee.resources
 D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.MainForm.resources

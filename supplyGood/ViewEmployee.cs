@@ -182,7 +182,7 @@ namespace supplyGood
                            txtSurname.Text,
                            txtName.Text,
                            txtPatron.Text,
-                           dateIn.Value,
+                           dateIn.Value.Date,
                            dateO,
                            (float)Convert.ToDouble(txtSalary.Text));
                     string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;

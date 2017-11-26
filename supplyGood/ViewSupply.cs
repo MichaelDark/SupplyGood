@@ -23,10 +23,28 @@ namespace supplyGood
         {
             get
             {
-                double? d =  consignmentTableAdapter.SumBySupply(_ID);
+                double? d = (double?)consignmentTableAdapter.SumBySupply(_ID);
                 if (d == null)
                     return "-";
-                return d.ToString();
+                return Math.Round((double)d, 2).ToString();
+            }
+        }
+        int GetIDByAllAttributes
+        {
+            get
+            {
+                int? id = (int?)supplyTableAdapter.GetIDByAllAttributes(
+                    GetID(cbxClient.Text),
+                    GetID(cbxCar.Text),
+                    GetID(cbxStorage.Text),
+                    txtAddress.Text,
+                    dateContract.Value,
+                    Convert.ToInt32(txtPeriod.Text),
+                    cbxDelivered.Checked,
+                    cbxShipped.Checked);
+                if (id == null)
+                    return -1;
+                return (int)id;
             }
         }
 
@@ -48,7 +66,6 @@ namespace supplyGood
 
             _ID = ID;
             _Mode = Mode;
-            dgvGoods.ColumnCount = 3;
             dgvGoods.Columns[0].ReadOnly = true;
 
             _Fields = new List<TextBox>();
@@ -59,7 +76,6 @@ namespace supplyGood
         private void ViewSupply_Load(object sender, EventArgs e)
         {
             this.consignmentTableAdapter.Fill(this.mainDBDataSet.Consignment);
-            //consignmentBindingSource.Filter = "id = " + _ID;
             if (_Mode != SubFormMode.Add)
             {
                 LoadInfo();
@@ -69,6 +85,14 @@ namespace supplyGood
             LoadStorages();
             RefreshSum();
             SetMode();
+            if (_Mode != SubFormMode.Add)
+            {
+                consignmentBindingSource.Filter = "id_supply = " + _ID;
+            }
+        }
+        private void ViewSupply_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            consignmentTableAdapter.Update(mainDBDataSet.Consignment);
         }
 
         private void SetMode()
@@ -169,9 +193,9 @@ namespace supplyGood
                 string currentEmp = null;
                 while (myReader.Read())
                 {
-                    cbxClient.Items.Add("#" + myReader["id"].ToString() + ", " + myReader["cl_company"].ToString() + ", " + myReader["cl_surname"].ToString() + myReader["cl_name"].ToString());
+                    cbxClient.Items.Add("#" + myReader["id"].ToString() + ", " + myReader["cl_company"].ToString() + ", " + myReader["cl_surname"].ToString() + " " + myReader["cl_name"].ToString());
                     if (myReader["id"].ToString() == _ID_CLIENT.ToString())
-                        currentEmp = "#" + myReader["id"].ToString() + ", " + myReader["cl_company"].ToString() + ", " + myReader["cl_surname"].ToString() + myReader["cl_name"].ToString();
+                        currentEmp = "#" + myReader["id"].ToString() + ", " + myReader["cl_company"].ToString() + ", " + myReader["cl_surname"].ToString() + " " + myReader["cl_name"].ToString();
 
                 }
                 if (currentEmp == null)
@@ -277,7 +301,7 @@ namespace supplyGood
         
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (_Mode == SubFormMode.Add || _Mode == SubFormMode.Edit)
+            if (_Mode == SubFormMode.Add)
             {
                 if (HasObligatoryNullFields)
                 {
@@ -285,35 +309,38 @@ namespace supplyGood
                     return;
                 }
 
-                //int? driverID;
+                supplyTableAdapter.InsertQuery(
+                    GetID(cbxClient.Text),
+                    GetID(cbxCar.Text),
+                    GetID(cbxStorage.Text),
+                    txtAddress.Text,
+                    dateContract.Value.Date,
+                    Convert.ToInt32(txtPeriod.Text),
+                    cbxDelivered.Checked,
+                    cbxShipped.Checked);
 
-                //if (cbxClient.Text == "Нет закрепленного сотрудника")
-                //{
-                //    driverID = null;
-                //}
-                //else
-                //{
-                //    driverID = GetID(cbxClient.Text);
-                //}
+                _ID = GetIDByAllAttributes;
 
-                //_ID_CLIENT = driverID == null ? -1 : (int)driverID;
+                _Mode = SubFormMode.View;
+            }
+            else if(_Mode == SubFormMode.Edit)
+            {
+                if (HasObligatoryNullFields)
+                {
+                    MessageBox.Show("Заполните все обязательные поля (помечены звездочкой - *)", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-                //if (_Mode == SubFormMode.Add)
-                //{
-                //    carTableAdapter.InsertQuery(driverID,
-                //        txtGov.Text,
-                //        txtModel.Text,
-                //        txtColor.Text);
-                //    Close();
-                //}
-                //else
-                //{
-                //    carTableAdapter.UpdateQuery(driverID,
-                //        txtGov.Text,
-                //        txtModel.Text,
-                //        txtColor.Text,
-                //        _ID);
-                //}
+                supplyTableAdapter.UpdateQuery(
+                    GetID(cbxClient.Text),
+                    GetID(cbxCar.Text),
+                    GetID(cbxStorage.Text),
+                    txtAddress.Text,
+                    dateContract.Value.Date,
+                    Convert.ToInt32(txtPeriod.Text),
+                    cbxDelivered.Checked,
+                    cbxShipped.Checked,
+                    _ID);
 
                 _Mode = SubFormMode.View;
             }
@@ -336,5 +363,6 @@ namespace supplyGood
         {
             RefreshSum();
         }
+
     }
 }

@@ -37,23 +37,55 @@ namespace supplyGood
                 }
                 if (loginExists > 0)
                 {
+                    int userCount;
                     using (SqlCommand sqlCommand = new SqlCommand("SELECT COUNT(*) from [User] where login like @login AND password like @password", myConnection))
                     {
                         sqlCommand.Parameters.AddWithValue("@login", _login);
                         sqlCommand.Parameters.AddWithValue("@password", _passw);
-                        int userCount = (int)sqlCommand.ExecuteScalar();
-                        if (userCount > 0)
+                        userCount = (int)sqlCommand.ExecuteScalar();
+                    }
+                    if (userCount > 0)
+                    {
+                        Rights rights;
+                        using (SqlCommand sqlCommand = new SqlCommand("SELECT * from [User] where login like @login AND password like @password", myConnection))
                         {
-                            var NextForm = new MainForm();
-                            NextForm.Owner = this;
-                            NextForm.Show();
-                            this.Hide();
-                            lblError.Text = "";
+                            sqlCommand.Parameters.AddWithValue("@login", _login);
+                            sqlCommand.Parameters.AddWithValue("@password", _passw);
+                            SqlDataReader reader = sqlCommand.ExecuteReader();
+                            reader.Read();
+                            switch (reader["rights"].ToString())
+                            {
+                                case "admin":
+                                    {
+                                        rights = Rights.Admin;
+                                        break;
+                                    }
+                                case "hr":
+                                    {
+                                        rights = Rights.HR;
+                                        break;
+                                    }
+                                case "storage":
+                                    {
+                                        rights = Rights.Storage;
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        rights = Rights.Manager;
+                                        break;
+                                    }
+                            }
                         }
-                        else
-                        {
-                            lblError.Text = "Неверный пароль";
-                        }
+                        var NextForm = new MainForm(rights);
+                        NextForm.Owner = this;
+                        NextForm.Show();
+                        this.Hide();
+                        lblError.Text = "";
+                    }
+                    else
+                    {
+                        lblError.Text = "Неверный пароль";
                     }
                 }
                 else

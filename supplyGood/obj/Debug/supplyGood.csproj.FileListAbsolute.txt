@@ -14,3 +14,4 @@ D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.ViewSupply.resources
 D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.csproj.GenerateResource.Cache
 D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.exe
 D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.pdb
+D:\supplyGood\supplyGood\supplyGood\obj\Debug\supplyGood.Statistics.resources

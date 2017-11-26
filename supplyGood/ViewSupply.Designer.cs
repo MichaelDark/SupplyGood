@@ -80,9 +80,9 @@
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label6.Location = new System.Drawing.Point(16, 214);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(101, 17);
+            this.label6.Size = new System.Drawing.Size(110, 17);
             this.label6.TabIndex = 10;
-            this.label6.Text = "Адрес доставки";
+            this.label6.Text = "Адрес доставки *";
             // 
             // label5
             // 
@@ -90,9 +90,9 @@
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(16, 322);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(174, 17);
+            this.label5.Size = new System.Drawing.Size(183, 17);
             this.label5.TabIndex = 30;
-            this.label5.Text = "Дата заключения договора";
+            this.label5.Text = "Дата заключения договора *";
             // 
             // cbxShipped
             // 
@@ -156,9 +156,9 @@
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(16, 46);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 17);
+            this.label1.Size = new System.Drawing.Size(70, 17);
             this.label1.TabIndex = 40;
-            this.label1.Text = "Заказчик";
+            this.label1.Text = "Заказчик *";
             // 
             // cbxCar
             // 
@@ -176,9 +176,9 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.Location = new System.Drawing.Point(16, 102);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 17);
+            this.label2.Size = new System.Drawing.Size(68, 17);
             this.label2.TabIndex = 42;
-            this.label2.Text = "Машина";
+            this.label2.Text = "Машина *";
             // 
             // cbxStorage
             // 
@@ -196,9 +196,9 @@
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.Location = new System.Drawing.Point(16, 158);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 17);
+            this.label3.Size = new System.Drawing.Size(52, 17);
             this.label3.TabIndex = 44;
-            this.label3.Text = "Склад";
+            this.label3.Text = "Склад *";
             // 
             // txtPeriod
             // 
@@ -214,9 +214,9 @@
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.Location = new System.Drawing.Point(16, 378);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(152, 17);
+            this.label4.Size = new System.Drawing.Size(161, 17);
             this.label4.TabIndex = 47;
-            this.label4.Text = "Срок поставки, месяцев";
+            this.label4.Text = "Срок поставки, месяцев *";
             // 
             // cbxDelivered
             // 
@@ -266,7 +266,9 @@
             this.dgvGoods.Size = new System.Drawing.Size(565, 487);
             this.dgvGoods.TabIndex = 9;
             this.dgvGoods.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvGoods_DefaultValuesNeeded);
+            this.dgvGoods.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGoods_RowLeave);
             this.dgvGoods.SelectionChanged += new System.EventHandler(this.dgvGoods_SelectionChanged);
+            this.dgvGoods.Leave += new System.EventHandler(this.dgvGoods_Leave);
             // 
             // idsupplyDataGridViewTextBoxColumn
             // 

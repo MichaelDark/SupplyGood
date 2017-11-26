@@ -6376,7 +6376,7 @@ SELECT id_supply, id_good, con_amount, con_price FROM Consignment WHERE (id_good
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT SUM(con_price) FROM Consignment WHERE id_supply=@id;";
+            this._commandCollection[1].CommandText = "SELECT SUM(con_price * con_amount) FROM Consignment WHERE id_supply=@id;";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_supply", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

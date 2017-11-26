@@ -23,9 +23,15 @@ namespace supplyGood
         {
             get
             {
-                double? d = (double?)consignmentTableAdapter.SumBySupply(_ID);
-                if (d == null)
-                    return "-";
+                double d = 0;
+                for (int i = 0; i < dgvGoods.Rows.Count; i++)
+                {
+                    try
+                    {
+                        d += Convert.ToDouble(dgvGoods.Rows[i].Cells[2].Value) * Convert.ToDouble(dgvGoods.Rows[i].Cells[3].Value);
+                    }
+                    catch (Exception ex) { }
+                }
                 return Math.Round((double)d, 2).ToString();
             }
         }
@@ -87,7 +93,7 @@ namespace supplyGood
             SetMode();
             if (_Mode != SubFormMode.Add)
             {
-                consignmentBindingSource.Filter = "id_supply = " + _ID;
+                consignmentBindingSource.Filter = string.Format("id_supply = {0}", _ID);
             }
         }
         private void ViewSupply_FormClosing(object sender, FormClosingEventArgs e)
@@ -364,5 +370,14 @@ namespace supplyGood
             RefreshSum();
         }
 
+        private void dgvGoods_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            RefreshSum();
+        }
+
+        private void dgvGoods_Leave(object sender, EventArgs e)
+        {
+            RefreshSum();
+        }
     }
 }

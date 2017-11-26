@@ -40,6 +40,7 @@
             this.clientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.employeeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMain = new System.Windows.Forms.Label();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.contextDGV = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -93,7 +94,8 @@
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.managementToolStripMenuItem,
-            this.usersToolStripMenuItem});
+            this.usersToolStripMenuItem,
+            this.statisticsToolStripMenuItem});
             this.mainMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
@@ -112,7 +114,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.exitToolStripMenuItem.Text = "Выход";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -176,6 +178,13 @@
             this.usersToolStripMenuItem.Text = "Пользователи";
             this.usersToolStripMenuItem.Click += new System.EventHandler(this.UsersToolStripMenuItem_Click);
             // 
+            // statisticsToolStripMenuItem
+            // 
+            this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.statisticsToolStripMenuItem.Text = "Статистика";
+            this.statisticsToolStripMenuItem.Click += new System.EventHandler(this.statisticsToolStripMenuItem_Click);
+            // 
             // lblMain
             // 
             this.lblMain.AutoSize = true;
@@ -207,7 +216,7 @@
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMain.ShowCellToolTips = false;
             this.dgvMain.Size = new System.Drawing.Size(966, 422);
-            this.dgvMain.TabIndex = 9;
+            this.dgvMain.TabIndex = 4;
             this.dgvMain.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseDown);
             this.dgvMain.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMain_DataError);
             this.dgvMain.DoubleClick += new System.EventHandler(this.dgvMain_DoubleClick);
@@ -249,7 +258,7 @@
             this.btnFunc.Location = new System.Drawing.Point(740, 502);
             this.btnFunc.Name = "btnFunc";
             this.btnFunc.Size = new System.Drawing.Size(238, 48);
-            this.btnFunc.TabIndex = 10;
+            this.btnFunc.TabIndex = 5;
             this.btnFunc.Text = "Добавить пользователя";
             this.btnFunc.UseVisualStyleBackColor = false;
             this.btnFunc.Click += new System.EventHandler(this.btnAdd_Click);
@@ -268,10 +277,10 @@
             this.btnFilter.BackColor = System.Drawing.Color.Honeydew;
             this.btnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnFilter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnFilter.Location = new System.Drawing.Point(862, 27);
+            this.btnFilter.Location = new System.Drawing.Point(868, 40);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(110, 30);
-            this.btnFilter.TabIndex = 12;
+            this.btnFilter.TabIndex = 6;
             this.btnFilter.Text = "Фильтры >>";
             this.btnFilter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFilter.UseVisualStyleBackColor = false;
@@ -302,7 +311,7 @@
             this.panel1.Location = new System.Drawing.Point(1000, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(190, 538);
-            this.panel1.TabIndex = 13;
+            this.panel1.TabIndex = 14;
             // 
             // btnClearFilters
             // 
@@ -333,7 +342,7 @@
             this.txtFilter9.Location = new System.Drawing.Point(3, 441);
             this.txtFilter9.Name = "txtFilter9";
             this.txtFilter9.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter9.TabIndex = 17;
+            this.txtFilter9.TabIndex = 15;
             this.txtFilter9.TextChanged += new System.EventHandler(this.Filter_TextChanged);
             // 
             // lblFilter8
@@ -352,7 +361,7 @@
             this.txtFilter8.Location = new System.Drawing.Point(3, 392);
             this.txtFilter8.Name = "txtFilter8";
             this.txtFilter8.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter8.TabIndex = 15;
+            this.txtFilter8.TabIndex = 14;
             this.txtFilter8.TextChanged += new System.EventHandler(this.Filter_TextChanged);
             // 
             // lblFilter7
@@ -390,7 +399,7 @@
             this.txtFilter6.Location = new System.Drawing.Point(3, 294);
             this.txtFilter6.Name = "txtFilter6";
             this.txtFilter6.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter6.TabIndex = 11;
+            this.txtFilter6.TabIndex = 12;
             this.txtFilter6.TextChanged += new System.EventHandler(this.Filter_TextChanged);
             // 
             // lblFilter5
@@ -409,7 +418,7 @@
             this.txtFilter5.Location = new System.Drawing.Point(3, 245);
             this.txtFilter5.Name = "txtFilter5";
             this.txtFilter5.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter5.TabIndex = 9;
+            this.txtFilter5.TabIndex = 11;
             this.txtFilter5.TextChanged += new System.EventHandler(this.Filter_TextChanged);
             // 
             // lblFilter4
@@ -428,7 +437,7 @@
             this.txtFilter4.Location = new System.Drawing.Point(3, 196);
             this.txtFilter4.Name = "txtFilter4";
             this.txtFilter4.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter4.TabIndex = 7;
+            this.txtFilter4.TabIndex = 10;
             this.txtFilter4.TextChanged += new System.EventHandler(this.Filter_TextChanged);
             // 
             // lblFilter3
@@ -447,7 +456,7 @@
             this.txtFilter3.Location = new System.Drawing.Point(3, 147);
             this.txtFilter3.Name = "txtFilter3";
             this.txtFilter3.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter3.TabIndex = 5;
+            this.txtFilter3.TabIndex = 9;
             this.txtFilter3.TextChanged += new System.EventHandler(this.Filter_TextChanged);
             // 
             // lblFilter2
@@ -466,7 +475,7 @@
             this.txtFilter2.Location = new System.Drawing.Point(3, 98);
             this.txtFilter2.Name = "txtFilter2";
             this.txtFilter2.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter2.TabIndex = 3;
+            this.txtFilter2.TabIndex = 8;
             this.txtFilter2.TextChanged += new System.EventHandler(this.Filter_TextChanged);
             // 
             // lblFilter1
@@ -485,7 +494,7 @@
             this.txtFilter1.Location = new System.Drawing.Point(3, 49);
             this.txtFilter1.Name = "txtFilter1";
             this.txtFilter1.Size = new System.Drawing.Size(182, 29);
-            this.txtFilter1.TabIndex = 1;
+            this.txtFilter1.TabIndex = 7;
             this.txtFilter1.TextChanged += new System.EventHandler(this.Filter_TextChanged);
             // 
             // lbl1
@@ -617,5 +626,6 @@
         private System.Windows.Forms.TextBox txtFilter1;
         private System.Windows.Forms.Label lbl1;
         private MainDBDataSetTableAdapters.SupplyTableAdapter supplyTableAdapter;
+        private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
     }
 }

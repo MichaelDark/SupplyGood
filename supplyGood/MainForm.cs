@@ -161,10 +161,12 @@ namespace supplyGood
                 suppliesToolStripMenuItem.Visible = false;
                 goodsToolStripMenuItem.Visible = false;
                 clientsToolStripMenuItem.Visible = false;
+                usersToolStripMenuItem.Visible = false;
             }
             else if (_Rights == Rights.Manager)
             {
                 employeeToolStripMenuItem.Visible = false;
+                usersToolStripMenuItem.Visible = false;
             }
             else if (_Rights == Rights.Storage)
             {
@@ -172,6 +174,7 @@ namespace supplyGood
                 carsToolStripMenuItem.Visible = false;
                 clientsToolStripMenuItem.Visible = false;
                 employeeToolStripMenuItem.Visible = false;
+                usersToolStripMenuItem.Visible = false;
             }
 
             //Init filters' UI
@@ -204,6 +207,22 @@ namespace supplyGood
         {
             userTableAdapter.Fill(this.mainDBDataSet.User);
             mainMenuStrip.Renderer = new MainStripRenderer();
+            if (_Rights == Rights.HR)
+            {
+                EmployeeToolStripMenuItem_Click(null, null);
+            }
+            else if (_Rights == Rights.Manager)
+            {
+                SuppliesToolStripMenuItem_Click(null, null);
+            }
+            else if (_Rights == Rights.Storage)
+            {
+                GoodsToolStripMenuItem_Click(null, null);
+            }
+            else
+            {
+                UsersToolStripMenuItem_Click(null, null);
+            }
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -411,7 +430,7 @@ namespace supplyGood
                 dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
                 dgvMain.Rows[currRowIndex].Selected = true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private string GetDeletingName(int curr, int currID)
         {
@@ -509,7 +528,7 @@ namespace supplyGood
                 case TableView.Supply:
                     {
                         string filter = "";
-                        for (int i = 0; i < _headerSupply.Length; i++)
+                        for (int i = 0; i < _headerSupply.Length - 2; i++)
                         {
                             if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
                             {
@@ -681,6 +700,11 @@ namespace supplyGood
             lblHint.Text = "Подсказка: редактирование доступно прямо в таблицу. Все поля обязательны для заполнения";
             Text = lblMain.Text + " - " + RightsCaption;
             UpdateCurrentData();
+        }
+        private void statisticsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var NextForm = new Statistics();
+            NextForm.ShowDialog();
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -92,7 +92,7 @@ namespace supplyGood
                         {
                             tableName = "GoodSellingAll";
                         }
-                        lblTotal.Text = "Общее количество товара: " + GetFormattedNumber(GetTotal("SUM", tableName, "Amount"), false);
+                        lblTotal.Text = "Общее количество товара, ед.: " + GetFormattedNumber(GetTotal("SUM", tableName, "Amount"), false);
                         return ExecuteQuery(string.Format(@"SELECT Good, Amount FROM {0}", tableName));
                     }
                 case StatisticMode.GoodProfit:
@@ -110,7 +110,7 @@ namespace supplyGood
                         {
                             tableName = "GoodProfitAll";
                         }
-                        lblTotal.Text = "Общая прибыль: " + GetFormattedNumber(GetTotal("SUM", tableName, "Amount"));
+                        lblTotal.Text = "Общая прибыль, грн.: " + GetFormattedNumber(GetTotal("SUM", tableName, "Amount"));
                         return ExecuteQuery(string.Format(@"SELECT Good, Amount FROM {0}", tableName));
                     }
                 default:
@@ -141,6 +141,7 @@ namespace supplyGood
         {
             var wordApp = new Word.Application();
             string reportSourcePath = "";
+            string reportPath = "";
             try
             {
                 switch (_Mode)
@@ -157,7 +158,7 @@ namespace supplyGood
                         }
                 }
 
-                string reportPath = 
+                reportPath = 
                     Application.StartupPath + @"\report" +
                     DateTime.Now.Year +
                     DateTime.Now.Month +
@@ -206,15 +207,7 @@ namespace supplyGood
                 }
 
                 wordDoc.Save();
-
-                //for (int i = 0; i < 100; i++)
-                //{
-                //    try
-                //    {
-                //        MessageBox.Show(i + " " + wordDoc.Tables[i].Descr);
-                //    }
-                //    catch (Exception ex) { }
-                //}
+                
                 Word.Table table = wordDoc.Tables[1];
 
                 table.Rows[1].Cells[1].Range.Text = dgvMain.Columns[0].HeaderText;
@@ -232,7 +225,7 @@ namespace supplyGood
 
                 object missing = System.Reflection.Missing.Value;
                 wordDoc.Save();
-                wordDoc.Close();
+                wordApp.Visible = true;
             }
             catch (Exception e)
             {
@@ -240,10 +233,6 @@ namespace supplyGood
                     "Ошибка",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-            }
-            finally
-            {
-                wordApp.Quit();
             }
         }
         private void ReplaceWordStub(string stub, string text, Word.Document wordDoc)
@@ -270,7 +259,7 @@ namespace supplyGood
                 string[] header = new string[]
                 {
                     "Наименование",
-                    "Количество проданных единиц товара"
+                    "Количество проданных единиц товара, ед."
                 };
 
                 DataTable dt = GetTable();
@@ -300,7 +289,7 @@ namespace supplyGood
                 string[] header = new string[]
                 {
                     "Наименование",
-                    "Общий доход с продаж товара"
+                    "Общий доход с продаж товара, грн."
                 };
 
                 DataTable dt = GetTable();

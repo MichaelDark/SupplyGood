@@ -68,15 +68,15 @@
             // goodSellToolStripMenuItem
             // 
             this.goodSellToolStripMenuItem.Name = "goodSellToolStripMenuItem";
-            this.goodSellToolStripMenuItem.Size = new System.Drawing.Size(268, 30);
-            this.goodSellToolStripMenuItem.Text = "Самый продаваемый";
+            this.goodSellToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
+            this.goodSellToolStripMenuItem.Text = "Популярность";
             this.goodSellToolStripMenuItem.Click += new System.EventHandler(this.GoodSellToolStripMenuItem_Click);
             // 
             // goodProfitToolStripMenuItem
             // 
             this.goodProfitToolStripMenuItem.Name = "goodProfitToolStripMenuItem";
-            this.goodProfitToolStripMenuItem.Size = new System.Drawing.Size(268, 30);
-            this.goodProfitToolStripMenuItem.Text = "Самый прибыльный";
+            this.goodProfitToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
+            this.goodProfitToolStripMenuItem.Text = "Прибыльность";
             this.goodProfitToolStripMenuItem.Click += new System.EventHandler(this.GoodProfitToolStripMenuItem_Click);
             // 
             // dgvMain
@@ -149,7 +149,7 @@
             this.btnReport.UseVisualStyleBackColor = false;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
-            // Statistics
+            // StatisticsForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1204, 562);
@@ -163,7 +163,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.mainMenuStrip;
             this.MaximizeBox = false;
-            this.Name = "Statistics";
+            this.Name = "StatisticsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Статистика";
             this.Load += new System.EventHandler(this.Statistics_Load);

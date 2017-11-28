@@ -13,6 +13,7 @@ using System.Configuration;
 
 namespace supplyGood
 {
+    public enum FilterType { Text, Number, Date, Bool }
     public enum Rights { Admin, HR, Manager, Storage }
     public enum SearchDirection { Previous, Next }
     public enum SubFormMode { Empty, View, Edit, Add }
@@ -21,6 +22,7 @@ namespace supplyGood
     public partial class MainForm : Form
     {
         Rights _Rights;
+        List<Filter> Filters;
         string RightsCaption
         {
             get
@@ -50,8 +52,7 @@ namespace supplyGood
                 }
             }
         }
-
-        bool Filtering;
+        
         TableView _View = TableView.Empty;
         List<TextBox> txtFilters = new List<TextBox>();
         List<Label> lblFilters = new List<Label>();
@@ -151,11 +152,10 @@ namespace supplyGood
         public MainForm(Rights cRights = Rights.Admin)
         {
             InitializeComponent();
-            Width = 1000;
+            Filters = new List<Filter>();
             _Rights = cRights;
             Text = RightsCaption;
             _View = TableView.Empty;
-            Filtering = false;
 
             if (_Rights == Rights.HR)
             {
@@ -176,30 +176,6 @@ namespace supplyGood
                 clientsToolStripMenuItem.Visible = false;
                 employeeToolStripMenuItem.Visible = false;
                 usersToolStripMenuItem.Visible = false;
-            }
-
-            //Init filters' UI
-            {
-                txtFilters.Add(txtFilter1);
-                txtFilters.Add(txtFilter2);
-                txtFilters.Add(txtFilter3);
-                txtFilters.Add(txtFilter4);
-                txtFilters.Add(txtFilter5);
-                txtFilters.Add(txtFilter6);
-                txtFilters.Add(txtFilter7);
-                txtFilters.Add(txtFilter8);
-                txtFilters.Add(txtFilter9);
-            }
-            {
-                lblFilters.Add(lblFilter1);
-                lblFilters.Add(lblFilter2);
-                lblFilters.Add(lblFilter3);
-                lblFilters.Add(lblFilter4);
-                lblFilters.Add(lblFilter5);
-                lblFilters.Add(lblFilter6);
-                lblFilters.Add(lblFilter7);
-                lblFilters.Add(lblFilter8);
-                lblFilters.Add(lblFilter9);
             }
         }
 
@@ -329,7 +305,12 @@ namespace supplyGood
                 dgvMain.Columns[4].Width = 320;
             }
 
-            SetFilters();
+            PerformFiltering();
+
+            foreach (DataGridViewRow d in dgvMain.Rows)
+            {
+                d.ContextMenuStrip = contextDGV;
+            }
         }
         private void ApplyVisualAppearence()
         {
@@ -377,7 +358,6 @@ namespace supplyGood
                         dgvMain.ReadOnly = true;
                         dgvMain.AllowUserToAddRows = false;
                         dgvMain.AllowUserToDeleteRows = false;
-                        dgvMain.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                         break;
                     }
                 case TableView.User:
@@ -392,7 +372,6 @@ namespace supplyGood
                         dgvMain.ReadOnly = false;
                         dgvMain.AllowUserToAddRows = true;
                         dgvMain.AllowUserToDeleteRows = true;
-                        dgvMain.SelectionMode = DataGridViewSelectionMode.CellSelect;
                         break;
                     }
             }
@@ -518,193 +497,109 @@ namespace supplyGood
                     }
             }
         }
-        private void SetFilters()
-        {
-            string[] head = null;
-            ClearFilters();
-            switch (_View)
-            {
-                case TableView.Supply:
-                    {
-                        head = _headerSupply;
-                        break;
-                    }
-                case TableView.Good:
-                    {
-                        head = _headerGood;
-                        break;
-                    }
-                case TableView.Car:
-                    {
-                        head = _headerCar;
-                        break;
-                    }
-                case TableView.Employee:
-                    {
-                        head = _headerEmployee;
-                        break;
-                    }
-                case TableView.User:
-                    {
-                        head = _headerUser;
-                        break;
-                    }
-            }
-            for (int i = 0; i < 9; i++)
-            {
-                try
-                {
-                    lblFilters[i].Text = head[i];
-                    lblFilters[i].Visible = true;
-                    txtFilters[i].Visible = true;
-                }
-                catch
-                {
-                    if ((_View == TableView.Good || _View == TableView.Employee) && i == head.Length)
-                    {
-                        string text = lblFilters[i - 1].Text;
-                        lblFilters[i - 1].Text = text + " (от)";
-                        lblFilters[i].Text = text + " (до)";
-                        lblFilters[i].Visible = true;
-                        txtFilters[i].Visible = true;
-                    }
-                    else 
-                    {
-                        lblFilters[i].Visible = false;
-                        txtFilters[i].Visible = false;
-                    }
-                }
-            }
-            if (_View == TableView.Supply)
-            {
-                lblFilters[7].Visible = false;
-                txtFilters[7].Visible = false;
-                lblFilters[8].Visible = false;
-                txtFilters[8].Visible = false;
-            }
-        }
         private void PerformFiltering()
         {
+            string filterString = "";
+            foreach (Filter filter in Filters)
+            {
+                if (!filter.Checked)
+                    continue;
+
+                switch (filter.Type)
+                {
+                    case FilterType.Bool:
+                        {
+                            if (filterString.Length > 0) filterString += " AND ";
+                            filterString += filter.Field + ((bool)filter.OnlyTrue ? "=true" : "=false");
+                            break;
+                        }
+                    case FilterType.Date:
+                        {
+                            if (filterString.Length > 0) filterString += " AND ";
+                            filterString += string.Format("CONVERT({0}, 'System.DateTime')>=CONVERT('{1}', 'System.DateTime') AND CONVERT({0}, 'System.DateTime')<=CONVERT('{2}', 'System.DateTime')",
+                                filter.Field, filter.FromDate.Date.ToShortDateString(), filter.ToDate.Date.ToShortDateString());
+                            break;
+                        }
+                    case FilterType.Number:
+                        {
+                            if (filterString.Length > 0) filterString += " AND ";
+                            if (filter.From == null && filter.To == null)
+                            {
+                                break;
+                            }
+                            else if (filter.From == null)
+                            {
+                                filterString += filter.Field + "<=" + filter.To;
+                            }
+                            else if (filter.To == null)
+                            {
+                                filterString += filter.Field + ">=" + filter.From;
+                            }
+                            else 
+                            {
+                                filterString += filter.Field + ">=" + filter.From + " AND " + filter.Field + "<=" + filter.To;
+                            }
+                            break;
+                        }
+                    case FilterType.Text:
+                        {
+                            if (filterString.Length > 0) filterString += " AND ";
+                            filterString += filter.Field + " LIKE '%" + filter.Value.ToLower() + "%'";
+                            break;
+                        }
+                }
+            }
             switch (_View)
             {
-                case TableView.Supply:
-                    {
-                        string filter = "";
-                        for (int i = 0; i < _headerSupply.Length - 2; i++)
-                        {
-                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
-                            {
-                                if (filter.Length > 0) filter += " AND ";
-                                filter += string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsSupply[i], txtFilters[i].Text.Trim());
-                            }
-                        }
-                        supplyBindingSource.Filter = filter;
-                        break;
-                    }
                 case TableView.Good:
                     {
-                        string filter = "";
-                        for (int i = 0; i < _headerGood.Length - 1; i++)
-                        {
-                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
-                            {
-                                if (filter.Length > 0) filter += " AND ";
-                                filter += string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsGood[i], txtFilters[i].Text.Trim());
-                            }
-                        }
-                        int from = _headerGood.Length - 1;
-                        int to = _headerGood.Length;
-                        if (!String.IsNullOrEmpty(txtFilters[from].Text.Trim()) && !String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
-                        {
-                            if (filter.Length > 0) filter += " AND ";
-                            filter += string.Format("{0} >= {1} AND {0} <= {2}", _fieldsGood[from], txtFilters[from].Text.Trim(), txtFilters[to].Text.Trim());
-                        }
-                        else if (!String.IsNullOrEmpty(txtFilters[from].Text.Trim()))
-                        {
-                            if (filter.Length > 0) filter += " AND ";
-                            filter += string.Format("{0} >= {1}", _fieldsGood[from], txtFilters[from].Text.Trim());
-                        }
-                        else if (!String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
-                        {
-                            if (filter.Length > 0) filter += " AND ";
-                            filter += string.Format("{0} <= {1}", _fieldsGood[from], txtFilters[to].Text.Trim());
-                        }
-                        goodBindingSource.Filter = filter;
+                        goodBindingSource.Filter = filterString;
                         break;
                     }
                 case TableView.Car:
                     {
-                        string filter = "";
-                        for (int i = 0; i < _headerCar.Length; i++)
-                        {
-                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
-                            {
-                                if (filter.Length > 0) filter += " AND ";
-                                filter += string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsCar[i], txtFilters[i].Text.Trim());
-                            }
-                        }
-                        carBindingSource.Filter = filter;
+                        carBindingSource.Filter = filterString;
                         break;
                     }
                 case TableView.Employee:
                     {
-                        string filter = "";
-                        for (int i = 0; i < _headerEmployee.Length - 1; i++)
-                        {
-                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
-                            {
-                                if (filter.Length > 0) filter += " AND ";
-                                filter = string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsEmployee[i], txtFilters[i].Text.Trim());
-                            }
-                        }
-                        int from = _headerEmployee.Length - 1;
-                        int to = _headerEmployee.Length;
-                        if (!String.IsNullOrEmpty(txtFilters[from].Text.Trim()) && !String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
-                        {
-                            if (filter.Length > 0) filter += " AND ";
-                            filter = string.Format("{0} >= {1} AND {0} <= {2}", _fieldsEmployee[from], txtFilters[from].Text.Trim(), txtFilters[to].Text.Trim());
-                        }
-                        else if (!String.IsNullOrEmpty(txtFilters[from].Text.Trim()))
-                        {
-                            if (filter.Length > 0) filter += " AND ";
-                            filter = string.Format("{0} >= {1}", _fieldsEmployee[from], txtFilters[from].Text.Trim());
-                        }
-                        else if (!String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
-                        {
-                            if (filter.Length > 0) filter += " AND ";
-                            filter = string.Format("{0} <= {1}", _fieldsEmployee[from], txtFilters[to].Text.Trim());
-                        }
-                        employeeBindingSource.Filter = filter;
+                        employeeBindingSource.Filter = filterString;
+                        break;
+                    }
+                case TableView.Supply:
+                    {
+                        supplyBindingSource.Filter = filterString;
                         break;
                     }
                 case TableView.User:
                     {
-                        string filter = "";
-                        for (int i = 0; i < _headerUser.Length; i++)
-                        {
-                            if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
-                            {
-                                if (filter.Length > 0) filter += " AND ";
-                                filter = string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsUser[i], txtFilters[i].Text.Trim());
-                            }
-                        }
-                        userBindingSource.Filter = filter;
+                        userBindingSource.Filter = filterString;
                         break;
                     }
             }
         }
         private void ClearFilters()
         {
-            foreach (TextBox t in txtFilters)
+            foreach (Filter f in Filters)
             {
-                t.Text = "";
+                f.Clear();
             }
         }
-
 
         private void SuppliesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Supply;
+
+            Filters.Clear();
+            Filters.Add(new Filter(false, _fieldsSupply[0], _headerSupply[0], FilterType.Number));
+            Filters.Add(new Filter(false, _fieldsSupply[1], _headerSupply[1], FilterType.Number));
+            Filters.Add(new Filter(false, _fieldsSupply[2], _headerSupply[2], FilterType.Number));
+            Filters.Add(new Filter(false, _fieldsSupply[3], _headerSupply[3], FilterType.Number));
+            Filters.Add(new Filter(false, _fieldsSupply[4], _headerSupply[4], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsSupply[5], _headerSupply[5], FilterType.Date));
+            Filters.Add(new Filter(false, _fieldsSupply[6], _headerSupply[6], FilterType.Number));
+            Filters.Add(new Filter(false, _fieldsSupply[7], _headerSupply[7], FilterType.Bool));
+            Filters.Add(new Filter(false, _fieldsSupply[8], _headerSupply[8], FilterType.Bool));
 
             lblMain.Text = "Поставки";
             lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
@@ -719,6 +614,15 @@ namespace supplyGood
         {
             _View = TableView.Employee;
 
+            Filters.Clear();
+            Filters.Add(new Filter(false, _fieldsEmployee[0], _headerEmployee[0], FilterType.Number));
+            Filters.Add(new Filter(false, _fieldsEmployee[1], _headerEmployee[1], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsEmployee[2], _headerEmployee[2], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsEmployee[3], _headerEmployee[3], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsEmployee[4], _headerEmployee[4], FilterType.Date));
+            Filters.Add(new Filter(false, _fieldsEmployee[5], _headerEmployee[5], FilterType.Date));
+            Filters.Add(new Filter(false, _fieldsEmployee[6], _headerEmployee[6], FilterType.Number));
+
             lblMain.Text = "Сотрудники";
             lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
                 "информации о сотруднике, её редактирования и удаления сотрудника. " +
@@ -731,6 +635,12 @@ namespace supplyGood
         private void GoodsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Good;
+
+            Filters.Clear();
+            Filters.Add(new Filter(false, _fieldsGood[0], _headerGood[0], FilterType.Number));
+            Filters.Add(new Filter(false, _fieldsGood[1], _headerGood[1], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsGood[2], _headerGood[2], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsGood[3], _headerGood[3], FilterType.Number));
 
             lblMain.Text = "Товары";
             lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
@@ -745,6 +655,13 @@ namespace supplyGood
         {
             _View = TableView.Car;
 
+            Filters.Clear();
+            Filters.Add(new Filter(false, _fieldsCar[0], _headerCar[0], FilterType.Number));
+            Filters.Add(new Filter(false, _fieldsCar[1], _headerCar[1], FilterType.Number));
+            Filters.Add(new Filter(false, _fieldsCar[2], _headerCar[2], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsCar[3], _headerCar[3], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsCar[4], _headerCar[4], FilterType.Text));
+
             lblMain.Text = "Машины";
             lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
                 "информации о машине, её редактирования и удаления машины. " +
@@ -758,6 +675,11 @@ namespace supplyGood
         {
             _View = TableView.User;
 
+            Filters.Clear();
+            Filters.Add(new Filter(false, _fieldsUser[0], _headerUser[0], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsUser[1], _headerUser[1], FilterType.Text));
+            Filters.Add(new Filter(false, _fieldsUser[2], _headerUser[2], FilterType.Text));
+
             lblMain.Text = "Пользователи";
             lblHint.Text = "Подсказка: редактирование доступно прямо в таблицу. Все поля обязательны для заполнения";
             Text = lblMain.Text + " - " + RightsCaption;
@@ -768,11 +690,24 @@ namespace supplyGood
             var NextForm = new StatisticsForm();
             NextForm.ShowDialog();
         }
+        private void PredictGoodToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var NextForm = new PredictForm();
+            NextForm.ShowDialog();
+        }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnSearchNext_Click(object sender, EventArgs e)
+        {
+            Search(SearchDirection.Next);
+        }
+        private void BtnSearchPrev_Click(object sender, EventArgs e)
+        {
+            Search(SearchDirection.Previous);
+        }
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             int currRowIndex = -1;
             int currID;
@@ -822,27 +757,48 @@ namespace supplyGood
             }
             catch { }
         }
-        private void btnFilter_Click(object sender, EventArgs e)
+        private void BtnFilter_Click(object sender, EventArgs e)
         {
-            if (!Filtering)
-            {
-                Width = 1200;
-                btnFilter.Text = "Фильтры <<";
-            }
-            else
-            {
-                Width = 1000;
-                btnFilter.Text = "Фильтры >>";
-            }
-            Filtering = !Filtering;
+            var NextForm = new FilterForm(Filters);
+            NextForm.ShowDialog();
+            Filters = NextForm.Filters.ToList();
+            PerformFiltering();
         }
-        private void btnClearFilters_Click(object sender, EventArgs e)
+        private void BtnClearFilters_Click(object sender, EventArgs e)
         {
             ClearFilters();
+            UpdateCurrentData();
         }
-        private void Filter_TextChanged(object sender, EventArgs e)
+        private void BtnSort_Click(object sender, EventArgs e)
         {
-            if (Filtering) PerformFiltering();
+            switch (_View)
+            {
+                case TableView.Good:
+                    {
+                        goodBindingSource.Sort = _fieldsGood[cbxSearch.SelectedIndex];
+                        break;
+                    }
+                case TableView.Car:
+                    {
+                        carBindingSource.Sort = _fieldsCar[cbxSearch.SelectedIndex];
+                        break;
+                    }
+                case TableView.Employee:
+                    {
+                        employeeBindingSource.Sort = _fieldsEmployee[cbxSearch.SelectedIndex];
+                        break;
+                    }
+                case TableView.Supply:
+                    {
+                        supplyBindingSource.Sort = _fieldsSupply[cbxSearch.SelectedIndex];
+                        break;
+                    }
+                case TableView.User:
+                    {
+                        userBindingSource.Sort = _fieldsUser[cbxSearch.SelectedIndex];
+                        break;
+                    }
+            }
         }
 
 
@@ -861,29 +817,36 @@ namespace supplyGood
             string NameOfDeletingItem = GetDeletingName(curr, currID);
             if (DialogResult.Yes == MessageBox.Show("Вы уверены, что хотите удалить " + NameOfDeletingItem + "?", "Удаление",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-                switch (_View)
+                try
                 {
-                    case TableView.Supply:
-                        {
-                            supplyTableAdapter.DeleteQuery(currID);
-                            break;
-                        }
-                    case TableView.Good:
-                        {
-                            goodTableAdapter.DeleteQuery(currID);
-                            break;
-                        }
-                    case TableView.Car:
-                        {
-                            carTableAdapter.DeleteQuery(currID);
-                            break;
-                        }
-                    case TableView.Employee:
-                        {
-                            personalInfoTableAdapter.DeleteQuery(currID);
-                            employeeTableAdapter.DeleteQuery(currID);
-                            break;
-                        }
+                    switch (_View)
+                    {
+                        case TableView.Supply:
+                            {
+                                supplyTableAdapter.DeleteQuery(currID);
+                                break;
+                            }
+                        case TableView.Good:
+                            {
+                                goodTableAdapter.DeleteQuery(currID);
+                                break;
+                            }
+                        case TableView.Car:
+                            {
+                                carTableAdapter.DeleteQuery(currID);
+                                break;
+                            }
+                        case TableView.Employee:
+                            {
+                                personalInfoTableAdapter.DeleteQuery(currID);
+                                employeeTableAdapter.DeleteQuery(currID);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("При удалении произошла ошибка. Обьект НЕ удален", "Удаление", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex - 1;
@@ -914,22 +877,6 @@ namespace supplyGood
         private void dgvMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show("Вы не заполнили все необходимые поля" + Environment.NewLine + "Повторите ввод данных");
-        }
-
-        private void PredictGoodToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var NextForm = new PredictForm();
-            NextForm.ShowDialog();
-        }
-
-        private void BtnSearchPrev_Click(object sender, EventArgs e)
-        {
-            Search(SearchDirection.Previous);
-        }
-
-        private void BtnSearchNext_Click(object sender, EventArgs e)
-        {
-            Search(SearchDirection.Next);
         }
     }
 
@@ -982,6 +929,58 @@ namespace supplyGood
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
             base.OnRenderToolStripBorder(e);
+        }
+    }
+    public class Filter
+    {
+        public bool Checked;
+
+        public string Field;
+        public string Header;
+
+        public FilterType Type;
+
+        public double? From = null;
+        public double? To = null;
+        public DateTime FromDate = DateTime.Now.Date;
+        public DateTime ToDate = DateTime.Now.Date;
+        public string Value = null;
+        public bool? OnlyTrue = null;
+        public Filter(bool check, string field, string header, FilterType filter)
+        {
+            Checked = check;
+            Field = field;
+            Header = header;
+            Type = filter;
+        }
+        public Filter(bool check, string field, string header, double? from = null, double? to = null) : this(check, field, header, FilterType.Number)
+        {
+            From = from;
+            To = to;
+        }
+        public Filter(bool check, string field, string header, DateTime from, DateTime to) : this(check, field, header, FilterType.Date)
+        {
+            FromDate = from;
+            ToDate = to;
+        }
+        public Filter(bool check, string field, string header, string value) : this(check, field, header, FilterType.Text)
+        {
+            Value = value;
+        }
+        public Filter(bool check, string field, string header, bool? value = null) : this(check, field, header, FilterType.Bool)
+        {
+            OnlyTrue = value;
+        }
+
+        public void Clear()
+        {
+            Checked = false;
+            From = null;
+            To = null;
+            FromDate = DateTime.Now.Date;
+            ToDate = DateTime.Now.Date;
+            Value = null;
+            OnlyTrue = null;
         }
     }
 }

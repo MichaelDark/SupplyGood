@@ -29,17 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.suppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.goodsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.carsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.storagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.employeeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.goodsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.storagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.carsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.прогнозToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.predictGoodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMain = new System.Windows.Forms.Label();
             this.dgvMain = new System.Windows.Forms.DataGridView();
@@ -79,12 +82,39 @@
             this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.userTableAdapter = new supplyGood.MainDBDataSetTableAdapters.UserTableAdapter();
             this.supplyTableAdapter = new supplyGood.MainDBDataSetTableAdapters.SupplyTableAdapter();
+            this.btnSearchNext = new System.Windows.Forms.Button();
+            this.btnSearchPrev = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.carBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.employeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.goodBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.supplyBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.cbxSearch = new System.Windows.Forms.ComboBox();
+            this.btnSort = new System.Windows.Forms.Button();
+            this.bnMain = new System.Windows.Forms.BindingNavigator(this.components);
+            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
+            this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
+            this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.contextDGV.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.carBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.supplyBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bnMain)).BeginInit();
+            this.bnMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -95,6 +125,7 @@
             this.fileToolStripMenuItem,
             this.managementToolStripMenuItem,
             this.usersToolStripMenuItem,
+            this.прогнозToolStripMenuItem,
             this.statisticsToolStripMenuItem});
             this.mainMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
@@ -122,11 +153,11 @@
             // 
             this.managementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.suppliesToolStripMenuItem,
+            this.employeeToolStripMenuItem,
             this.goodsToolStripMenuItem,
-            this.carsToolStripMenuItem,
-            this.storagesToolStripMenuItem,
             this.clientsToolStripMenuItem,
-            this.employeeToolStripMenuItem});
+            this.storagesToolStripMenuItem,
+            this.carsToolStripMenuItem});
             this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
             this.managementToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.managementToolStripMenuItem.Text = "Просмотр";
@@ -138,12 +169,33 @@
             this.suppliesToolStripMenuItem.Text = "Поставки";
             this.suppliesToolStripMenuItem.Click += new System.EventHandler(this.SuppliesToolStripMenuItem_Click);
             // 
+            // employeeToolStripMenuItem
+            // 
+            this.employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
+            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.employeeToolStripMenuItem.Text = "Сотрудники";
+            this.employeeToolStripMenuItem.Click += new System.EventHandler(this.EmployeeToolStripMenuItem_Click);
+            // 
             // goodsToolStripMenuItem
             // 
             this.goodsToolStripMenuItem.Name = "goodsToolStripMenuItem";
             this.goodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.goodsToolStripMenuItem.Text = "Товары";
             this.goodsToolStripMenuItem.Click += new System.EventHandler(this.GoodsToolStripMenuItem_Click);
+            // 
+            // clientsToolStripMenuItem
+            // 
+            this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
+            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.clientsToolStripMenuItem.Text = "-Заказчики";
+            this.clientsToolStripMenuItem.Visible = false;
+            // 
+            // storagesToolStripMenuItem
+            // 
+            this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
+            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.storagesToolStripMenuItem.Text = "-Склады";
+            this.storagesToolStripMenuItem.Visible = false;
             // 
             // carsToolStripMenuItem
             // 
@@ -152,31 +204,28 @@
             this.carsToolStripMenuItem.Text = "Машины";
             this.carsToolStripMenuItem.Click += new System.EventHandler(this.CarsToolStripMenuItem_Click);
             // 
-            // storagesToolStripMenuItem
-            // 
-            this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
-            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.storagesToolStripMenuItem.Text = "-Склады";
-            // 
-            // clientsToolStripMenuItem
-            // 
-            this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
-            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.clientsToolStripMenuItem.Text = "-Заказчики";
-            // 
-            // employeeToolStripMenuItem
-            // 
-            this.employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
-            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.employeeToolStripMenuItem.Text = "Сотрудники";
-            this.employeeToolStripMenuItem.Click += new System.EventHandler(this.EmployeeToolStripMenuItem_Click);
-            // 
             // usersToolStripMenuItem
             // 
+            this.usersToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
             this.usersToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
             this.usersToolStripMenuItem.Text = "Пользователи";
             this.usersToolStripMenuItem.Click += new System.EventHandler(this.UsersToolStripMenuItem_Click);
+            // 
+            // прогнозToolStripMenuItem
+            // 
+            this.прогнозToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.predictGoodToolStripMenuItem});
+            this.прогнозToolStripMenuItem.Name = "прогнозToolStripMenuItem";
+            this.прогнозToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.прогнозToolStripMenuItem.Text = "Прогноз";
+            // 
+            // predictGoodToolStripMenuItem
+            // 
+            this.predictGoodToolStripMenuItem.Name = "predictGoodToolStripMenuItem";
+            this.predictGoodToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.predictGoodToolStripMenuItem.Text = "Товары";
+            this.predictGoodToolStripMenuItem.Click += new System.EventHandler(this.PredictGoodToolStripMenuItem_Click);
             // 
             // statisticsToolStripMenuItem
             // 
@@ -206,7 +255,7 @@
             this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMain.Location = new System.Drawing.Point(12, 74);
+            this.dgvMain.Location = new System.Drawing.Point(12, 115);
             this.dgvMain.MultiSelect = false;
             this.dgvMain.Name = "dgvMain";
             this.dgvMain.ReadOnly = true;
@@ -215,7 +264,7 @@
             this.dgvMain.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMain.ShowCellToolTips = false;
-            this.dgvMain.Size = new System.Drawing.Size(966, 422);
+            this.dgvMain.Size = new System.Drawing.Size(966, 426);
             this.dgvMain.TabIndex = 4;
             this.dgvMain.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseDown);
             this.dgvMain.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMain_DataError);
@@ -255,7 +304,7 @@
             // 
             this.btnFunc.BackColor = System.Drawing.Color.Azure;
             this.btnFunc.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnFunc.Location = new System.Drawing.Point(740, 502);
+            this.btnFunc.Location = new System.Drawing.Point(740, 547);
             this.btnFunc.Name = "btnFunc";
             this.btnFunc.Size = new System.Drawing.Size(238, 48);
             this.btnFunc.TabIndex = 5;
@@ -266,7 +315,7 @@
             // lblHint
             // 
             this.lblHint.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblHint.Location = new System.Drawing.Point(12, 499);
+            this.lblHint.Location = new System.Drawing.Point(12, 544);
             this.lblHint.Name = "lblHint";
             this.lblHint.Size = new System.Drawing.Size(722, 63);
             this.lblHint.TabIndex = 11;
@@ -277,12 +326,11 @@
             this.btnFilter.BackColor = System.Drawing.Color.Honeydew;
             this.btnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnFilter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnFilter.Location = new System.Drawing.Point(868, 40);
+            this.btnFilter.Location = new System.Drawing.Point(868, 38);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(110, 30);
             this.btnFilter.TabIndex = 6;
             this.btnFilter.Text = "Фильтры >>";
-            this.btnFilter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFilter.UseVisualStyleBackColor = false;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
@@ -310,7 +358,7 @@
             this.panel1.Controls.Add(this.lbl1);
             this.panel1.Location = new System.Drawing.Point(1000, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(190, 538);
+            this.panel1.Size = new System.Drawing.Size(190, 580);
             this.panel1.TabIndex = 14;
             // 
             // btnClearFilters
@@ -541,10 +589,209 @@
             // 
             this.supplyTableAdapter.ClearBeforeFill = true;
             // 
+            // btnSearchNext
+            // 
+            this.btnSearchNext.BackColor = System.Drawing.Color.Honeydew;
+            this.btnSearchNext.BackgroundImage = global::supplyGood.Properties.Resources.next;
+            this.btnSearchNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSearchNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSearchNext.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSearchNext.Location = new System.Drawing.Point(832, 38);
+            this.btnSearchNext.Name = "btnSearchNext";
+            this.btnSearchNext.Size = new System.Drawing.Size(30, 71);
+            this.btnSearchNext.TabIndex = 15;
+            this.btnSearchNext.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSearchNext.UseVisualStyleBackColor = false;
+            this.btnSearchNext.Click += new System.EventHandler(this.BtnSearchNext_Click);
+            // 
+            // btnSearchPrev
+            // 
+            this.btnSearchPrev.BackColor = System.Drawing.Color.Honeydew;
+            this.btnSearchPrev.BackgroundImage = global::supplyGood.Properties.Resources.prev;
+            this.btnSearchPrev.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSearchPrev.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSearchPrev.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSearchPrev.Location = new System.Drawing.Point(577, 38);
+            this.btnSearchPrev.Name = "btnSearchPrev";
+            this.btnSearchPrev.Size = new System.Drawing.Size(30, 71);
+            this.btnSearchPrev.TabIndex = 16;
+            this.btnSearchPrev.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSearchPrev.UseVisualStyleBackColor = false;
+            this.btnSearchPrev.Click += new System.EventHandler(this.BtnSearchPrev_Click);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(613, 76);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(213, 33);
+            this.txtSearch.TabIndex = 17;
+            // 
+            // carBindingSource
+            // 
+            this.carBindingSource.DataMember = "Car";
+            this.carBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // employeeBindingSource
+            // 
+            this.employeeBindingSource.DataMember = "Employee";
+            this.employeeBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // goodBindingSource
+            // 
+            this.goodBindingSource.DataMember = "Good";
+            this.goodBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // supplyBindingSource
+            // 
+            this.supplyBindingSource.DataMember = "Supply";
+            this.supplyBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // cbxSearch
+            // 
+            this.cbxSearch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxSearch.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cbxSearch.FormattingEnabled = true;
+            this.cbxSearch.Location = new System.Drawing.Point(613, 37);
+            this.cbxSearch.Name = "cbxSearch";
+            this.cbxSearch.Size = new System.Drawing.Size(213, 33);
+            this.cbxSearch.TabIndex = 18;
+            // 
+            // btnSort
+            // 
+            this.btnSort.BackColor = System.Drawing.Color.Honeydew;
+            this.btnSort.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSort.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSort.Location = new System.Drawing.Point(868, 79);
+            this.btnSort.Name = "btnSort";
+            this.btnSort.Size = new System.Drawing.Size(110, 30);
+            this.btnSort.TabIndex = 19;
+            this.btnSort.Text = "Сортировка";
+            this.btnSort.UseVisualStyleBackColor = false;
+            // 
+            // bnMain
+            // 
+            this.bnMain.AddNewItem = this.bindingNavigatorAddNewItem;
+            this.bnMain.CountItem = this.bindingNavigatorCountItem;
+            this.bnMain.DeleteItem = this.bindingNavigatorDeleteItem;
+            this.bnMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bindingNavigatorMoveFirstItem,
+            this.bindingNavigatorMovePreviousItem,
+            this.bindingNavigatorSeparator,
+            this.bindingNavigatorPositionItem,
+            this.bindingNavigatorCountItem,
+            this.bindingNavigatorSeparator1,
+            this.bindingNavigatorMoveNextItem,
+            this.bindingNavigatorMoveLastItem,
+            this.bindingNavigatorSeparator2,
+            this.bindingNavigatorAddNewItem,
+            this.bindingNavigatorDeleteItem});
+            this.bnMain.Location = new System.Drawing.Point(0, 24);
+            this.bnMain.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
+            this.bnMain.MoveLastItem = this.bindingNavigatorMoveLastItem;
+            this.bnMain.MoveNextItem = this.bindingNavigatorMoveNextItem;
+            this.bnMain.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+            this.bnMain.Name = "bnMain";
+            this.bnMain.PositionItem = this.bindingNavigatorPositionItem;
+            this.bnMain.Size = new System.Drawing.Size(1204, 25);
+            this.bnMain.TabIndex = 20;
+            this.bnMain.Text = "bnMain";
+            this.bnMain.Visible = false;
+            // 
+            // bindingNavigatorAddNewItem
+            // 
+            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
+            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
+            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorAddNewItem.Text = "Добавить";
+            // 
+            // bindingNavigatorCountItem
+            // 
+            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(43, 22);
+            this.bindingNavigatorCountItem.Text = "для {0}";
+            this.bindingNavigatorCountItem.ToolTipText = "Общее число элементов";
+            // 
+            // bindingNavigatorDeleteItem
+            // 
+            this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
+            this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
+            this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorDeleteItem.Text = "Удалить";
+            // 
+            // bindingNavigatorMoveFirstItem
+            // 
+            this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
+            this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
+            this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorMoveFirstItem.Text = "Переместить в начало";
+            // 
+            // bindingNavigatorMovePreviousItem
+            // 
+            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
+            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
+            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorMovePreviousItem.Text = "Переместить назад";
+            // 
+            // bindingNavigatorSeparator
+            // 
+            this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
+            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bindingNavigatorPositionItem
+            // 
+            this.bindingNavigatorPositionItem.AccessibleName = "Положение";
+            this.bindingNavigatorPositionItem.AutoSize = false;
+            this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
+            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 23);
+            this.bindingNavigatorPositionItem.Text = "0";
+            this.bindingNavigatorPositionItem.ToolTipText = "Текущее положение";
+            // 
+            // bindingNavigatorSeparator1
+            // 
+            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
+            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bindingNavigatorMoveNextItem
+            // 
+            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
+            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
+            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorMoveNextItem.Text = "Переместить вперед";
+            // 
+            // bindingNavigatorMoveLastItem
+            // 
+            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
+            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
+            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorMoveLastItem.Text = "Переместить в конец";
+            // 
+            // bindingNavigatorSeparator2
+            // 
+            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1204, 562);
+            this.ClientSize = new System.Drawing.Size(1204, 616);
+            this.Controls.Add(this.bnMain);
+            this.Controls.Add(this.btnSort);
+            this.Controls.Add(this.cbxSearch);
+            this.Controls.Add(this.txtSearch);
+            this.Controls.Add(this.btnSearchPrev);
+            this.Controls.Add(this.btnSearchNext);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnFilter);
             this.Controls.Add(this.lblHint);
@@ -570,6 +817,13 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.carBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.supplyBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bnMain)).EndInit();
+            this.bnMain.ResumeLayout(false);
+            this.bnMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -627,5 +881,28 @@
         private System.Windows.Forms.Label lbl1;
         private MainDBDataSetTableAdapters.SupplyTableAdapter supplyTableAdapter;
         private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
+        private System.Windows.Forms.Button btnSearchNext;
+        private System.Windows.Forms.Button btnSearchPrev;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.ToolStripMenuItem прогнозToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem predictGoodToolStripMenuItem;
+        private System.Windows.Forms.BindingSource carBindingSource;
+        private System.Windows.Forms.BindingSource employeeBindingSource;
+        private System.Windows.Forms.BindingSource goodBindingSource;
+        private System.Windows.Forms.BindingSource supplyBindingSource;
+        private System.Windows.Forms.ComboBox cbxSearch;
+        private System.Windows.Forms.Button btnSort;
+        private System.Windows.Forms.BindingNavigator bnMain;
+        private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
+        private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
+        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
+        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
+        private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
+        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
+        private System.Windows.Forms.ToolStripTextBox bindingNavigatorPositionItem;
+        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
+        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
+        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
+        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
     }
 }

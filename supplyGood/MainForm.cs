@@ -14,6 +14,7 @@ using System.Configuration;
 namespace supplyGood
 {
     public enum Rights { Admin, HR, Manager, Storage }
+    public enum SearchDirection { Previous, Next }
     public enum SubFormMode { Empty, View, Edit, Add }
     public enum TableView { Empty, Supply, Good, Car, Storage, Client, Employee, User }
 
@@ -125,8 +126,8 @@ namespace supplyGood
         {
                 "ID поставки",
                 "ID заказчика",
-                "ID склада",
                 "ID машины",
+                "ID склада",
                 "Адрес доставки",
                 "Дата договора",
                 "Срок поставки, мес",
@@ -137,8 +138,8 @@ namespace supplyGood
         {
                 "id",
                 "id_client",
-                "id_storage",
                 "id_car",
+                "id_storage",
                 "s_address",
                 "s_contract",
                 "s_period",
@@ -206,6 +207,11 @@ namespace supplyGood
         private void MainForm_Load(object sender, EventArgs e)
         {
             userTableAdapter.Fill(this.mainDBDataSet.User);
+            supplyTableAdapter.Fill(this.mainDBDataSet.Supply);
+            employeeTableAdapter.Fill(this.mainDBDataSet.Employee);
+            goodTableAdapter.Fill(this.mainDBDataSet.Good);
+            carTableAdapter.Fill(this.mainDBDataSet.Car);
+
             mainMenuStrip.Renderer = new MainStripRenderer();
             if (_Rights == Rights.HR)
             {
@@ -227,113 +233,91 @@ namespace supplyGood
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             userTableAdapter.Update(mainDBDataSet.User);
+            supplyTableAdapter.Update(mainDBDataSet.Supply);
+            employeeTableAdapter.Update(mainDBDataSet.Employee);
+            goodTableAdapter.Update(mainDBDataSet.Good);
+            carTableAdapter.Update(mainDBDataSet.Car);
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
-        
-        //switch (_View)
-        //    {
-        //        case TableView.Good:
-        //        case TableView.Car:
-        //        case TableView.Employee:
-        //        case TableView.User:
-        //            {
-                        
-        //                break;
-        //            }
-        //    }
 
-        private bool UpdateDataGridView(string query, DataGridView dgv, string[] headers, ContextMenuStrip menuStrip, int selectedRow = 0)
+        private void Search(SearchDirection searchDirection)
         {
+            if (txtSearch.Text == "")
+            {
+                UpdateCurrentData();
+                MessageBox.Show("Nothing was found.");
+                return;
+            }
+            int stopID;
             try
             {
-                string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
-                SqlConnection sqlconn = new SqlConnection(ConnectionString);
-                sqlconn.Open();
-                SqlDataAdapter oda = new SqlDataAdapter(query, sqlconn);
-                DataTable dt = new DataTable();
-                oda.Fill(dt);
-                dgv.DataSource = dt;
-                sqlconn.Close();
-                if (headers.Length > 0)
+                stopID = dgvMain.SelectedRows[0].Index;
+            }
+            catch
+            {
+                dgvMain.Rows[0].Selected = true;
+                stopID = 0;
+            }
+            while (true)
+            {
+                if (dgvMain.SelectedRows[0].Cells[cbxSearch.SelectedIndex].Value.ToString().ToLower().Contains(txtSearch.Text.ToLower())
+                    && dgvMain.SelectedRows[0].Cells[cbxSearch.SelectedIndex].Style.SelectionBackColor != Color.LightGreen)
                 {
-                    for (int i = 0; i < headers.Length; i++)
+                    dgvMain.SelectedRows[0].Cells[cbxSearch.SelectedIndex].Style.SelectionBackColor = Color.LightGreen;
+                    return;
+                }
+                if (searchDirection == SearchDirection.Previous)
+                {
+                    if (bnMain.BindingSource.Position - 1 >= 0)
                     {
-                        dgv.Columns[i].HeaderText = headers[i];
+                        dgvMain.SelectedRows[0].Cells[cbxSearch.SelectedIndex].Style.SelectionBackColor = Color.LightSkyBlue;
+                        bnMain.BindingSource.MovePrevious();
+                    }
+                    else
+                    {
+                        dgvMain.SelectedRows[0].Cells[cbxSearch.SelectedIndex].Style.SelectionBackColor = Color.LightSkyBlue;
+                        bnMain.BindingSource.MoveLast();
                     }
                 }
-                for (int i = 0; i < dgv.Rows.Count; i++)
+                else if (searchDirection == SearchDirection.Next)
                 {
-                    dgv.Rows[i].ContextMenuStrip = menuStrip;
+                    if (bnMain.BindingSource.Position + 1 < bnMain.BindingSource.Count)
+                    {
+                        dgvMain.SelectedRows[0].Cells[cbxSearch.SelectedIndex].Style.SelectionBackColor = Color.LightSkyBlue;
+                        bnMain.BindingSource.MoveNext();
+                    }
+                    else
+                    {
+                        dgvMain.SelectedRows[0].Cells[cbxSearch.SelectedIndex].Style.SelectionBackColor = Color.LightSkyBlue;
+                        bnMain.BindingSource.MoveFirst();
+                    }
                 }
-                dgv.Rows[selectedRow].Selected = true;
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
+                else
+                    return;
+                if (dgvMain.SelectedRows[0].Index == stopID && 
+                    !(dgvMain.SelectedRows[0].Cells[cbxSearch.SelectedIndex].Value.ToString().ToLower().Contains(txtSearch.Text.ToLower())))
+                {
+                    UpdateCurrentData();
+                    MessageBox.Show("Nothing was found.");
+                    return;
+                }
             }
         }
         private void UpdateCurrentData()
         {
-            switch (_View)
-            {
-                case TableView.Employee:
-                    {
-                        ApplyVisualAppearence();
-                        UpdateDataGridView(
-                            @"SELECT * FROM Employee",
-                            dgvMain,
-                            _headerEmployee,
-                            contextDGV,
-                            0);
-                        break;
-                    }
-                case TableView.Good:
-                    {
-                        ApplyVisualAppearence();
-                        UpdateDataGridView(
-                            @"SELECT * FROM Good",
-                            dgvMain,
-                            _headerGood,
-                            contextDGV,
-                            0);
-                        break;
-                    }
-                case TableView.Car:
-                    {
-                        ApplyVisualAppearence();
-                        UpdateDataGridView(
-                            @"SELECT * FROM Car",
-                            dgvMain,
-                            _headerCar,
-                            contextDGV,
-                            0);
-                        break;
-                    }
-                case TableView.Supply:
-                    {
-                        ApplyVisualAppearence();
-                        UpdateDataGridView(
-                            @"SELECT * FROM Supply",
-                            dgvMain,
-                            _headerSupply,
-                            contextDGV,
-                            0);
-                        break;
-                    }
-                case TableView.User:
-                    {
-                        ApplyVisualAppearence();
-                        break;
-                    }
-            }
+            SaveToDB();
+            ApplyVisualAppearence();
 
             if (_View == TableView.Car || _View == TableView.Good)
             {
                 dgvMain.Columns[0].Width = 75;
+            }
+            if (_View == TableView.Car)
+            {
+                dgvMain.Columns[1].Width = 75;
             }
 
             if (_View == TableView.Supply)
@@ -342,16 +326,14 @@ namespace supplyGood
                 dgvMain.Columns[1].Width = 40;
                 dgvMain.Columns[2].Width = 40;
                 dgvMain.Columns[3].Width = 40;
-
-                dgvMain.Columns[6].Width = 70;
-                dgvMain.Columns[7].Width = 40;
-                dgvMain.Columns[8].Width = 60;
+                dgvMain.Columns[4].Width = 320;
             }
 
             SetFilters();
         }
         private void ApplyVisualAppearence()
         {
+            string[] headers = new string[0];
             switch (_View)
             {
                 case TableView.Good:
@@ -359,7 +341,38 @@ namespace supplyGood
                 case TableView.Employee:
                 case TableView.Supply:
                     {
-                        dgvMain.DataSource = null;
+                        if (_View == TableView.Good)
+                        {
+                            dgvMain.DataSource = goodBindingSource;
+                            bnMain.BindingSource = goodBindingSource;
+                            headers = _headerGood;
+                            cbxSearch.Items.Clear();
+                            cbxSearch.Items.AddRange(_headerGood);
+                        }
+                        else if (_View == TableView.Car)
+                        {
+                            dgvMain.DataSource = carBindingSource;
+                            bnMain.BindingSource = carBindingSource;
+                            headers = _headerCar;
+                            cbxSearch.Items.Clear();
+                            cbxSearch.Items.AddRange(_headerCar);
+                        }
+                        else if (_View == TableView.Employee)
+                        {
+                            dgvMain.DataSource = employeeBindingSource;
+                            bnMain.BindingSource = employeeBindingSource;
+                            headers = _headerEmployee;
+                            cbxSearch.Items.Clear();
+                            cbxSearch.Items.AddRange(_headerEmployee);
+                        }
+                        else if (_View == TableView.Supply)
+                        {
+                            dgvMain.DataSource = supplyBindingSource;
+                            bnMain.BindingSource = supplyBindingSource;
+                            headers = _headerSupply;
+                            cbxSearch.Items.Clear();
+                            cbxSearch.Items.AddRange(_headerSupply);
+                        }
                         btnFunc.Visible = true;
                         dgvMain.ReadOnly = true;
                         dgvMain.AllowUserToAddRows = false;
@@ -370,6 +383,11 @@ namespace supplyGood
                 case TableView.User:
                     {
                         dgvMain.DataSource = userBindingSource;
+                        bnMain.BindingSource = userBindingSource;
+                        headers = _headerUser;
+                        cbxSearch.Items.Clear();
+                        cbxSearch.Items.AddRange(_headerUser);
+
                         btnFunc.Visible = false;
                         dgvMain.ReadOnly = false;
                         dgvMain.AllowUserToAddRows = true;
@@ -377,6 +395,43 @@ namespace supplyGood
                         dgvMain.SelectionMode = DataGridViewSelectionMode.CellSelect;
                         break;
                     }
+            }
+            cbxSearch.SelectedIndex = 0;
+
+            if (headers.Length > 0)
+            {
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    dgvMain.Columns[i].HeaderText = headers[i];
+                }
+            }
+        }
+        private void SaveToDB()
+        {
+            try
+            {
+                Validate();
+                supplyBindingSource.EndEdit();
+                supplyTableAdapter.Update(this.mainDBDataSet.Supply);
+                employeeBindingSource.EndEdit();
+                employeeTableAdapter.Update(this.mainDBDataSet.Employee);
+                goodBindingSource.EndEdit();
+                goodTableAdapter.Update(this.mainDBDataSet.Good);
+                carBindingSource.EndEdit();
+                carTableAdapter.Update(this.mainDBDataSet.Car);
+                userBindingSource.EndEdit();
+                userTableAdapter.Update(this.mainDBDataSet.User);
+
+
+                userTableAdapter.Fill(this.mainDBDataSet.User);
+                supplyTableAdapter.Fill(this.mainDBDataSet.Supply);
+                employeeTableAdapter.Fill(this.mainDBDataSet.Employee);
+                goodTableAdapter.Fill(this.mainDBDataSet.Good);
+                carTableAdapter.Fill(this.mainDBDataSet.Car);
+            }
+            catch
+            {
+                MessageBox.Show("Update failed");
             }
         }
         private void ClearAllHandlers(Control control)
@@ -503,7 +558,7 @@ namespace supplyGood
                     lblFilters[i].Visible = true;
                     txtFilters[i].Visible = true;
                 }
-                catch (Exception ex)
+                catch
                 {
                     if ((_View == TableView.Good || _View == TableView.Employee) && i == head.Length)
                     {
@@ -513,12 +568,19 @@ namespace supplyGood
                         lblFilters[i].Visible = true;
                         txtFilters[i].Visible = true;
                     }
-                    else
+                    else 
                     {
                         lblFilters[i].Visible = false;
                         txtFilters[i].Visible = false;
                     }
                 }
+            }
+            if (_View == TableView.Supply)
+            {
+                lblFilters[7].Visible = false;
+                txtFilters[7].Visible = false;
+                lblFilters[8].Visible = false;
+                txtFilters[8].Visible = false;
             }
         }
         private void PerformFiltering()
@@ -533,10 +595,10 @@ namespace supplyGood
                             if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
                             {
                                 if (filter.Length > 0) filter += " AND ";
-                                filter += string.Format("{0} LIKE '%{1}%'", _fieldsSupply[i], txtFilters[i].Text.Trim());
+                                filter += string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsSupply[i], txtFilters[i].Text.Trim());
                             }
                         }
-                        (dgvMain.DataSource as DataTable).DefaultView.RowFilter = filter;
+                        supplyBindingSource.Filter = filter;
                         break;
                     }
                 case TableView.Good:
@@ -547,7 +609,7 @@ namespace supplyGood
                             if (!String.IsNullOrEmpty(txtFilters[i].Text.Trim()))
                             {
                                 if (filter.Length > 0) filter += " AND ";
-                                filter += string.Format("{0} LIKE '%{1}%'", _fieldsGood[i], txtFilters[i].Text.Trim());
+                                filter += string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsGood[i], txtFilters[i].Text.Trim());
                             }
                         }
                         int from = _headerGood.Length - 1;
@@ -565,9 +627,9 @@ namespace supplyGood
                         else if (!String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
                         {
                             if (filter.Length > 0) filter += " AND ";
-                            filter += string.Format("{0} >= {1}", _fieldsGood[from], txtFilters[to].Text.Trim());
+                            filter += string.Format("{0} <= {1}", _fieldsGood[from], txtFilters[to].Text.Trim());
                         }
-                        (dgvMain.DataSource as DataTable).DefaultView.RowFilter = filter;
+                        goodBindingSource.Filter = filter;
                         break;
                     }
                 case TableView.Car:
@@ -581,7 +643,7 @@ namespace supplyGood
                                 filter += string.Format("Convert({0}, System.String) LIKE '%{1}%'", _fieldsCar[i], txtFilters[i].Text.Trim());
                             }
                         }
-                        (dgvMain.DataSource as DataTable).DefaultView.RowFilter = filter;
+                        carBindingSource.Filter = filter;
                         break;
                     }
                 case TableView.Employee:
@@ -610,9 +672,9 @@ namespace supplyGood
                         else if (!String.IsNullOrEmpty(txtFilters[to].Text.Trim()))
                         {
                             if (filter.Length > 0) filter += " AND ";
-                            filter = string.Format("{0} >= {1}", _fieldsEmployee[from], txtFilters[to].Text.Trim());
+                            filter = string.Format("{0} <= {1}", _fieldsEmployee[from], txtFilters[to].Text.Trim());
                         }
-                        (dgvMain.DataSource as DataTable).DefaultView.RowFilter = filter;
+                        employeeBindingSource.Filter = filter;
                         break;
                     }
                 case TableView.User:
@@ -703,7 +765,7 @@ namespace supplyGood
         }
         private void statisticsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var NextForm = new Statistics();
+            var NextForm = new StatisticsForm();
             NextForm.ShowDialog();
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -719,7 +781,7 @@ namespace supplyGood
                 currRowIndex = dgvMain.SelectedCells[0].RowIndex;
                 currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
             }
-            catch (Exception ex) { }
+            catch { }
 
             var NextForm = new Form();
 
@@ -752,14 +814,14 @@ namespace supplyGood
             int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
 
             UpdateCurrentData();
+
             try
             {
                 dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
                 dgvMain.Rows[currRowIndex].Selected = true;
             }
-            catch (Exception ex) { }
-
-}
+            catch { }
+        }
         private void btnFilter_Click(object sender, EventArgs e)
         {
             if (!Filtering)
@@ -832,7 +894,7 @@ namespace supplyGood
             {
                 dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
             }
-            catch (Exception ex) { }
+            catch { }
         }
         private void dgvMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -842,7 +904,7 @@ namespace supplyGood
                 {
                     dgvMain.CurrentCell = dgvMain.Rows[e.RowIndex].Cells[e.ColumnIndex];
                 }
-                catch (Exception ex) { }
+                catch { }
             }
         }
         private void dgvMain_DoubleClick(object sender, EventArgs e)
@@ -852,6 +914,22 @@ namespace supplyGood
         private void dgvMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show("Вы не заполнили все необходимые поля" + Environment.NewLine + "Повторите ввод данных");
+        }
+
+        private void PredictGoodToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var NextForm = new PredictForm();
+            NextForm.ShowDialog();
+        }
+
+        private void BtnSearchPrev_Click(object sender, EventArgs e)
+        {
+            Search(SearchDirection.Previous);
+        }
+
+        private void BtnSearchNext_Click(object sender, EventArgs e)
+        {
+            Search(SearchDirection.Next);
         }
     }
 
@@ -903,7 +981,7 @@ namespace supplyGood
         }
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
-            //base.OnRenderToolStripBorder(e);
+            base.OnRenderToolStripBorder(e);
         }
     }
 }

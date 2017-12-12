@@ -44,7 +44,7 @@ namespace supplyGood
                     GetID(cbxCar.Text),
                     GetID(cbxStorage.Text),
                     txtAddress.Text,
-                    dateContract.Value,
+                    dateContract.Value.Date.ToShortDateString(),
                     Convert.ToInt32(txtPeriod.Text),
                     cbxDelivered.Checked,
                     cbxShipped.Checked);
@@ -81,6 +81,10 @@ namespace supplyGood
 
         private void ViewSupply_Load(object sender, EventArgs e)
         {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "mainDBDataSet.Good". При необходимости она может быть перемещена или удалена.
+            this.goodTableAdapter.Fill(this.mainDBDataSet.Good);
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "mainDBDataSet.ConsignmentUF". При необходимости она может быть перемещена или удалена.
+            this.consignmentUFTableAdapter.Fill(this.mainDBDataSet.ConsignmentUF);
             this.consignmentTableAdapter.Fill(this.mainDBDataSet.Consignment);
             if (_Mode != SubFormMode.Add)
             {
@@ -320,9 +324,9 @@ namespace supplyGood
                     GetID(cbxCar.Text),
                     GetID(cbxStorage.Text),
                     txtAddress.Text,
-                    dateContract.Value.Date,
+                    dateContract.Value.Date.ToShortDateString(),
                     Convert.ToInt32(txtPeriod.Text),
-                    cbxDelivered.Checked,
+                    cbxShipped.Checked && cbxDelivered.Checked,
                     cbxShipped.Checked);
 
                 _ID = GetIDByAllAttributes;
@@ -342,9 +346,9 @@ namespace supplyGood
                     GetID(cbxCar.Text),
                     GetID(cbxStorage.Text),
                     txtAddress.Text,
-                    dateContract.Value.Date,
+                    dateContract.Value.Date.ToShortDateString(),
                     Convert.ToInt32(txtPeriod.Text),
-                    cbxDelivered.Checked,
+                    cbxShipped.Checked && cbxDelivered.Checked,
                     cbxShipped.Checked,
                     _ID);
 
@@ -368,6 +372,11 @@ namespace supplyGood
         private void dgvGoods_SelectionChanged(object sender, EventArgs e)
         {
             RefreshSum();
+            if (dgvGoods.SelectedRows.Count != 0)
+            {
+                txtAmount.Text = dgvGoods.SelectedRows[0].Cells[2].Value.ToString();
+                txtPrice.Text = dgvGoods.SelectedRows[0].Cells[3].Value.ToString();
+            }
         }
 
         private void dgvGoods_RowLeave(object sender, DataGridViewCellEventArgs e)
@@ -378,6 +387,61 @@ namespace supplyGood
         private void dgvGoods_Leave(object sender, EventArgs e)
         {
             RefreshSum();
+        }
+
+        private void cbxShipped_CheckedChanged(object sender, EventArgs e)
+        {
+            cbxDelivered.Enabled = cbxShipped.Checked;
+        }
+
+        private void btnGoodAdd_Click(object sender, EventArgs e)
+        {
+            Form NextForm = new ChooseGoodForm(_ID);
+            NextForm.ShowDialog();
+
+            consignmentBindingSource.EndEdit();
+            consignmentUFTableAdapter.Fill(mainDBDataSet.ConsignmentUF);
+
+            RefreshSum();
+        }
+
+        private void btnGoodSave_Click(object sender, EventArgs e)
+        {
+            int amount, price, id_good;
+            try
+            {
+                amount = Convert.ToInt32(txtAmount.Text);
+                price = Convert.ToInt32(txtPrice.Text);
+                id_good = Convert.ToInt32(txtGoodName.Text.Split(',')[0].Substring(1));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Некорректно введенные данные, повторите попытку", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                dgvGoods_SelectionChanged(null, null);
+                return;
+            }
+            consignmentTableAdapter.UpdateQuery(amount, price, _ID, id_good);
+
+            consignmentBindingSource.EndEdit();
+            consignmentUFTableAdapter.Fill(mainDBDataSet.ConsignmentUF);
+            MessageBox.Show("Информация изменена", "Успех!!1!1", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            dgvGoods_SelectionChanged(null, null);
+        }
+
+        private void GoodAdd_TextChanged(object sender, EventArgs e)
+        {
+            if (dgvGoods.SelectedRows.Count != 0)
+            {
+                if (txtAmount.Text == dgvGoods.SelectedRows[0].Cells[2].Value.ToString() &&
+                txtPrice.Text == dgvGoods.SelectedRows[0].Cells[3].Value.ToString())
+                {
+                    btnGoodSave.Visible = false;
+                }
+                else
+                {
+                    btnGoodSave.Visible = true;
+                }
+            }
         }
     }
 }

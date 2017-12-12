@@ -46,6 +46,7 @@
             this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMain = new System.Windows.Forms.Label();
             this.dgvMain = new System.Windows.Forms.DataGridView();
+            this.mainDBDataSet = new supplyGood.MainDBDataSet();
             this.contextDGV = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.detailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,21 +54,9 @@
             this.btnFunc = new System.Windows.Forms.Button();
             this.lblHint = new System.Windows.Forms.Label();
             this.btnSort = new System.Windows.Forms.Button();
-            this.employeeTableAdapter = new supplyGood.MainDBDataSetTableAdapters.EmployeeTableAdapter();
-            this.personalInfoTableAdapter = new supplyGood.MainDBDataSetTableAdapters.PersonalInfoTableAdapter();
-            this.goodTableAdapter = new supplyGood.MainDBDataSetTableAdapters.GoodTableAdapter();
-            this.carTableAdapter = new supplyGood.MainDBDataSetTableAdapters.CarTableAdapter();
-            this.mainDBDataSet = new supplyGood.MainDBDataSet();
-            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.userTableAdapter = new supplyGood.MainDBDataSetTableAdapters.UserTableAdapter();
-            this.supplyTableAdapter = new supplyGood.MainDBDataSetTableAdapters.SupplyTableAdapter();
             this.btnSearchNext = new System.Windows.Forms.Button();
             this.btnSearchPrev = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.carBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.employeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.goodBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.supplyBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cbxSearch = new System.Windows.Forms.ComboBox();
             this.bnMain = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
@@ -83,17 +72,34 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnFilter = new System.Windows.Forms.Button();
             this.btnClearFilters = new System.Windows.Forms.Button();
+            this.employeeTableAdapter = new supplyGood.MainDBDataSetTableAdapters.EmployeeTableAdapter();
+            this.personalInfoTableAdapter = new supplyGood.MainDBDataSetTableAdapters.PersonalInfoTableAdapter();
+            this.goodTableAdapter = new supplyGood.MainDBDataSetTableAdapters.GoodTableAdapter();
+            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.userTableAdapter = new supplyGood.MainDBDataSetTableAdapters.UserTableAdapter();
+            this.carBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.employeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.goodBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.supplyBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.supplyUFTableAdapter = new supplyGood.MainDBDataSetTableAdapters.SupplyUFTableAdapter();
+            this.carUFTableAdapter = new supplyGood.MainDBDataSetTableAdapters.CarUFTableAdapter();
+            this.supplyTableAdapter = new supplyGood.MainDBDataSetTableAdapters.SupplyTableAdapter();
+            this.carTableAdapter = new supplyGood.MainDBDataSetTableAdapters.CarTableAdapter();
+            this.storageBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.storageTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StorageTableAdapter();
+            this.storageUFTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StorageUFTableAdapter();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
-            this.contextDGV.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
+            this.contextDGV.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bnMain)).BeginInit();
+            this.bnMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bnMain)).BeginInit();
-            this.bnMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.storageBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -144,42 +150,42 @@
             // suppliesToolStripMenuItem
             // 
             this.suppliesToolStripMenuItem.Name = "suppliesToolStripMenuItem";
-            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.suppliesToolStripMenuItem.Text = "Поставки";
             this.suppliesToolStripMenuItem.Click += new System.EventHandler(this.SuppliesToolStripMenuItem_Click);
             // 
             // employeeToolStripMenuItem
             // 
             this.employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
-            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.employeeToolStripMenuItem.Text = "Сотрудники";
             this.employeeToolStripMenuItem.Click += new System.EventHandler(this.EmployeeToolStripMenuItem_Click);
             // 
             // goodsToolStripMenuItem
             // 
             this.goodsToolStripMenuItem.Name = "goodsToolStripMenuItem";
-            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.goodsToolStripMenuItem.Text = "Товары";
             this.goodsToolStripMenuItem.Click += new System.EventHandler(this.GoodsToolStripMenuItem_Click);
             // 
             // clientsToolStripMenuItem
             // 
             this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
-            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clientsToolStripMenuItem.Text = "-Заказчики";
             this.clientsToolStripMenuItem.Visible = false;
             // 
             // storagesToolStripMenuItem
             // 
             this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
-            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.storagesToolStripMenuItem.Text = "-Склады";
-            this.storagesToolStripMenuItem.Visible = false;
+            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.storagesToolStripMenuItem.Text = "Склады";
+            this.storagesToolStripMenuItem.Click += new System.EventHandler(this.StorageToolStripMenuItem_Click);
             // 
             // carsToolStripMenuItem
             // 
             this.carsToolStripMenuItem.Name = "carsToolStripMenuItem";
-            this.carsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.carsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.carsToolStripMenuItem.Text = "Машины";
             this.carsToolStripMenuItem.Click += new System.EventHandler(this.CarsToolStripMenuItem_Click);
             // 
@@ -249,6 +255,11 @@
             this.dgvMain.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMain_DataError);
             this.dgvMain.DoubleClick += new System.EventHandler(this.dgvMain_DoubleClick);
             // 
+            // mainDBDataSet
+            // 
+            this.mainDBDataSet.DataSetName = "MainDBDataSet";
+            this.mainDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // contextDGV
             // 
             this.contextDGV.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -313,40 +324,6 @@
             this.btnSort.UseVisualStyleBackColor = false;
             this.btnSort.Click += new System.EventHandler(this.BtnSort_Click);
             // 
-            // employeeTableAdapter
-            // 
-            this.employeeTableAdapter.ClearBeforeFill = true;
-            // 
-            // personalInfoTableAdapter
-            // 
-            this.personalInfoTableAdapter.ClearBeforeFill = true;
-            // 
-            // goodTableAdapter
-            // 
-            this.goodTableAdapter.ClearBeforeFill = true;
-            // 
-            // carTableAdapter
-            // 
-            this.carTableAdapter.ClearBeforeFill = true;
-            // 
-            // mainDBDataSet
-            // 
-            this.mainDBDataSet.DataSetName = "MainDBDataSet";
-            this.mainDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // userBindingSource
-            // 
-            this.userBindingSource.DataMember = "User";
-            this.userBindingSource.DataSource = this.mainDBDataSet;
-            // 
-            // userTableAdapter
-            // 
-            this.userTableAdapter.ClearBeforeFill = true;
-            // 
-            // supplyTableAdapter
-            // 
-            this.supplyTableAdapter.ClearBeforeFill = true;
-            // 
             // btnSearchNext
             // 
             this.btnSearchNext.BackColor = System.Drawing.Color.Honeydew;
@@ -385,26 +362,6 @@
             this.txtSearch.Size = new System.Drawing.Size(189, 25);
             this.txtSearch.TabIndex = 17;
             // 
-            // carBindingSource
-            // 
-            this.carBindingSource.DataMember = "Car";
-            this.carBindingSource.DataSource = this.mainDBDataSet;
-            // 
-            // employeeBindingSource
-            // 
-            this.employeeBindingSource.DataMember = "Employee";
-            this.employeeBindingSource.DataSource = this.mainDBDataSet;
-            // 
-            // goodBindingSource
-            // 
-            this.goodBindingSource.DataMember = "Good";
-            this.goodBindingSource.DataSource = this.mainDBDataSet;
-            // 
-            // supplyBindingSource
-            // 
-            this.supplyBindingSource.DataMember = "Supply";
-            this.supplyBindingSource.DataSource = this.mainDBDataSet;
-            // 
             // cbxSearch
             // 
             this.cbxSearch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -440,7 +397,7 @@
             this.bnMain.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bnMain.Name = "bnMain";
             this.bnMain.PositionItem = this.bindingNavigatorPositionItem;
-            this.bnMain.Size = new System.Drawing.Size(1204, 25);
+            this.bnMain.Size = new System.Drawing.Size(1094, 25);
             this.bnMain.TabIndex = 20;
             this.bnMain.Text = "bnMain";
             this.bnMain.Visible = false;
@@ -556,6 +513,76 @@
             this.btnClearFilters.UseVisualStyleBackColor = false;
             this.btnClearFilters.Click += new System.EventHandler(this.BtnClearFilters_Click);
             // 
+            // employeeTableAdapter
+            // 
+            this.employeeTableAdapter.ClearBeforeFill = true;
+            // 
+            // personalInfoTableAdapter
+            // 
+            this.personalInfoTableAdapter.ClearBeforeFill = true;
+            // 
+            // goodTableAdapter
+            // 
+            this.goodTableAdapter.ClearBeforeFill = true;
+            // 
+            // userBindingSource
+            // 
+            this.userBindingSource.DataMember = "User";
+            this.userBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // userTableAdapter
+            // 
+            this.userTableAdapter.ClearBeforeFill = true;
+            // 
+            // carBindingSource
+            // 
+            this.carBindingSource.DataMember = "CarUF";
+            this.carBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // employeeBindingSource
+            // 
+            this.employeeBindingSource.DataMember = "Employee";
+            this.employeeBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // goodBindingSource
+            // 
+            this.goodBindingSource.DataMember = "Good";
+            this.goodBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // supplyBindingSource
+            // 
+            this.supplyBindingSource.DataMember = "SupplyUF";
+            this.supplyBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // supplyUFTableAdapter
+            // 
+            this.supplyUFTableAdapter.ClearBeforeFill = true;
+            // 
+            // carUFTableAdapter
+            // 
+            this.carUFTableAdapter.ClearBeforeFill = true;
+            // 
+            // supplyTableAdapter
+            // 
+            this.supplyTableAdapter.ClearBeforeFill = true;
+            // 
+            // carTableAdapter
+            // 
+            this.carTableAdapter.ClearBeforeFill = true;
+            // 
+            // storageBindingSource
+            // 
+            this.storageBindingSource.DataMember = "StorageUF";
+            this.storageBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // storageTableAdapter
+            // 
+            this.storageTableAdapter.ClearBeforeFill = true;
+            // 
+            // storageUFTableAdapter
+            // 
+            this.storageUFTableAdapter.ClearBeforeFill = true;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -586,16 +613,17 @@
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
-            this.contextDGV.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).EndInit();
+            this.contextDGV.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bnMain)).EndInit();
+            this.bnMain.ResumeLayout(false);
+            this.bnMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.carBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bnMain)).EndInit();
-            this.bnMain.ResumeLayout(false);
-            this.bnMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.storageBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -624,13 +652,11 @@
         private MainDBDataSetTableAdapters.PersonalInfoTableAdapter personalInfoTableAdapter;
         private System.Windows.Forms.ToolStripMenuItem clientsToolStripMenuItem;
         private MainDBDataSetTableAdapters.GoodTableAdapter goodTableAdapter;
-        private MainDBDataSetTableAdapters.CarTableAdapter carTableAdapter;
         private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem;
         private System.Windows.Forms.Button btnSort;
         private MainDBDataSet mainDBDataSet;
         private System.Windows.Forms.BindingSource userBindingSource;
         private MainDBDataSetTableAdapters.UserTableAdapter userTableAdapter;
-        private MainDBDataSetTableAdapters.SupplyTableAdapter supplyTableAdapter;
         private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
         private System.Windows.Forms.Button btnSearchNext;
         private System.Windows.Forms.Button btnSearchPrev;
@@ -656,5 +682,12 @@
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.Button btnClearFilters;
+        private MainDBDataSetTableAdapters.SupplyUFTableAdapter supplyUFTableAdapter;
+        private MainDBDataSetTableAdapters.CarUFTableAdapter carUFTableAdapter;
+        private MainDBDataSetTableAdapters.SupplyTableAdapter supplyTableAdapter;
+        private MainDBDataSetTableAdapters.CarTableAdapter carTableAdapter;
+        private System.Windows.Forms.BindingSource storageBindingSource;
+        private MainDBDataSetTableAdapters.StorageTableAdapter storageTableAdapter;
+        private MainDBDataSetTableAdapters.StorageUFTableAdapter storageUFTableAdapter;
     }
 }

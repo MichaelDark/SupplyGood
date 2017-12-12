@@ -22,7 +22,7 @@ namespace supplyGood
     public partial class MainForm : Form
     {
         Rights _Rights;
-        List<Filter> Filters;
+        List<FormState> State;
         string RightsCaption
         {
             get
@@ -54,105 +54,11 @@ namespace supplyGood
         }
         
         TableView _View = TableView.Empty;
-        List<TextBox> txtFilters = new List<TextBox>();
-        List<Label> lblFilters = new List<Label>();
-
-        string[] _headerEmployee = new string[]
-        {
-                "ID",
-                "Фамилия",
-                "Имя",
-                "Отчество",
-                "Зачисление",
-                "Увольнение",
-                "Оклад",
-        };
-        string[] _fieldsEmployee = new string[]
-        {
-                "id",
-                "em_surname",
-                "em_name",
-                "em_patron",
-                "em_acceptance",
-                "em_discharge",
-                "em_salary"
-        };
-
-        string[] _headerGood = new string[]
-        {
-                "ID",
-                "Наименование",
-                "Ед. измерения",
-                "Цена за ед. (грн)"
-        };
-        string[] _fieldsGood = new string[]
-        {
-                "id",
-                "g_name",
-                "g_unit",
-                "g_price"
-        };
-
-        string[] _headerCar = new string[]
-        {
-                "ID",
-                "ID Водителя",
-                "Гос. номер",
-                "Модель",
-                "Цвет"
-        };
-        string[] _fieldsCar = new string[]
-        {
-                "id",
-                "id_driver",
-                "car_number",
-                "car_model",
-                "car_color"
-        };
-
-        string[] _headerUser = new string[]
-        {
-                "Логин",
-                "Пароль",
-                "Права"
-        };
-        string[] _fieldsUser = new string[]
-        {
-                "login",
-                "password",
-                "rights"
-        };
-
-        string[] _headerSupply = new string[]
-        {
-                "ID поставки",
-                "ID заказчика",
-                "ID машины",
-                "ID склада",
-                "Адрес доставки",
-                "Дата договора",
-                "Срок поставки, мес",
-                "Отгр.",
-                "Дост."
-        };
-        string[] _fieldsSupply = new string[]
-        {
-                "id",
-                "id_client",
-                "id_car",
-                "id_storage",
-                "s_address",
-                "s_contract",
-                "s_period",
-                "s_shipped",
-                "s_delivered"
-        };
-
-
+        
         public MainForm(Rights cRights = Rights.Admin)
         {
             InitializeComponent();
-            Filters = new List<Filter>();
+            InitializeStates();
             _Rights = cRights;
             Text = RightsCaption;
             _View = TableView.Empty;
@@ -179,9 +85,259 @@ namespace supplyGood
             }
         }
 
+        private void InitializeStates()
+        {
+            State = new List<FormState>();
+            string caption = "";
+            string hint = "";
+            string btnText = "";
+            List<string> head = new List<string>();
+            List<string> field = new List<string>();
+            List<Filter> filter = new List<Filter>();
 
+            FormState empty = new FormState();
+            State.Add(empty);
+
+            //Supply
+            caption = "Поставки";
+            hint = "Подсказка: существует возможность просмотра расширенной " +
+                "информации о поставке, её редактирования и удаления поставки. " +
+                "Для этого необходимо выбрать поставку в таблице, нажать по нему " +
+                "правой кнопкой мыши и выбрать необходимое действие";
+            btnText = "Добавить поставку";
+            head = new List<string>()
+            {
+                "ID",
+                "Заказчик",
+                "Машина",
+                "Склад",
+                "Адрес доставки",
+                "Дата договора",
+                "Срок поставки, мес",
+                "Отгр.",
+                "Дост."
+            };
+            field = new List<string>()
+            {
+                "id",
+                "company",
+                "car",
+                "storage",
+                "address",
+                "contact",
+                "period",
+                "shipped",
+                "delivered"
+            };
+            filter = new List<Filter>()
+            {
+                new Filter(false, field[0], head[0], FilterType.Number),
+                new Filter(false, field[1], head[1], FilterType.Text),
+                new Filter(false, field[2], head[2], FilterType.Text),
+                new Filter(false, field[3], head[3], FilterType.Text),
+                new Filter(false, field[4], head[4], FilterType.Text),
+                new Filter(false, field[5], head[5], FilterType.Date),
+                new Filter(false, field[6], head[6], FilterType.Number),
+                new Filter(false, field[7], head[7], FilterType.Bool),
+                new Filter(false, field[8], head[8], FilterType.Bool)
+            };
+            FormState supply = new FormState(caption, hint, btnText, head, field, filter, supplyBindingSource);
+            State.Add(supply);
+
+            //Good
+            caption = "Товары";
+            hint = "Подсказка: существует возможность просмотра расширенной " +
+                "информации о товаре, её редактирования и удаления товара. " +
+                "Для этого необходимо выбрать товар в таблице, нажать по нему " +
+                "правой кнопкой мыши и выбрать необходимое действие";
+            btnText = "Добавить товар";
+            head = new List<string>()
+            {
+                "ID",
+                "Наименование",
+                "Ед. измерения",
+                "Цена за ед. (грн)"
+            };
+            field = new List<string>()
+            {
+                "id",
+                "g_name",
+                "g_unit",
+                "g_price"
+            };
+            filter = new List<Filter>()
+            {
+                new Filter(false, field[0], head[0], FilterType.Number),
+                new Filter(false, field[1], head[1], FilterType.Text),
+                new Filter(false, field[2], head[2], FilterType.Text),
+                new Filter(false, field[3], head[3], FilterType.Number)
+            };
+            FormState good = new FormState(caption, hint, btnText, head, field, filter, goodBindingSource);
+            State.Add(good);
+
+            //Car
+            caption = "Машины";
+            hint = "Подсказка: существует возможность просмотра расширенной " +
+                "информации о машине, её редактирования и удаления машины. " +
+                "Для этого необходимо выбрать машину в таблице, нажать по ней " +
+                "правой кнопкой мыши и выбрать необходимое действие";
+            btnText = "Добавить машину";
+            head = new List<string>()
+            {
+                "ID",
+                "Водитель",
+                "Гос. номер",
+                "Модель",
+                "Цвет"
+            };
+            field = new List<string>()
+            {
+                "id",
+                "driver",
+                "number",
+                "model",
+                "color"
+            };
+            filter = new List<Filter>()
+            {
+                new Filter(false, field[0], head[0], FilterType.Number),
+                new Filter(false, field[1], head[1], FilterType.Number),
+                new Filter(false, field[2], head[2], FilterType.Text),
+                new Filter(false, field[3], head[3], FilterType.Text),
+                new Filter(false, field[4], head[4], FilterType.Text)
+            };
+            FormState car = new FormState(caption, hint, btnText, head, field, filter, carBindingSource);
+            State.Add(car);
+
+            //Storage 
+            caption = "Склады";
+            hint = "Подсказка: существует возможность просмотра расширенной " +
+                "информации о складе, её редактирования и удаления склада. " +
+                "Для этого необходимо выбрать склад в таблице, нажать по нему " +
+                "правой кнопкой мыши и выбрать необходимое действие";
+            btnText = "Добавить склад";
+            head = new List<string>()
+            {
+                "ID",
+                "Кладовщик",
+                "Адрес"
+            };
+            field = new List<string>()
+            {
+                "id",
+                "storekeeper",
+                "address"
+            };
+            filter = new List<Filter>()
+            {
+                new Filter(false, field[0], head[0], FilterType.Number),
+                new Filter(false, field[1], head[1], FilterType.Text),
+                new Filter(false, field[2], head[2], FilterType.Text)
+            };
+            FormState storage = new FormState(caption, hint, btnText, head, field, filter, storageBindingSource);
+            State.Add(storage);
+
+            //Client TODO
+            head = new List<string>()
+            {
+                "ID",
+                "ID Водителя",
+                "Гос. номер",
+                "Модель",
+                "Цвет"
+            };
+            field = new List<string>()
+            {
+                "id",
+                "id_driver",
+                "car_number",
+                "car_model",
+                "car_color"
+            };
+            filter = new List<Filter>()
+            {
+                new Filter(false, field[0], head[0], FilterType.Number),
+                new Filter(false, field[1], head[1], FilterType.Number),
+                new Filter(false, field[2], head[2], FilterType.Text),
+                new Filter(false, field[3], head[3], FilterType.Text),
+                new Filter(false, field[4], head[4], FilterType.Text)
+            };
+            FormState client = new FormState(caption, hint, btnText, head, field, filter, supplyBindingSource);
+            State.Add(client);
+
+            //Employee
+            caption = "Сотрудники";
+            hint = "Подсказка: существует возможность просмотра расширенной " +
+                "информации о сотруднике, её редактирования и удаления сотрудника. " +
+                "Для этого необходимо выбрать сотрудника в таблице, нажать по нему " +
+                "правой кнопкой мыши и выбрать необходимое действие";
+            btnText = "Добавить сотрудника";
+            head = new List<string>()
+            {
+                "ID",
+                "Фамилия",
+                "Имя",
+                "Отчество",
+                "Зачисление",
+                "Увольнение",
+                "Оклад",
+            };
+            field = new List<string>()
+            {
+                "id",
+                "em_surname",
+                "em_name",
+                "em_patron",
+                "em_acceptance",
+                "em_discharge",
+                "em_salary"
+            };
+            filter = new List<Filter>()
+            {
+                new Filter(false, field[0], head[0], FilterType.Number),
+                new Filter(false, field[1], head[1], FilterType.Text),
+                new Filter(false, field[2], head[2], FilterType.Text),
+                new Filter(false, field[3], head[3], FilterType.Text),
+                new Filter(false, field[4], head[4], FilterType.Date),
+                new Filter(false, field[5], head[5], FilterType.Date),
+                new Filter(false, field[6], head[6], FilterType.Number)
+            };
+            FormState emp = new FormState(caption, hint, btnText, head, field, filter, employeeBindingSource);
+            State.Add(emp);
+
+            //User
+            caption = "Пользователи";
+            hint = "Подсказка: редактирование доступно прямо в таблицу. Все поля обязательны для заполнения";
+            btnText = "";
+            head = new List<string>()
+            {
+                "Логин",
+                "Пароль",
+                "Права"
+            };
+            field = new List<string>()
+            {
+                "login",
+                "password",
+                "rights"
+            };
+            filter = new List<Filter>()
+            {
+                new Filter(false, field[0], head[0], FilterType.Text),
+                new Filter(false, field[1], head[1], FilterType.Text),
+                new Filter(false, field[2], head[2], FilterType.Text)
+            };
+            FormState user = new FormState(caption, hint, btnText, head, field, filter, userBindingSource);
+            State.Add(user);
+        }
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "mainDBDataSet.StorageUF". При необходимости она может быть перемещена или удалена.
+            this.storageUFTableAdapter.Fill(this.mainDBDataSet.StorageUF);
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "mainDBDataSet.Storage". При необходимости она может быть перемещена или удалена.
+            this.storageTableAdapter.Fill(this.mainDBDataSet.Storage);
+            carUFTableAdapter.Fill(this.mainDBDataSet.CarUF);
+            supplyUFTableAdapter.Fill(this.mainDBDataSet.SupplyUF);
             userTableAdapter.Fill(this.mainDBDataSet.User);
             supplyTableAdapter.Fill(this.mainDBDataSet.Supply);
             employeeTableAdapter.Fill(this.mainDBDataSet.Employee);
@@ -208,11 +364,11 @@ namespace supplyGood
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            userTableAdapter.Update(mainDBDataSet.User);
             supplyTableAdapter.Update(mainDBDataSet.Supply);
-            employeeTableAdapter.Update(mainDBDataSet.Employee);
             goodTableAdapter.Update(mainDBDataSet.Good);
             carTableAdapter.Update(mainDBDataSet.Car);
+            userTableAdapter.Update(mainDBDataSet.User);
+            employeeTableAdapter.Update(mainDBDataSet.Employee);
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -285,24 +441,62 @@ namespace supplyGood
         private void UpdateCurrentData()
         {
             SaveToDB();
-            ApplyVisualAppearence();
 
-            if (_View == TableView.Car || _View == TableView.Good)
+            dgvMain.DataSource = State[(int)_View].Binding;
+            bnMain.BindingSource = State[(int)_View].Binding;
+            cbxSearch.Items.Clear();
+            cbxSearch.Items.AddRange(State[(int)_View].Headers.ToArray());
+
+            switch (_View)
+            {
+                case TableView.Good:
+                case TableView.Car:
+                case TableView.Storage:
+                case TableView.Employee:
+                case TableView.Supply:
+                    {
+                        btnFunc.Visible = true;
+                        dgvMain.ReadOnly = true;
+                        dgvMain.AllowUserToAddRows = false;
+                        dgvMain.AllowUserToDeleteRows = false;
+                        break;
+                    }
+                case TableView.User:
+                    {
+                        btnFunc.Visible = false;
+                        dgvMain.ReadOnly = false;
+                        dgvMain.AllowUserToAddRows = true;
+                        dgvMain.AllowUserToDeleteRows = true;
+                        break;
+                    }
+            }
+            cbxSearch.SelectedIndex = 0;
+            txtSearch.Text = "";
+
+            if (State[(int)_View].Headers.Count > 0)
+            {
+                for (int i = 0; i < State[(int)_View].Headers.Count; i++)
+                {
+                    dgvMain.Columns[i].HeaderText = State[(int)_View].Headers[i];
+                }
+            }
+
+            if (_View == TableView.Car || _View == TableView.Good || _View ==TableView.Storage)
             {
                 dgvMain.Columns[0].Width = 75;
             }
             if (_View == TableView.Car)
             {
-                dgvMain.Columns[1].Width = 75;
+                dgvMain.Columns[1].Width = 250;
             }
-
             if (_View == TableView.Supply)
             {
                 dgvMain.Columns[0].Width = 40;
-                dgvMain.Columns[1].Width = 40;
-                dgvMain.Columns[2].Width = 40;
-                dgvMain.Columns[3].Width = 40;
-                dgvMain.Columns[4].Width = 320;
+                dgvMain.Columns[1].Width = 150;
+                dgvMain.Columns[2].Width = 100;
+                dgvMain.Columns[3].Width = 250;
+                dgvMain.Columns[4].Width = 250;
+                dgvMain.Columns[5].Width = 120;
             }
 
             PerformFiltering();
@@ -312,101 +506,21 @@ namespace supplyGood
                 d.ContextMenuStrip = contextDGV;
             }
         }
-        private void ApplyVisualAppearence()
-        {
-            string[] headers = new string[0];
-            switch (_View)
-            {
-                case TableView.Good:
-                case TableView.Car:
-                case TableView.Employee:
-                case TableView.Supply:
-                    {
-                        if (_View == TableView.Good)
-                        {
-                            dgvMain.DataSource = goodBindingSource;
-                            bnMain.BindingSource = goodBindingSource;
-                            headers = _headerGood;
-                            cbxSearch.Items.Clear();
-                            cbxSearch.Items.AddRange(_headerGood);
-                        }
-                        else if (_View == TableView.Car)
-                        {
-                            dgvMain.DataSource = carBindingSource;
-                            bnMain.BindingSource = carBindingSource;
-                            headers = _headerCar;
-                            cbxSearch.Items.Clear();
-                            cbxSearch.Items.AddRange(_headerCar);
-                        }
-                        else if (_View == TableView.Employee)
-                        {
-                            dgvMain.DataSource = employeeBindingSource;
-                            bnMain.BindingSource = employeeBindingSource;
-                            headers = _headerEmployee;
-                            cbxSearch.Items.Clear();
-                            cbxSearch.Items.AddRange(_headerEmployee);
-                        }
-                        else if (_View == TableView.Supply)
-                        {
-                            dgvMain.DataSource = supplyBindingSource;
-                            bnMain.BindingSource = supplyBindingSource;
-                            headers = _headerSupply;
-                            cbxSearch.Items.Clear();
-                            cbxSearch.Items.AddRange(_headerSupply);
-                        }
-                        btnFunc.Visible = true;
-                        dgvMain.ReadOnly = true;
-                        dgvMain.AllowUserToAddRows = false;
-                        dgvMain.AllowUserToDeleteRows = false;
-                        break;
-                    }
-                case TableView.User:
-                    {
-                        dgvMain.DataSource = userBindingSource;
-                        bnMain.BindingSource = userBindingSource;
-                        headers = _headerUser;
-                        cbxSearch.Items.Clear();
-                        cbxSearch.Items.AddRange(_headerUser);
-
-                        btnFunc.Visible = false;
-                        dgvMain.ReadOnly = false;
-                        dgvMain.AllowUserToAddRows = true;
-                        dgvMain.AllowUserToDeleteRows = true;
-                        break;
-                    }
-            }
-            cbxSearch.SelectedIndex = 0;
-
-            if (headers.Length > 0)
-            {
-                for (int i = 0; i < headers.Length; i++)
-                {
-                    dgvMain.Columns[i].HeaderText = headers[i];
-                }
-            }
-        }
         private void SaveToDB()
         {
             try
             {
                 Validate();
-                supplyBindingSource.EndEdit();
-                supplyTableAdapter.Update(this.mainDBDataSet.Supply);
-                employeeBindingSource.EndEdit();
-                employeeTableAdapter.Update(this.mainDBDataSet.Employee);
-                goodBindingSource.EndEdit();
-                goodTableAdapter.Update(this.mainDBDataSet.Good);
-                carBindingSource.EndEdit();
-                carTableAdapter.Update(this.mainDBDataSet.Car);
                 userBindingSource.EndEdit();
                 userTableAdapter.Update(this.mainDBDataSet.User);
 
 
                 userTableAdapter.Fill(this.mainDBDataSet.User);
-                supplyTableAdapter.Fill(this.mainDBDataSet.Supply);
+                supplyUFTableAdapter.Fill(this.mainDBDataSet.SupplyUF);
                 employeeTableAdapter.Fill(this.mainDBDataSet.Employee);
                 goodTableAdapter.Fill(this.mainDBDataSet.Good);
-                carTableAdapter.Fill(this.mainDBDataSet.Car);
+                carUFTableAdapter.Fill(this.mainDBDataSet.CarUF);
+                storageUFTableAdapter.Fill(this.mainDBDataSet.StorageUF);
             }
             catch
             {
@@ -425,6 +539,9 @@ namespace supplyGood
         }
         private void Context_ViewEdit(SubFormMode mode)
         {
+            if (_View == TableView.User)
+                return;
+
             try
             {
                 var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
@@ -447,6 +564,11 @@ namespace supplyGood
                     case TableView.Car:
                         {
                             NextForm = new ViewCar(currID, mode);
+                            break;
+                        }
+                    case TableView.Storage:
+                        {
+                            NextForm = new ViewStorage(currID, mode);
                             break;
                         }
                     case TableView.Employee:
@@ -485,6 +607,12 @@ namespace supplyGood
                             dgvMain.Rows[curr].Cells[3].Value.ToString() + " " +
                             dgvMain.Rows[curr].Cells[2].Value.ToString();
                     }
+                case TableView.Storage:
+                    {
+                        return "склад (" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") по адресу " +
+                            dgvMain.Rows[curr].Cells[2].Value.ToString() + " (заведующий " +
+                            dgvMain.Rows[curr].Cells[3].Value.ToString() + ") ";
+                    }
                 case TableView.Employee:
                     {
                         return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
@@ -497,10 +625,18 @@ namespace supplyGood
                     }
             }
         }
+        private void PerformState()
+        {
+            lblMain.Text = State[(int)_View].Caption;
+            lblHint.Text = State[(int)_View].Hint;
+            btnFunc.Text = State[(int)_View].ButtonText;
+            Text = lblMain.Text + " - " + RightsCaption;
+            UpdateCurrentData();
+        }
         private void PerformFiltering()
         {
             string filterString = "";
-            foreach (Filter filter in Filters)
+            foreach (Filter filter in State[(int)_View].Filters)
             {
                 if (!filter.Checked)
                     continue;
@@ -561,6 +697,11 @@ namespace supplyGood
                         carBindingSource.Filter = filterString;
                         break;
                     }
+                case TableView.Storage:
+                    {
+                        storageBindingSource.Filter = filterString;
+                        break;
+                    }
                 case TableView.Employee:
                     {
                         employeeBindingSource.Filter = filterString;
@@ -580,110 +721,44 @@ namespace supplyGood
         }
         private void ClearFilters()
         {
-            foreach (Filter f in Filters)
-            {
-                f.Clear();
-            }
+            State[(int)_View].ClearFilters();
         }
 
         private void SuppliesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Supply;
 
-            Filters.Clear();
-            Filters.Add(new Filter(false, _fieldsSupply[0], _headerSupply[0], FilterType.Number));
-            Filters.Add(new Filter(false, _fieldsSupply[1], _headerSupply[1], FilterType.Number));
-            Filters.Add(new Filter(false, _fieldsSupply[2], _headerSupply[2], FilterType.Number));
-            Filters.Add(new Filter(false, _fieldsSupply[3], _headerSupply[3], FilterType.Number));
-            Filters.Add(new Filter(false, _fieldsSupply[4], _headerSupply[4], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsSupply[5], _headerSupply[5], FilterType.Date));
-            Filters.Add(new Filter(false, _fieldsSupply[6], _headerSupply[6], FilterType.Number));
-            Filters.Add(new Filter(false, _fieldsSupply[7], _headerSupply[7], FilterType.Bool));
-            Filters.Add(new Filter(false, _fieldsSupply[8], _headerSupply[8], FilterType.Bool));
-
-            lblMain.Text = "Поставки";
-            lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
-                "информации о поставке, её редактирования и удаления поставки. " +
-                "Для этого необходимо выбрать поставку в таблице, нажать по нему " +
-                "правой кнопкой мыши и выбрать необходимое действие";
-            btnFunc.Text = "Добавить поставку";
-            Text = lblMain.Text + " - " + RightsCaption;
-            UpdateCurrentData();
+            PerformState();
         }
         private void EmployeeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Employee;
 
-            Filters.Clear();
-            Filters.Add(new Filter(false, _fieldsEmployee[0], _headerEmployee[0], FilterType.Number));
-            Filters.Add(new Filter(false, _fieldsEmployee[1], _headerEmployee[1], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsEmployee[2], _headerEmployee[2], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsEmployee[3], _headerEmployee[3], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsEmployee[4], _headerEmployee[4], FilterType.Date));
-            Filters.Add(new Filter(false, _fieldsEmployee[5], _headerEmployee[5], FilterType.Date));
-            Filters.Add(new Filter(false, _fieldsEmployee[6], _headerEmployee[6], FilterType.Number));
-
-            lblMain.Text = "Сотрудники";
-            lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
-                "информации о сотруднике, её редактирования и удаления сотрудника. " +
-                "Для этого необходимо выбрать сотрудника в таблице, нажать по нему " +
-                "правой кнопкой мыши и выбрать необходимое действие";
-            btnFunc.Text = "Добавить сотрудника";
-            Text = lblMain.Text + " - " + RightsCaption;
-            UpdateCurrentData();
+            PerformState();
         }
         private void GoodsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Good;
 
-            Filters.Clear();
-            Filters.Add(new Filter(false, _fieldsGood[0], _headerGood[0], FilterType.Number));
-            Filters.Add(new Filter(false, _fieldsGood[1], _headerGood[1], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsGood[2], _headerGood[2], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsGood[3], _headerGood[3], FilterType.Number));
-
-            lblMain.Text = "Товары";
-            lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
-                "информации о товаре, её редактирования и удаления товара. " +
-                "Для этого необходимо выбрать товар в таблице, нажать по нему " +
-                "правой кнопкой мыши и выбрать необходимое действие";
-            btnFunc.Text = "Добавить товар";
-            Text = lblMain.Text + " - " + RightsCaption;
-            UpdateCurrentData();
+            PerformState();
         }
         private void CarsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Car;
 
-            Filters.Clear();
-            Filters.Add(new Filter(false, _fieldsCar[0], _headerCar[0], FilterType.Number));
-            Filters.Add(new Filter(false, _fieldsCar[1], _headerCar[1], FilterType.Number));
-            Filters.Add(new Filter(false, _fieldsCar[2], _headerCar[2], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsCar[3], _headerCar[3], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsCar[4], _headerCar[4], FilterType.Text));
+            PerformState();
+        }
+        private void StorageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _View = TableView.Storage;
 
-            lblMain.Text = "Машины";
-            lblHint.Text = "Подсказка: существует возможность просмотра расширенной " +
-                "информации о машине, её редактирования и удаления машины. " +
-                "Для этого необходимо выбрать машину в таблице, нажать по ней " +
-                "правой кнопкой мыши и выбрать необходимое действие";
-            btnFunc.Text = "Добавить машину";
-            Text = lblMain.Text + " - " + RightsCaption;
-            UpdateCurrentData();
+            PerformState();
         }
         private void UsersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.User;
 
-            Filters.Clear();
-            Filters.Add(new Filter(false, _fieldsUser[0], _headerUser[0], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsUser[1], _headerUser[1], FilterType.Text));
-            Filters.Add(new Filter(false, _fieldsUser[2], _headerUser[2], FilterType.Text));
-
-            lblMain.Text = "Пользователи";
-            lblHint.Text = "Подсказка: редактирование доступно прямо в таблицу. Все поля обязательны для заполнения";
-            Text = lblMain.Text + " - " + RightsCaption;
-            UpdateCurrentData();
+            PerformState();
         }
         private void statisticsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -737,6 +812,11 @@ namespace supplyGood
                         NextForm = new ViewCar();
                         break;
                     }
+                case TableView.Storage:
+                    {
+                        NextForm = new ViewStorage();
+                        break;
+                    }
                 case TableView.Employee:
                     {
                         NextForm = new ViewEmployee();
@@ -759,9 +839,9 @@ namespace supplyGood
         }
         private void BtnFilter_Click(object sender, EventArgs e)
         {
-            var NextForm = new FilterForm(Filters);
+            var NextForm = new FilterForm(State[(int)_View].Filters);
             NextForm.ShowDialog();
-            Filters = NextForm.Filters.ToList();
+            State[(int)_View].Filters = NextForm.Filters.ToList();
             PerformFiltering();
         }
         private void BtnClearFilters_Click(object sender, EventArgs e)
@@ -771,34 +851,7 @@ namespace supplyGood
         }
         private void BtnSort_Click(object sender, EventArgs e)
         {
-            switch (_View)
-            {
-                case TableView.Good:
-                    {
-                        goodBindingSource.Sort = _fieldsGood[cbxSearch.SelectedIndex];
-                        break;
-                    }
-                case TableView.Car:
-                    {
-                        carBindingSource.Sort = _fieldsCar[cbxSearch.SelectedIndex];
-                        break;
-                    }
-                case TableView.Employee:
-                    {
-                        employeeBindingSource.Sort = _fieldsEmployee[cbxSearch.SelectedIndex];
-                        break;
-                    }
-                case TableView.Supply:
-                    {
-                        supplyBindingSource.Sort = _fieldsSupply[cbxSearch.SelectedIndex];
-                        break;
-                    }
-                case TableView.User:
-                    {
-                        userBindingSource.Sort = _fieldsUser[cbxSearch.SelectedIndex];
-                        break;
-                    }
-            }
+            dgvMain.Sort(dgvMain.Columns[cbxSearch.SelectedIndex], ListSortDirection.Ascending);
         }
 
 
@@ -834,6 +887,11 @@ namespace supplyGood
                         case TableView.Car:
                             {
                                 carTableAdapter.DeleteQuery(currID);
+                                break;
+                            }
+                        case TableView.Storage:
+                            {
+                                storageTableAdapter.DeleteQuery(currID);
                                 break;
                             }
                         case TableView.Employee:
@@ -931,6 +989,7 @@ namespace supplyGood
             base.OnRenderToolStripBorder(e);
         }
     }
+
     public class Filter
     {
         public bool Checked;
@@ -981,6 +1040,62 @@ namespace supplyGood
             ToDate = DateTime.Now.Date;
             Value = null;
             OnlyTrue = null;
+        }
+    }
+    public class FormState
+    {
+        public string Caption;
+        public string Hint;
+        public string ButtonText;
+        public List<string> Headers;
+        public List<string> Fields;
+        public List<Filter> Filters;
+        public BindingSource Binding;
+
+        public FormState()
+        {
+            Caption = "";
+            Hint = "";
+            ButtonText = "";
+            Headers = new List<string>();
+            Fields = new List<string>();
+            Filters = new List<Filter>();
+            Binding = null;
+        }
+        public FormState(
+            string caption, 
+            string hint, 
+            string buttonText, 
+            List<string> headers, 
+            List<string> fields, 
+            List<Filter> filters, 
+            BindingSource binding)
+        {
+            Caption = caption;
+            Hint = hint;
+            ButtonText = buttonText;
+            Headers = headers;
+            Fields = fields;
+            Filters = filters;
+            Binding = binding;
+        }
+
+        public void ClearFilters()
+        {
+            foreach (Filter f in Filters)
+            {
+                f.Clear();
+            }
+        }
+        public void Clear()
+        {
+            Caption = "";
+            Hint = "";
+            ButtonText = "";
+            Headers.Clear();
+            Fields.Clear();
+            Filters.Clear();
+            Binding = null;
         }
     }
 }

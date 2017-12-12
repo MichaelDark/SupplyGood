@@ -53,7 +53,7 @@
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
             this.mainMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mainMenuStrip.Size = new System.Drawing.Size(1204, 33);
+            this.mainMenuStrip.Size = new System.Drawing.Size(784, 33);
             this.mainMenuStrip.TabIndex = 0;
             // 
             // goodToolStripMenuItem
@@ -99,7 +99,7 @@
             this.dgvMain.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvMain.ShowCellToolTips = false;
-            this.dgvMain.Size = new System.Drawing.Size(1180, 436);
+            this.dgvMain.Size = new System.Drawing.Size(760, 436);
             this.dgvMain.TabIndex = 4;
             // 
             // cbxOptions
@@ -108,9 +108,9 @@
             this.cbxOptions.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbxOptions.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbxOptions.FormattingEnabled = true;
-            this.cbxOptions.Location = new System.Drawing.Point(874, 38);
+            this.cbxOptions.Location = new System.Drawing.Point(484, 43);
             this.cbxOptions.Name = "cbxOptions";
-            this.cbxOptions.Size = new System.Drawing.Size(318, 29);
+            this.cbxOptions.Size = new System.Drawing.Size(288, 29);
             this.cbxOptions.TabIndex = 5;
             this.cbxOptions.Visible = false;
             this.cbxOptions.SelectedIndexChanged += new System.EventHandler(this.CbxOptions_SelectedIndexChanged);
@@ -131,7 +131,7 @@
             // 
             this.lblTotal.Location = new System.Drawing.Point(206, 70);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(986, 41);
+            this.lblTotal.Size = new System.Drawing.Size(566, 41);
             this.lblTotal.TabIndex = 8;
             this.lblTotal.Text = "Общая сумма: -";
             this.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -152,7 +152,7 @@
             // StatisticsForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1204, 562);
+            this.ClientSize = new System.Drawing.Size(784, 562);
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.lblCaption);
@@ -164,7 +164,7 @@
             this.MainMenuStrip = this.mainMenuStrip;
             this.MaximizeBox = false;
             this.Name = "StatisticsForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Статистика";
             this.Load += new System.EventHandler(this.Statistics_Load);
             this.mainMenuStrip.ResumeLayout(false);

@@ -167,7 +167,6 @@ namespace supplyGood
                     DateTime.Now.Minute +
                     DateTime.Now.Second +
                     ".docx";
-                MessageBox.Show(reportSourcePath + Environment.NewLine + reportPath);
                 File.Copy(reportSourcePath, reportPath);
                 
                 wordApp.Visible = false;

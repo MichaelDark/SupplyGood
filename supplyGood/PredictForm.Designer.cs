@@ -41,7 +41,7 @@
             this.cbxOptions.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbxOptions.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbxOptions.FormattingEnabled = true;
-            this.cbxOptions.Location = new System.Drawing.Point(776, 10);
+            this.cbxOptions.Location = new System.Drawing.Point(502, 10);
             this.cbxOptions.Name = "cbxOptions";
             this.cbxOptions.Size = new System.Drawing.Size(270, 29);
             this.cbxOptions.TabIndex = 5;
@@ -67,7 +67,7 @@
             this.dgvMain.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvMain.ShowCellToolTips = false;
-            this.dgvMain.Size = new System.Drawing.Size(1034, 438);
+            this.dgvMain.Size = new System.Drawing.Size(760, 505);
             this.dgvMain.TabIndex = 4;
             // 
             // lblCaption
@@ -85,7 +85,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(551, 10);
+            this.label1.Location = new System.Drawing.Point(277, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(219, 25);
             this.label1.TabIndex = 9;
@@ -94,7 +94,7 @@
             // PredictForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1058, 495);
+            this.ClientSize = new System.Drawing.Size(784, 562);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblCaption);
             this.Controls.Add(this.cbxOptions);
@@ -103,7 +103,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "PredictForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Прогноз товара";
             this.Load += new System.EventHandler(this.PredictForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();

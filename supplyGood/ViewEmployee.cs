@@ -155,10 +155,10 @@ namespace supplyGood
                 }
                 _Mode = SubFormMode.View;
 
-                DateTime? dateO;
+                string dateO;
                 if (cbxDischarged.Checked)
                 {
-                    dateO = dateOut.Value.Date;
+                    dateO = dateOut.Value.Date.ToShortDateString();
                 }
                 else
                 {
@@ -171,18 +171,18 @@ namespace supplyGood
                         txtSurname.Text,
                         txtName.Text,
                         txtPatron.Text,
-                        dateIn.Value.Date,
+                        dateIn.Value.Date.ToShortDateString(),
                         dateO,
                         (float)Convert.ToDouble(txtSalary.Text),
                         _ID);
                 }
                 else
                 {
-                    employeeTableAdapter.Insert(
+                    employeeTableAdapter.InsertQuery(
                            txtSurname.Text,
                            txtName.Text,
                            txtPatron.Text,
-                           dateIn.Value.Date,
+                           dateIn.Value.Date.ToShortDateString(),
                            dateO,
                            (float)Convert.ToDouble(txtSalary.Text));
                     string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;

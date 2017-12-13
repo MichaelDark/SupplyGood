@@ -94,6 +94,12 @@
     <Compile Include="ViewCar.Designer.cs">
       <DependentUpon>ViewCar.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewClient.Designer.cs">
+      <DependentUpon>ViewClient.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ViewCar.resx">
       <DependentUpon>ViewCar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewClient.resx">
+      <DependentUpon>ViewClient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewEmployee.resx">
       <DependentUpon>ViewEmployee.cs</DependentUpon>

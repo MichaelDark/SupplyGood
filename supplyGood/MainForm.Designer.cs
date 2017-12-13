@@ -88,6 +88,8 @@
             this.storageBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.storageTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StorageTableAdapter();
             this.storageUFTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StorageUFTableAdapter();
+            this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.clientTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ClientTableAdapter();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
@@ -100,6 +102,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.storageBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -172,8 +175,8 @@
             // 
             this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
             this.clientsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.clientsToolStripMenuItem.Text = "-Заказчики";
-            this.clientsToolStripMenuItem.Visible = false;
+            this.clientsToolStripMenuItem.Text = "Заказчики";
+            this.clientsToolStripMenuItem.Click += new System.EventHandler(this.ClientToolStripMenuItem_Click);
             // 
             // storagesToolStripMenuItem
             // 
@@ -583,6 +586,15 @@
             // 
             this.storageUFTableAdapter.ClearBeforeFill = true;
             // 
+            // clientBindingSource
+            // 
+            this.clientBindingSource.DataMember = "Client";
+            this.clientBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // clientTableAdapter
+            // 
+            this.clientTableAdapter.ClearBeforeFill = true;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -607,7 +619,6 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Администратор";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.mainMenuStrip.ResumeLayout(false);
@@ -624,6 +635,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.supplyBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.storageBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -689,5 +701,7 @@
         private System.Windows.Forms.BindingSource storageBindingSource;
         private MainDBDataSetTableAdapters.StorageTableAdapter storageTableAdapter;
         private MainDBDataSetTableAdapters.StorageUFTableAdapter storageUFTableAdapter;
+        private System.Windows.Forms.BindingSource clientBindingSource;
+        private MainDBDataSetTableAdapters.ClientTableAdapter clientTableAdapter;
     }
 }

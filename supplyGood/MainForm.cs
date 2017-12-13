@@ -237,32 +237,44 @@ namespace supplyGood
             FormState storage = new FormState(caption, hint, btnText, head, field, filter, storageBindingSource);
             State.Add(storage);
 
-            //Client TODO
+            //Client
+            caption = "Заказчики";
+            hint = "Подсказка: существует возможность просмотра расширенной " +
+                "информации о заказчике, её редактирования и удаления заказчика. " +
+                "Для этого необходимо выбрать заказчика в таблице, нажать по нему " +
+                "правой кнопкой мыши и выбрать необходимое действие";
+            btnText = "Добавить заказчика";
             head = new List<string>()
             {
                 "ID",
-                "ID Водителя",
-                "Гос. номер",
-                "Модель",
-                "Цвет"
+                "Компания",
+                "Адрес",
+                "Конт. лицо: Фамилия",
+                "Конт. лицо: Имя",
+                "Конт. лицо: Отчество",
+                "Контакты"
             };
             field = new List<string>()
             {
                 "id",
-                "id_driver",
-                "car_number",
-                "car_model",
-                "car_color"
+                "cl_company",
+                "cl_address",
+                "cl_surname",
+                "cl_name",
+                "cl_patron",
+                "cl_contacts"
             };
             filter = new List<Filter>()
             {
                 new Filter(false, field[0], head[0], FilterType.Number),
-                new Filter(false, field[1], head[1], FilterType.Number),
+                new Filter(false, field[1], head[1], FilterType.Text),
                 new Filter(false, field[2], head[2], FilterType.Text),
                 new Filter(false, field[3], head[3], FilterType.Text),
-                new Filter(false, field[4], head[4], FilterType.Text)
+                new Filter(false, field[4], head[4], FilterType.Text),
+                new Filter(false, field[5], head[5], FilterType.Text),
+                new Filter(false, field[6], head[6], FilterType.Text)
             };
-            FormState client = new FormState(caption, hint, btnText, head, field, filter, supplyBindingSource);
+            FormState client = new FormState(caption, hint, btnText, head, field, filter, clientBindingSource);
             State.Add(client);
 
             //Employee
@@ -332,10 +344,9 @@ namespace supplyGood
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "mainDBDataSet.StorageUF". При необходимости она может быть перемещена или удалена.
-            this.storageUFTableAdapter.Fill(this.mainDBDataSet.StorageUF);
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "mainDBDataSet.Storage". При необходимости она может быть перемещена или удалена.
-            this.storageTableAdapter.Fill(this.mainDBDataSet.Storage);
+            clientTableAdapter.Fill(this.mainDBDataSet.Client);
+            storageUFTableAdapter.Fill(this.mainDBDataSet.StorageUF);
+            storageTableAdapter.Fill(this.mainDBDataSet.Storage);
             carUFTableAdapter.Fill(this.mainDBDataSet.CarUF);
             supplyUFTableAdapter.Fill(this.mainDBDataSet.SupplyUF);
             userTableAdapter.Fill(this.mainDBDataSet.User);
@@ -361,14 +372,6 @@ namespace supplyGood
             {
                 UsersToolStripMenuItem_Click(null, null);
             }
-        }
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            supplyTableAdapter.Update(mainDBDataSet.Supply);
-            goodTableAdapter.Update(mainDBDataSet.Good);
-            carTableAdapter.Update(mainDBDataSet.Car);
-            userTableAdapter.Update(mainDBDataSet.User);
-            employeeTableAdapter.Update(mainDBDataSet.Employee);
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -441,6 +444,14 @@ namespace supplyGood
         private void UpdateCurrentData()
         {
             SaveToDB();
+            
+            supplyUFTableAdapter.Fill(this.mainDBDataSet.SupplyUF);
+            goodTableAdapter.Fill(this.mainDBDataSet.Good);
+            clientTableAdapter.Fill(this.mainDBDataSet.Client);
+            carUFTableAdapter.Fill(this.mainDBDataSet.CarUF);
+            storageUFTableAdapter.Fill(this.mainDBDataSet.StorageUF);
+            employeeTableAdapter.Fill(this.mainDBDataSet.Employee);
+            userTableAdapter.Fill(this.mainDBDataSet.User);
 
             dgvMain.DataSource = State[(int)_View].Binding;
             bnMain.BindingSource = State[(int)_View].Binding;
@@ -449,11 +460,12 @@ namespace supplyGood
 
             switch (_View)
             {
+                case TableView.Supply:
                 case TableView.Good:
                 case TableView.Car:
                 case TableView.Storage:
                 case TableView.Employee:
-                case TableView.Supply:
+                case TableView.Client:
                     {
                         btnFunc.Visible = true;
                         dgvMain.ReadOnly = true;
@@ -481,7 +493,7 @@ namespace supplyGood
                 }
             }
 
-            if (_View == TableView.Car || _View == TableView.Good || _View ==TableView.Storage)
+            if (_View == TableView.Car || _View == TableView.Good || _View ==TableView.Storage || _View == TableView.Client)
             {
                 dgvMain.Columns[0].Width = 75;
             }
@@ -513,14 +525,6 @@ namespace supplyGood
                 Validate();
                 userBindingSource.EndEdit();
                 userTableAdapter.Update(this.mainDBDataSet.User);
-
-
-                userTableAdapter.Fill(this.mainDBDataSet.User);
-                supplyUFTableAdapter.Fill(this.mainDBDataSet.SupplyUF);
-                employeeTableAdapter.Fill(this.mainDBDataSet.Employee);
-                goodTableAdapter.Fill(this.mainDBDataSet.Good);
-                carUFTableAdapter.Fill(this.mainDBDataSet.CarUF);
-                storageUFTableAdapter.Fill(this.mainDBDataSet.StorageUF);
             }
             catch
             {
@@ -536,57 +540,6 @@ namespace supplyGood
                 BindingFlags.NonPublic | BindingFlags.Instance);
             EventHandlerList list = (EventHandlerList)pi.GetValue(control, null);
             list.RemoveHandler(obj, list[obj]);
-        }
-        private void Context_ViewEdit(SubFormMode mode)
-        {
-            if (_View == TableView.User)
-                return;
-
-            try
-            {
-                var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
-                int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
-                int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
-                var NextForm = new Form();
-
-                switch (_View)
-                {
-                    case TableView.Supply:
-                        {
-                            NextForm = new ViewSupply(currID, mode);
-                            break;
-                        }
-                    case TableView.Good:
-                        {
-                            NextForm = new ViewGood(currID, mode);
-                            break;
-                        }
-                    case TableView.Car:
-                        {
-                            NextForm = new ViewCar(currID, mode);
-                            break;
-                        }
-                    case TableView.Storage:
-                        {
-                            NextForm = new ViewStorage(currID, mode);
-                            break;
-                        }
-                    case TableView.Employee:
-                        {
-
-                            NextForm = new ViewEmployee(currID, mode);
-                            break;
-                        }
-                }
-
-                NextForm.ShowDialog();
-
-                UpdateCurrentData();
-
-                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
-                dgvMain.Rows[currRowIndex].Selected = true;
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private string GetDeletingName(int curr, int currID)
         {
@@ -617,6 +570,12 @@ namespace supplyGood
                     {
                         return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
                             dgvMain.Rows[curr].Cells[1].Value.ToString() + " " +
+                            dgvMain.Rows[curr].Cells[2].Value.ToString();
+                    }
+                case TableView.Client:
+                    {
+                        return "(" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") " +
+                            dgvMain.Rows[curr].Cells[1].Value.ToString() + " по адресу " +
                             dgvMain.Rows[curr].Cells[2].Value.ToString();
                     }
                 default:
@@ -685,39 +644,7 @@ namespace supplyGood
                         }
                 }
             }
-            switch (_View)
-            {
-                case TableView.Good:
-                    {
-                        goodBindingSource.Filter = filterString;
-                        break;
-                    }
-                case TableView.Car:
-                    {
-                        carBindingSource.Filter = filterString;
-                        break;
-                    }
-                case TableView.Storage:
-                    {
-                        storageBindingSource.Filter = filterString;
-                        break;
-                    }
-                case TableView.Employee:
-                    {
-                        employeeBindingSource.Filter = filterString;
-                        break;
-                    }
-                case TableView.Supply:
-                    {
-                        supplyBindingSource.Filter = filterString;
-                        break;
-                    }
-                case TableView.User:
-                    {
-                        userBindingSource.Filter = filterString;
-                        break;
-                    }
-            }
+            State[(int)_View].Binding.Filter = filterString;
         }
         private void ClearFilters()
         {
@@ -751,6 +678,12 @@ namespace supplyGood
         private void StorageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _View = TableView.Storage;
+
+            PerformState();
+        }
+        private void ClientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _View = TableView.Client;
 
             PerformState();
         }
@@ -817,6 +750,11 @@ namespace supplyGood
                         NextForm = new ViewStorage();
                         break;
                     }
+                case TableView.Client:
+                    {
+                        NextForm = new ViewClient();
+                        break;
+                    }
                 case TableView.Employee:
                     {
                         NextForm = new ViewEmployee();
@@ -863,6 +801,63 @@ namespace supplyGood
         {
             Context_ViewEdit(SubFormMode.Edit);
         }
+        private void Context_ViewEdit(SubFormMode mode)
+        {
+            if (_View == TableView.User)
+                return;
+
+            try
+            {
+                var currRowIndex = dgvMain.SelectedCells[0].RowIndex;
+                int currID = Convert.ToInt32(dgvMain.Rows[currRowIndex].Cells[0].Value);
+                int currRowOnTop = dgvMain.FirstDisplayedScrollingRowIndex;
+                var NextForm = new Form();
+
+                switch (_View)
+                {
+                    case TableView.Supply:
+                        {
+                            NextForm = new ViewSupply(currID, mode);
+                            break;
+                        }
+                    case TableView.Good:
+                        {
+                            NextForm = new ViewGood(currID, mode);
+                            break;
+                        }
+                    case TableView.Car:
+                        {
+                            NextForm = new ViewCar(currID, mode);
+                            break;
+                        }
+                    case TableView.Storage:
+                        {
+                            NextForm = new ViewStorage(currID, mode);
+                            break;
+                        }
+                    case TableView.Employee:
+                        {
+
+                            NextForm = new ViewEmployee(currID, mode);
+                            break;
+                        }
+                    case TableView.Client:
+                        {
+
+                            NextForm = new ViewClient(currID, mode);
+                            break;
+                        }
+                }
+
+                NextForm.ShowDialog();
+
+                UpdateCurrentData();
+
+                dgvMain.FirstDisplayedScrollingRowIndex = currRowOnTop;
+                dgvMain.Rows[currRowIndex].Selected = true;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
         private void Context_DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var curr = dgvMain.SelectedCells[0].RowIndex;
@@ -892,6 +887,11 @@ namespace supplyGood
                         case TableView.Storage:
                             {
                                 storageTableAdapter.DeleteQuery(currID);
+                                break;
+                            }
+                        case TableView.Client:
+                            {
+                                clientTableAdapter.DeleteQuery(currID);
                                 break;
                             }
                         case TableView.Employee:

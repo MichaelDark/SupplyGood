@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatisticsForm));
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.goodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goodSellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,8 +39,10 @@
             this.lblCaption = new System.Windows.Forms.Label();
             this.lblTotal = new System.Windows.Forms.Label();
             this.btnReport = new System.Windows.Forms.Button();
+            this.pictureMain = new System.Windows.Forms.PictureBox();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -86,7 +89,7 @@
             this.dgvMain.AllowUserToResizeRows = false;
             this.dgvMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMain.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvMain.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvMain.BackgroundColor = System.Drawing.Color.White;
             this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -118,10 +121,9 @@
             // lblCaption
             // 
             this.lblCaption.AutoSize = true;
-            this.lblCaption.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblCaption.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblCaption.ForeColor = System.Drawing.Color.Black;
-            this.lblCaption.Location = new System.Drawing.Point(0, 33);
+            this.lblCaption.Location = new System.Drawing.Point(52, 33);
             this.lblCaption.Name = "lblCaption";
             this.lblCaption.Size = new System.Drawing.Size(275, 37);
             this.lblCaption.TabIndex = 7;
@@ -149,10 +151,23 @@
             this.btnReport.UseVisualStyleBackColor = false;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
+            // pictureMain
+            // 
+            this.pictureMain.Image = global::supplyGood.Properties.Resources.statistics;
+            this.pictureMain.InitialImage = null;
+            this.pictureMain.Location = new System.Drawing.Point(12, 36);
+            this.pictureMain.Name = "pictureMain";
+            this.pictureMain.Size = new System.Drawing.Size(34, 34);
+            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureMain.TabIndex = 57;
+            this.pictureMain.TabStop = false;
+            // 
             // StatisticsForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.lblCaption);
@@ -161,6 +176,7 @@
             this.Controls.Add(this.mainMenuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenuStrip;
             this.MaximizeBox = false;
             this.Name = "StatisticsForm";
@@ -170,6 +186,7 @@
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,5 +203,6 @@
         private System.Windows.Forms.Label lblCaption;
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Button btnReport;
+        private System.Windows.Forms.PictureBox pictureMain;
     }
 }

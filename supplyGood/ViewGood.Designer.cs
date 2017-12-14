@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewGood));
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -37,6 +38,8 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.goodTableAdapter = new supplyGood.MainDBDataSetTableAdapters.GoodTableAdapter();
+            this.pictureMain = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
             this.SuspendLayout();
             // 
             // txtPrice
@@ -98,9 +101,9 @@
             // lblTitle
             // 
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTitle.Location = new System.Drawing.Point(12, 9);
+            this.lblTitle.Location = new System.Drawing.Point(98, 9);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(265, 76);
+            this.lblTitle.Size = new System.Drawing.Size(184, 76);
             this.lblTitle.TabIndex = 41;
             this.lblTitle.Text = "Информация о товаре";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -116,10 +119,23 @@
             // 
             this.goodTableAdapter.ClearBeforeFill = true;
             // 
+            // pictureMain
+            // 
+            this.pictureMain.Image = global::supplyGood.Properties.Resources.good;
+            this.pictureMain.InitialImage = null;
+            this.pictureMain.Location = new System.Drawing.Point(19, 12);
+            this.pictureMain.Name = "pictureMain";
+            this.pictureMain.Size = new System.Drawing.Size(73, 73);
+            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureMain.TabIndex = 58;
+            this.pictureMain.TabStop = false;
+            // 
             // ViewGood
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(294, 317);
+            this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label6);
@@ -130,10 +146,12 @@
             this.Controls.Add(this.txtName);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ViewGood";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Просмотр - Товар";
             this.Load += new System.EventHandler(this.ViewGood_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -150,5 +168,6 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.TextBox txtName;
         private MainDBDataSetTableAdapters.GoodTableAdapter goodTableAdapter;
+        private System.Windows.Forms.PictureBox pictureMain;
     }
 }

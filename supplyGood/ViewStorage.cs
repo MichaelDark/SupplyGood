@@ -271,7 +271,7 @@ namespace supplyGood
                 dgvGoods_SelectionChanged(null, null);
                 return;
             }
-            stockTableAdapter.UpdateQuery(_ID, id_good, amount);
+            stockTableAdapter.UpdateQuery(amount, _ID, id_good);
 
             stockBindingSource.EndEdit();
             stockUFTableAdapter.Fill(mainDBDataSet.StockUF);

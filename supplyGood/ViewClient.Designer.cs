@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewClient));
             this.txtSurname = new System.Windows.Forms.TextBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,7 +45,9 @@
             this.txtCompany = new System.Windows.Forms.TextBox();
             this.clientTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ClientTableAdapter();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pictureMain = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
             this.SuspendLayout();
             // 
             // txtSurname
@@ -58,7 +61,7 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTitle.Location = new System.Drawing.Point(12, 9);
+            this.lblTitle.Location = new System.Drawing.Point(62, 9);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(336, 37);
             this.lblTitle.TabIndex = 1;
@@ -192,10 +195,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Контактное лицо";
             // 
+            // pictureMain
+            // 
+            this.pictureMain.Image = global::supplyGood.Properties.Resources.client;
+            this.pictureMain.InitialImage = null;
+            this.pictureMain.Location = new System.Drawing.Point(19, 9);
+            this.pictureMain.Name = "pictureMain";
+            this.pictureMain.Size = new System.Drawing.Size(37, 37);
+            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureMain.TabIndex = 58;
+            this.pictureMain.TabStop = false;
+            // 
             // ViewClient
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(605, 328);
+            this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtCompany);
             this.Controls.Add(this.btnSave);
@@ -207,12 +223,14 @@
             this.Controls.Add(this.lblTitle);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ViewClient";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Просмотр - Заказчик";
             this.Load += new System.EventHandler(this.ViewEmployee_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,5 +254,6 @@
         private System.Windows.Forms.TextBox txtCompany;
         private MainDBDataSetTableAdapters.ClientTableAdapter clientTableAdapter;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.PictureBox pictureMain;
     }
 }

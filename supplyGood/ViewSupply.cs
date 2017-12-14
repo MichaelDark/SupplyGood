@@ -18,6 +18,8 @@ namespace supplyGood
         int _ID_STORAGE = -1;
         SubFormMode _Mode;
         List<TextBox> _Fields;
+        bool IsShipped;
+        bool IsDelivered;
         bool HasObligatoryNullFields => _Fields.Exists(x => (String.IsNullOrEmpty(x.Text) || String.IsNullOrWhiteSpace(x.Text)));
         string SumForSupply
         {
@@ -118,8 +120,8 @@ namespace supplyGood
 
             dateContract.Enabled = state;
 
-            cbxShipped.Enabled = state;
-            cbxDelivered.Enabled = state;
+            cbxShipped.Enabled = !IsShipped && state;
+            cbxDelivered.Enabled = !IsShipped && !IsDelivered && state;
 
             if (_Mode == SubFormMode.Add)
             {
@@ -174,8 +176,12 @@ namespace supplyGood
                 _ID_CAR = Convert.ToInt32(myReader["id_car"]);
                 _ID_STORAGE = Convert.ToInt32(myReader["id_storage"]);
 
-                cbxShipped.Checked = Convert.ToBoolean(myReader["s_shipped"]);
-                cbxDelivered.Checked = Convert.ToBoolean(myReader["s_delivered"]);
+                IsShipped = Convert.ToBoolean(myReader["s_shipped"]);
+                cbxShipped.Checked = IsShipped;
+                cbxShipped.Enabled = !IsShipped;
+                IsDelivered = Convert.ToBoolean(myReader["s_delivered"]);
+                cbxDelivered.Checked = IsDelivered;
+                cbxDelivered.Enabled = !IsDelivered;
 
                 myReader.Close();
             }
@@ -374,8 +380,8 @@ namespace supplyGood
             RefreshSum();
             if (dgvGoods.SelectedRows.Count != 0)
             {
-                txtAmount.Text = dgvGoods.SelectedRows[0].Cells[2].Value.ToString();
-                txtPrice.Text = dgvGoods.SelectedRows[0].Cells[3].Value.ToString();
+                txtAmount.Text = dgvGoods.SelectedRows[0].Cells[1].Value.ToString();
+                txtPrice.Text = dgvGoods.SelectedRows[0].Cells[2].Value.ToString();
             }
         }
 
@@ -407,11 +413,15 @@ namespace supplyGood
 
         private void btnGoodSave_Click(object sender, EventArgs e)
         {
-            int amount, price, id_good;
+            int amount;
+            int old_amount;
+            double price;
+            int id_good;
             try
             {
                 amount = Convert.ToInt32(txtAmount.Text);
-                price = Convert.ToInt32(txtPrice.Text);
+                old_amount = Convert.ToInt32(dgvGoods.SelectedRows[0].Cells[1]);
+                price = Convert.ToDouble(txtPrice.Text);
                 id_good = Convert.ToInt32(txtGoodName.Text.Split(',')[0].Substring(1));
             }
             catch (Exception ex)
@@ -420,20 +430,77 @@ namespace supplyGood
                 dgvGoods_SelectionChanged(null, null);
                 return;
             }
-            consignmentTableAdapter.UpdateQuery(amount, price, _ID, id_good);
 
-            consignmentBindingSource.EndEdit();
-            consignmentUFTableAdapter.Fill(mainDBDataSet.ConsignmentUF);
-            MessageBox.Show("Информация изменена", "Успех!!1!1", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            dgvGoods_SelectionChanged(null, null);
+            //if (!cbxShipped.Checked)
+            //{
+
+            //    string myConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
+
+            //    using (SqlConnection myConnection = new SqlConnection(myConnectionString))
+            //    {
+            //        myConnection.Open();
+
+            //        // Start a local transaction.
+            //        SqlTransaction myTransaction = myConnection.BeginTransaction();
+
+            //        // Enlist a command in the current transaction.
+            //        SqlCommand command = myConnection.CreateCommand();
+            //        command.Transaction = myTransaction;
+
+            //        try
+            //        {
+            //            // Execute two separate commands.
+            //            command.CommandText =
+            //              string.Format("SELECT Sum(con_amount) FROM Consignment WHERE id_good={0}", id_good);
+            //            int available = Convert.ToInt32(command.ExecuteScalar());
+
+            //            if ((old_amount - amount) < 0 && )
+
+            //                command.CommandText =
+            //                  "INSERT INTO Production.ScrapReason(Name) VALUES('Wrong color')";
+            //            command.ExecuteNonQuery();
+
+            //            // Commit the transaction.
+            //            myTransaction.Commit();
+            //            Console.WriteLine("Both records were written to database.");
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            // Handle the exception if the transaction fails to commit.
+            //            Console.WriteLine(ex.Message);
+
+            //            try
+            //            {
+            //                // Attempt to roll back the transaction.
+            //                myTransaction.Rollback();
+            //            }
+            //            catch (Exception exRollback)
+            //            {
+            //                // Throws an InvalidOperationException if the connection 
+            //                // is closed or the transaction has already been rolled 
+            //                // back on the server.
+            //                Console.WriteLine(exRollback.Message);
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+                consignmentTableAdapter.UpdateQuery(amount, (float)price, _ID, id_good);
+
+                consignmentBindingSource.EndEdit();
+                consignmentUFTableAdapter.Fill(mainDBDataSet.ConsignmentUF);
+                MessageBox.Show("Информация изменена", "Успех!!1!1", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dgvGoods_SelectionChanged(null, null);
+            //}
         }
 
         private void GoodAdd_TextChanged(object sender, EventArgs e)
         {
             if (dgvGoods.SelectedRows.Count != 0)
             {
-                if (txtAmount.Text == dgvGoods.SelectedRows[0].Cells[2].Value.ToString() &&
-                txtPrice.Text == dgvGoods.SelectedRows[0].Cells[3].Value.ToString())
+                if (txtAmount.Text == dgvGoods.SelectedRows[0].Cells[1].Value.ToString() &&
+                txtPrice.Text == dgvGoods.SelectedRows[0].Cells[2].Value.ToString())
                 {
                     btnGoodSave.Visible = false;
                 }

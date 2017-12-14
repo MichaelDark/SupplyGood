@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewStorage));
             this.lblTitle = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
@@ -56,20 +57,22 @@
             this.stockTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StockTableAdapter();
             this.stockUFTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StockUFTableAdapter();
             this.storageTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StorageTableAdapter();
+            this.pictureMain = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoods)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goodAddBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
             // 
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTitle.Location = new System.Drawing.Point(19, 9);
+            this.lblTitle.Location = new System.Drawing.Point(59, 9);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(391, 37);
+            this.lblTitle.Size = new System.Drawing.Size(351, 37);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Склад";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -131,7 +134,7 @@
             this.dgvGoods.AutoGenerateColumns = false;
             this.dgvGoods.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvGoods.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvGoods.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvGoods.BackgroundColor = System.Drawing.Color.White;
             this.dgvGoods.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvGoods.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvGoods.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -216,6 +219,7 @@
             // 
             // txtGoodName
             // 
+            this.txtGoodName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.stockBindingSource, "good", true));
             this.txtGoodName.Location = new System.Drawing.Point(77, 32);
             this.txtGoodName.Name = "txtGoodName";
             this.txtGoodName.ReadOnly = true;
@@ -308,10 +312,23 @@
             // 
             this.storageTableAdapter.ClearBeforeFill = true;
             // 
+            // pictureMain
+            // 
+            this.pictureMain.Image = global::supplyGood.Properties.Resources.storage;
+            this.pictureMain.InitialImage = null;
+            this.pictureMain.Location = new System.Drawing.Point(19, 12);
+            this.pictureMain.Name = "pictureMain";
+            this.pictureMain.Size = new System.Drawing.Size(34, 34);
+            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureMain.TabIndex = 57;
+            this.pictureMain.TabStop = false;
+            // 
             // ViewStorage
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1019, 565);
+            this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.dgvGoods);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnGoodAdd);
@@ -324,6 +341,7 @@
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ViewStorage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Просмотр - Склад";
@@ -336,6 +354,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.goodAddBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -369,5 +388,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn goodDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn amountDataGridViewTextBoxColumn;
         private MainDBDataSetTableAdapters.StorageTableAdapter storageTableAdapter;
+        private System.Windows.Forms.PictureBox pictureMain;
     }
 }

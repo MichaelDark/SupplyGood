@@ -42,8 +42,10 @@
             this.mainDBDataSet = new supplyGood.MainDBDataSet();
             this.consignmentTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ConsignmentTableAdapter();
             this.stockTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StockTableAdapter();
+            this.pictureMain = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSave
@@ -70,12 +72,12 @@
             // 
             // lblTitle
             // 
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTitle.Location = new System.Drawing.Point(12, 9);
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTitle.Location = new System.Drawing.Point(72, 9);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(265, 50);
+            this.lblTitle.Size = new System.Drawing.Size(205, 50);
             this.lblTitle.TabIndex = 41;
-            this.lblTitle.Text = "Выберите товара";
+            this.lblTitle.Text = "Выберите товар";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // goodTableAdapter
@@ -145,10 +147,23 @@
             // 
             this.stockTableAdapter.ClearBeforeFill = true;
             // 
+            // pictureMain
+            // 
+            this.pictureMain.Image = global::supplyGood.Properties.Resources.good;
+            this.pictureMain.InitialImage = null;
+            this.pictureMain.Location = new System.Drawing.Point(19, 12);
+            this.pictureMain.Name = "pictureMain";
+            this.pictureMain.Size = new System.Drawing.Size(47, 47);
+            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureMain.TabIndex = 59;
+            this.pictureMain.TabStop = false;
+            // 
             // ChooseGoodForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(294, 295);
+            this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.cbxGood);
             this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.label1);
@@ -164,6 +179,7 @@
             this.Load += new System.EventHandler(this.ChooseGoodForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,5 +199,6 @@
         private MainDBDataSet mainDBDataSet;
         private MainDBDataSetTableAdapters.ConsignmentTableAdapter consignmentTableAdapter;
         private MainDBDataSetTableAdapters.StockTableAdapter stockTableAdapter;
+        private System.Windows.Forms.PictureBox pictureMain;
     }
 }

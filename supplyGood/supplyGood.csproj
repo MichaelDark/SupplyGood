@@ -45,6 +45,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ico.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -222,6 +225,21 @@
   <ItemGroup>
     <None Include="img\next.png" />
     <None Include="img\prev.png" />
+    <None Include="img\car.png" />
+    <None Include="img\client.png" />
+    <None Include="img\employee.png" />
+    <None Include="img\forecast.png" />
+    <None Include="img\statistics.png" />
+    <None Include="img\storage.png" />
+    <None Include="img\supply.png" />
+    <None Include="img\good.png" />
+    <None Include="img\file.png" />
+    <None Include="img\view.png" />
+    <None Include="img\exit.png" />
+    <None Include="ico.ico" />
+    <None Include="ico.png" />
+    <None Include="img\filter.png" />
+    <None Include="img\user.png" />
     <Content Include="MainDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

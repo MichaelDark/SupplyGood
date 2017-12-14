@@ -141,7 +141,7 @@ namespace supplyGood
                 new Filter(false, field[7], head[7], FilterType.Bool),
                 new Filter(false, field[8], head[8], FilterType.Bool)
             };
-            FormState supply = new FormState(caption, hint, btnText, head, field, filter, supplyBindingSource);
+            FormState supply = new FormState(caption, hint, btnText, head, field, filter, supplyBindingSource, supplyGood.Properties.Resources.supply);
             State.Add(supply);
 
             //Good
@@ -172,7 +172,7 @@ namespace supplyGood
                 new Filter(false, field[2], head[2], FilterType.Text),
                 new Filter(false, field[3], head[3], FilterType.Number)
             };
-            FormState good = new FormState(caption, hint, btnText, head, field, filter, goodBindingSource);
+            FormState good = new FormState(caption, hint, btnText, head, field, filter, goodBindingSource, supplyGood.Properties.Resources.good);
             State.Add(good);
 
             //Car
@@ -206,7 +206,7 @@ namespace supplyGood
                 new Filter(false, field[3], head[3], FilterType.Text),
                 new Filter(false, field[4], head[4], FilterType.Text)
             };
-            FormState car = new FormState(caption, hint, btnText, head, field, filter, carBindingSource);
+            FormState car = new FormState(caption, hint, btnText, head, field, filter, carBindingSource, supplyGood.Properties.Resources.car);
             State.Add(car);
 
             //Storage 
@@ -234,7 +234,7 @@ namespace supplyGood
                 new Filter(false, field[1], head[1], FilterType.Text),
                 new Filter(false, field[2], head[2], FilterType.Text)
             };
-            FormState storage = new FormState(caption, hint, btnText, head, field, filter, storageBindingSource);
+            FormState storage = new FormState(caption, hint, btnText, head, field, filter, storageBindingSource, supplyGood.Properties.Resources.storage);
             State.Add(storage);
 
             //Client
@@ -274,7 +274,7 @@ namespace supplyGood
                 new Filter(false, field[5], head[5], FilterType.Text),
                 new Filter(false, field[6], head[6], FilterType.Text)
             };
-            FormState client = new FormState(caption, hint, btnText, head, field, filter, clientBindingSource);
+            FormState client = new FormState(caption, hint, btnText, head, field, filter, clientBindingSource, supplyGood.Properties.Resources.client);
             State.Add(client);
 
             //Employee
@@ -314,7 +314,7 @@ namespace supplyGood
                 new Filter(false, field[5], head[5], FilterType.Date),
                 new Filter(false, field[6], head[6], FilterType.Number)
             };
-            FormState emp = new FormState(caption, hint, btnText, head, field, filter, employeeBindingSource);
+            FormState emp = new FormState(caption, hint, btnText, head, field, filter, employeeBindingSource, supplyGood.Properties.Resources.employee);
             State.Add(emp);
 
             //User
@@ -339,7 +339,7 @@ namespace supplyGood
                 new Filter(false, field[1], head[1], FilterType.Text),
                 new Filter(false, field[2], head[2], FilterType.Text)
             };
-            FormState user = new FormState(caption, hint, btnText, head, field, filter, userBindingSource);
+            FormState user = new FormState(caption, hint, btnText, head, field, filter, userBindingSource, supplyGood.Properties.Resources.user);
             State.Add(user);
         }
         private void MainForm_Load(object sender, EventArgs e)
@@ -564,7 +564,7 @@ namespace supplyGood
                     {
                         return "склад (" + dgvMain.Rows[curr].Cells[0].Value.ToString() + ") по адресу " +
                             dgvMain.Rows[curr].Cells[2].Value.ToString() + " (заведующий " +
-                            dgvMain.Rows[curr].Cells[3].Value.ToString() + ") ";
+                            dgvMain.Rows[curr].Cells[1].Value.ToString() + ") ";
                     }
                 case TableView.Employee:
                     {
@@ -590,6 +590,7 @@ namespace supplyGood
             lblHint.Text = State[(int)_View].Hint;
             btnFunc.Text = State[(int)_View].ButtonText;
             Text = lblMain.Text + " - " + RightsCaption;
+            pictureMain.Image = State[(int)_View].Image;
             UpdateCurrentData();
         }
         private void PerformFiltering()
@@ -1051,6 +1052,7 @@ namespace supplyGood
         public List<string> Fields;
         public List<Filter> Filters;
         public BindingSource Binding;
+        public Bitmap Image;
 
         public FormState()
         {
@@ -1061,6 +1063,7 @@ namespace supplyGood
             Fields = new List<string>();
             Filters = new List<Filter>();
             Binding = null;
+            Image = null;
         }
         public FormState(
             string caption, 
@@ -1069,7 +1072,8 @@ namespace supplyGood
             List<string> headers, 
             List<string> fields, 
             List<Filter> filters, 
-            BindingSource binding)
+            BindingSource binding,
+            Bitmap image)
         {
             Caption = caption;
             Hint = hint;
@@ -1078,6 +1082,7 @@ namespace supplyGood
             Fields = fields;
             Filters = filters;
             Binding = binding;
+            Image = image;
         }
 
         public void ClearFilters()
@@ -1096,6 +1101,7 @@ namespace supplyGood
             Fields.Clear();
             Filters.Clear();
             Binding = null;
+            Image = null;
         }
     }
 }

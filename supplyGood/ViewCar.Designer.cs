@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewCar));
             this.lblTitle = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtGov = new System.Windows.Forms.TextBox();
@@ -44,16 +45,18 @@
             this.mainDBDataSet = new supplyGood.MainDBDataSet();
             this.employeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.carTableAdapter = new supplyGood.MainDBDataSetTableAdapters.CarTableAdapter();
+            this.pictureMain = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
             // 
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTitle.Location = new System.Drawing.Point(19, 9);
+            this.lblTitle.Location = new System.Drawing.Point(110, 9);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(391, 91);
+            this.lblTitle.Size = new System.Drawing.Size(300, 91);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Информация о машине #999";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -163,10 +166,23 @@
             // 
             this.carTableAdapter.ClearBeforeFill = true;
             // 
+            // pictureMain
+            // 
+            this.pictureMain.Image = global::supplyGood.Properties.Resources.car;
+            this.pictureMain.InitialImage = null;
+            this.pictureMain.Location = new System.Drawing.Point(19, 9);
+            this.pictureMain.Name = "pictureMain";
+            this.pictureMain.Size = new System.Drawing.Size(85, 85);
+            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureMain.TabIndex = 57;
+            this.pictureMain.TabStop = false;
+            // 
             // ViewCar
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(422, 390);
+            this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.cbxEmployee);
             this.Controls.Add(this.txtColor);
             this.Controls.Add(this.btnSave);
@@ -179,12 +195,14 @@
             this.Controls.Add(this.lblTitle);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ViewCar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Просмотр - Машина";
             this.Load += new System.EventHandler(this.ViewCar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,5 +224,6 @@
         private MainDBDataSet mainDBDataSet;
         private System.Windows.Forms.BindingSource employeeBindingSource;
         private MainDBDataSetTableAdapters.CarTableAdapter carTableAdapter;
+        private System.Windows.Forms.PictureBox pictureMain;
     }
 }

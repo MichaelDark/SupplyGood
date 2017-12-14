@@ -54,8 +54,6 @@
             this.btnFunc = new System.Windows.Forms.Button();
             this.lblHint = new System.Windows.Forms.Label();
             this.btnSort = new System.Windows.Forms.Button();
-            this.btnSearchNext = new System.Windows.Forms.Button();
-            this.btnSearchPrev = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.cbxSearch = new System.Windows.Forms.ComboBox();
             this.bnMain = new System.Windows.Forms.BindingNavigator(this.components);
@@ -90,6 +88,9 @@
             this.storageUFTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StorageUFTableAdapter();
             this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.clientTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ClientTableAdapter();
+            this.pictureMain = new System.Windows.Forms.PictureBox();
+            this.btnSearchPrev = new System.Windows.Forms.Button();
+            this.btnSearchNext = new System.Windows.Forms.Button();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
@@ -103,10 +104,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.supplyBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.storageBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
             // 
+            this.mainMenuStrip.BackColor = System.Drawing.SystemColors.Control;
             this.mainMenuStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.mainMenuStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -126,12 +129,14 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Image = global::supplyGood.Properties.Resources.file;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.fileToolStripMenuItem.Text = "Файл";
             // 
             // exitToolStripMenuItem
             // 
+            this.exitToolStripMenuItem.Image = global::supplyGood.Properties.Resources.exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.exitToolStripMenuItem.Text = "Выход";
@@ -146,57 +151,65 @@
             this.clientsToolStripMenuItem,
             this.storagesToolStripMenuItem,
             this.carsToolStripMenuItem});
+            this.managementToolStripMenuItem.Image = global::supplyGood.Properties.Resources.view;
             this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
-            this.managementToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.managementToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
             this.managementToolStripMenuItem.Text = "Просмотр";
             // 
             // suppliesToolStripMenuItem
             // 
+            this.suppliesToolStripMenuItem.Image = global::supplyGood.Properties.Resources.supply;
             this.suppliesToolStripMenuItem.Name = "suppliesToolStripMenuItem";
-            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.suppliesToolStripMenuItem.Text = "Поставки";
             this.suppliesToolStripMenuItem.Click += new System.EventHandler(this.SuppliesToolStripMenuItem_Click);
             // 
             // employeeToolStripMenuItem
             // 
+            this.employeeToolStripMenuItem.Image = global::supplyGood.Properties.Resources.employee;
             this.employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
-            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.employeeToolStripMenuItem.Text = "Сотрудники";
             this.employeeToolStripMenuItem.Click += new System.EventHandler(this.EmployeeToolStripMenuItem_Click);
             // 
             // goodsToolStripMenuItem
             // 
+            this.goodsToolStripMenuItem.Image = global::supplyGood.Properties.Resources.good;
             this.goodsToolStripMenuItem.Name = "goodsToolStripMenuItem";
-            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.goodsToolStripMenuItem.Text = "Товары";
             this.goodsToolStripMenuItem.Click += new System.EventHandler(this.GoodsToolStripMenuItem_Click);
             // 
             // clientsToolStripMenuItem
             // 
+            this.clientsToolStripMenuItem.Image = global::supplyGood.Properties.Resources.client;
             this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
-            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.clientsToolStripMenuItem.Text = "Заказчики";
             this.clientsToolStripMenuItem.Click += new System.EventHandler(this.ClientToolStripMenuItem_Click);
             // 
             // storagesToolStripMenuItem
             // 
+            this.storagesToolStripMenuItem.Image = global::supplyGood.Properties.Resources.storage;
             this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
-            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.storagesToolStripMenuItem.Text = "Склады";
             this.storagesToolStripMenuItem.Click += new System.EventHandler(this.StorageToolStripMenuItem_Click);
             // 
             // carsToolStripMenuItem
             // 
+            this.carsToolStripMenuItem.Image = global::supplyGood.Properties.Resources.car;
             this.carsToolStripMenuItem.Name = "carsToolStripMenuItem";
-            this.carsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.carsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.carsToolStripMenuItem.Text = "Машины";
             this.carsToolStripMenuItem.Click += new System.EventHandler(this.CarsToolStripMenuItem_Click);
             // 
             // usersToolStripMenuItem
             // 
             this.usersToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.usersToolStripMenuItem.Image = global::supplyGood.Properties.Resources.user;
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(113, 20);
             this.usersToolStripMenuItem.Text = "Пользователи";
             this.usersToolStripMenuItem.Click += new System.EventHandler(this.UsersToolStripMenuItem_Click);
             // 
@@ -204,12 +217,14 @@
             // 
             this.прогнозToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.predictGoodToolStripMenuItem});
+            this.прогнозToolStripMenuItem.Image = global::supplyGood.Properties.Resources.forecast;
             this.прогнозToolStripMenuItem.Name = "прогнозToolStripMenuItem";
-            this.прогнозToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.прогнозToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.прогнозToolStripMenuItem.Text = "Прогноз";
             // 
             // predictGoodToolStripMenuItem
             // 
+            this.predictGoodToolStripMenuItem.Image = global::supplyGood.Properties.Resources.forecast;
             this.predictGoodToolStripMenuItem.Name = "predictGoodToolStripMenuItem";
             this.predictGoodToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.predictGoodToolStripMenuItem.Text = "Товары";
@@ -217,8 +232,9 @@
             // 
             // statisticsToolStripMenuItem
             // 
+            this.statisticsToolStripMenuItem.Image = global::supplyGood.Properties.Resources.statistics;
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
-            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
             this.statisticsToolStripMenuItem.Text = "Статистика";
             this.statisticsToolStripMenuItem.Click += new System.EventHandler(this.statisticsToolStripMenuItem_Click);
             // 
@@ -226,7 +242,7 @@
             // 
             this.lblMain.AutoSize = true;
             this.lblMain.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMain.Location = new System.Drawing.Point(12, 24);
+            this.lblMain.Location = new System.Drawing.Point(65, 27);
             this.lblMain.Name = "lblMain";
             this.lblMain.Size = new System.Drawing.Size(330, 47);
             this.lblMain.TabIndex = 3;
@@ -239,7 +255,7 @@
             this.dgvMain.AllowUserToResizeRows = false;
             this.dgvMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMain.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvMain.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvMain.BackgroundColor = System.Drawing.Color.White;
             this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -326,36 +342,6 @@
             this.btnSort.Text = "Сортировка";
             this.btnSort.UseVisualStyleBackColor = false;
             this.btnSort.Click += new System.EventHandler(this.BtnSort_Click);
-            // 
-            // btnSearchNext
-            // 
-            this.btnSearchNext.BackColor = System.Drawing.Color.Honeydew;
-            this.btnSearchNext.BackgroundImage = global::supplyGood.Properties.Resources.next;
-            this.btnSearchNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnSearchNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSearchNext.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSearchNext.Location = new System.Drawing.Point(831, 28);
-            this.btnSearchNext.Name = "btnSearchNext";
-            this.btnSearchNext.Size = new System.Drawing.Size(30, 55);
-            this.btnSearchNext.TabIndex = 15;
-            this.btnSearchNext.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearchNext.UseVisualStyleBackColor = false;
-            this.btnSearchNext.Click += new System.EventHandler(this.BtnSearchNext_Click);
-            // 
-            // btnSearchPrev
-            // 
-            this.btnSearchPrev.BackColor = System.Drawing.Color.Honeydew;
-            this.btnSearchPrev.BackgroundImage = global::supplyGood.Properties.Resources.prev;
-            this.btnSearchPrev.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnSearchPrev.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSearchPrev.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSearchPrev.Location = new System.Drawing.Point(600, 28);
-            this.btnSearchPrev.Name = "btnSearchPrev";
-            this.btnSearchPrev.Size = new System.Drawing.Size(30, 55);
-            this.btnSearchPrev.TabIndex = 16;
-            this.btnSearchPrev.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearchPrev.UseVisualStyleBackColor = false;
-            this.btnSearchPrev.Click += new System.EventHandler(this.BtnSearchPrev_Click);
             // 
             // txtSearch
             // 
@@ -595,10 +581,52 @@
             // 
             this.clientTableAdapter.ClearBeforeFill = true;
             // 
+            // pictureMain
+            // 
+            this.pictureMain.InitialImage = null;
+            this.pictureMain.Location = new System.Drawing.Point(12, 27);
+            this.pictureMain.Name = "pictureMain";
+            this.pictureMain.Size = new System.Drawing.Size(47, 47);
+            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureMain.TabIndex = 23;
+            this.pictureMain.TabStop = false;
+            // 
+            // btnSearchPrev
+            // 
+            this.btnSearchPrev.BackColor = System.Drawing.Color.Honeydew;
+            this.btnSearchPrev.BackgroundImage = global::supplyGood.Properties.Resources.prev;
+            this.btnSearchPrev.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSearchPrev.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSearchPrev.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSearchPrev.Location = new System.Drawing.Point(600, 28);
+            this.btnSearchPrev.Name = "btnSearchPrev";
+            this.btnSearchPrev.Size = new System.Drawing.Size(30, 55);
+            this.btnSearchPrev.TabIndex = 16;
+            this.btnSearchPrev.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSearchPrev.UseVisualStyleBackColor = false;
+            this.btnSearchPrev.Click += new System.EventHandler(this.BtnSearchPrev_Click);
+            // 
+            // btnSearchNext
+            // 
+            this.btnSearchNext.BackColor = System.Drawing.Color.Honeydew;
+            this.btnSearchNext.BackgroundImage = global::supplyGood.Properties.Resources.next;
+            this.btnSearchNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSearchNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSearchNext.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSearchNext.Location = new System.Drawing.Point(831, 28);
+            this.btnSearchNext.Name = "btnSearchNext";
+            this.btnSearchNext.Size = new System.Drawing.Size(30, 55);
+            this.btnSearchNext.TabIndex = 15;
+            this.btnSearchNext.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSearchNext.UseVisualStyleBackColor = false;
+            this.btnSearchNext.Click += new System.EventHandler(this.BtnSearchNext_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1094, 616);
+            this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.btnClearFilters);
             this.Controls.Add(this.btnFilter);
             this.Controls.Add(this.bnMain);
@@ -614,11 +642,12 @@
             this.Controls.Add(this.mainMenuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenuStrip;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Администратор";
+            this.Text = "p";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.mainMenuStrip.ResumeLayout(false);
@@ -636,6 +665,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.supplyBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.storageBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -703,5 +733,6 @@
         private MainDBDataSetTableAdapters.StorageUFTableAdapter storageUFTableAdapter;
         private System.Windows.Forms.BindingSource clientBindingSource;
         private MainDBDataSetTableAdapters.ClientTableAdapter clientTableAdapter;
+        private System.Windows.Forms.PictureBox pictureMain;
     }
 }

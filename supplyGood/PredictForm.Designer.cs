@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PredictForm));
             this.cbxOptions = new System.Windows.Forms.ComboBox();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.lblCaption = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.pictureMain = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
             this.SuspendLayout();
             // 
             // cbxOptions
@@ -54,7 +57,7 @@
             this.dgvMain.AllowUserToResizeRows = false;
             this.dgvMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMain.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvMain.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvMain.BackgroundColor = System.Drawing.Color.White;
             this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -73,10 +76,9 @@
             // lblCaption
             // 
             this.lblCaption.AutoSize = true;
-            this.lblCaption.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblCaption.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblCaption.ForeColor = System.Drawing.Color.Black;
-            this.lblCaption.Location = new System.Drawing.Point(0, 0);
+            this.lblCaption.Location = new System.Drawing.Point(47, 0);
             this.lblCaption.Name = "lblCaption";
             this.lblCaption.Size = new System.Drawing.Size(214, 37);
             this.lblCaption.TabIndex = 8;
@@ -91,22 +93,37 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Анализировать данные:";
             // 
+            // pictureMain
+            // 
+            this.pictureMain.Image = global::supplyGood.Properties.Resources.forecast;
+            this.pictureMain.InitialImage = null;
+            this.pictureMain.Location = new System.Drawing.Point(12, 5);
+            this.pictureMain.Name = "pictureMain";
+            this.pictureMain.Size = new System.Drawing.Size(34, 34);
+            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureMain.TabIndex = 57;
+            this.pictureMain.TabStop = false;
+            // 
             // PredictForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblCaption);
             this.Controls.Add(this.cbxOptions);
             this.Controls.Add(this.dgvMain);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "PredictForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Прогноз товара";
             this.Load += new System.EventHandler(this.PredictForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -117,5 +134,6 @@
         private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.Label lblCaption;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureMain;
     }
 }

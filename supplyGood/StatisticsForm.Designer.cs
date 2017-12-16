@@ -37,7 +37,6 @@
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.cbxOptions = new System.Windows.Forms.ComboBox();
             this.lblCaption = new System.Windows.Forms.Label();
-            this.lblTotal = new System.Windows.Forms.Label();
             this.btnReport = new System.Windows.Forms.Button();
             this.pictureMain = new System.Windows.Forms.PictureBox();
             this.mainMenuStrip.SuspendLayout();
@@ -64,12 +63,14 @@
             this.goodToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.goodSellToolStripMenuItem,
             this.goodProfitToolStripMenuItem});
+            this.goodToolStripMenuItem.Image = global::supplyGood.Properties.Resources.good;
             this.goodToolStripMenuItem.Name = "goodToolStripMenuItem";
-            this.goodToolStripMenuItem.Size = new System.Drawing.Size(76, 29);
+            this.goodToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             this.goodToolStripMenuItem.Text = "Товар";
             // 
             // goodSellToolStripMenuItem
             // 
+            this.goodSellToolStripMenuItem.Image = global::supplyGood.Properties.Resources.stat_popularity;
             this.goodSellToolStripMenuItem.Name = "goodSellToolStripMenuItem";
             this.goodSellToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
             this.goodSellToolStripMenuItem.Text = "Популярность";
@@ -77,6 +78,7 @@
             // 
             // goodProfitToolStripMenuItem
             // 
+            this.goodProfitToolStripMenuItem.Image = global::supplyGood.Properties.Resources.stat_profit;
             this.goodProfitToolStripMenuItem.Name = "goodProfitToolStripMenuItem";
             this.goodProfitToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
             this.goodProfitToolStripMenuItem.Text = "Прибыльность";
@@ -129,15 +131,6 @@
             this.lblCaption.TabIndex = 7;
             this.lblCaption.Text = "Название статистики";
             // 
-            // lblTotal
-            // 
-            this.lblTotal.Location = new System.Drawing.Point(206, 70);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(566, 41);
-            this.lblTotal.TabIndex = 8;
-            this.lblTotal.Text = "Общая сумма: -";
-            this.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // btnReport
             // 
             this.btnReport.BackColor = System.Drawing.Color.Gainsboro;
@@ -169,7 +162,6 @@
             this.ClientSize = new System.Drawing.Size(784, 562);
             this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.btnReport);
-            this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.lblCaption);
             this.Controls.Add(this.cbxOptions);
             this.Controls.Add(this.dgvMain);
@@ -201,7 +193,6 @@
         private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.ComboBox cbxOptions;
         private System.Windows.Forms.Label lblCaption;
-        private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Button btnReport;
         private System.Windows.Forms.PictureBox pictureMain;
     }

@@ -7,9 +7,11 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace supplyGood
 {
@@ -21,6 +23,7 @@ namespace supplyGood
 
     public partial class MainForm : Form
     {
+        string _pathPriceList = Application.StartupPath + @"\reports\pricelist.docx";
         Rights _Rights;
         List<FormState> State;
         string RightsCaption
@@ -375,7 +378,7 @@ namespace supplyGood
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            //Application.Exit();
         }
 
         private void Search(SearchDirection searchDirection)
@@ -651,6 +654,76 @@ namespace supplyGood
         {
             State[(int)_View].ClearFilters();
         }
+        private void PrintPricelist()
+        {
+            var wordApp = new Word.Application();
+            string reportPath = "";
+            try
+            {
+                reportPath =
+                    Application.StartupPath + @"\pricelist_" +
+                    DateTime.Now.Year + "_" +
+                    DateTime.Now.Month + "_" +
+                    DateTime.Now.Day + "_" +
+                    DateTime.Now.Hour + "_" +
+                    DateTime.Now.Minute + "_" +
+                    DateTime.Now.Second +
+                    ".docx";
+                File.Copy(_pathPriceList, reportPath);
+
+                wordApp.Visible = false;
+                var wordDoc = wordApp.Documents.Open(reportPath);
+
+                ReplaceWordStub("{date}", DateTime.Now.Date.ToShortDateString(), wordDoc);
+
+                Word.Table table = wordDoc.Tables[1];
+
+                table.Rows[1].Cells[1].Range.Text = "Наименование";
+                table.Rows[1].Cells[2].Range.Text = "Ед. измерения";
+                table.Rows[1].Cells[3].Range.Text = "Цена";
+
+                string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
+                SqlConnection sqlconn = new SqlConnection(ConnectionString);
+                try
+                {
+                    sqlconn.Open();
+                    SqlCommand command = new SqlCommand("SELECT g_name, g_unit, g_price FROM Good ORDER BY g_name", sqlconn);
+                    SqlDataReader reader = command.ExecuteReader();
+                    int i = 0;
+                    while(reader.Read())
+                    {
+                        table.Rows.Add();
+                        for (int j = 0; j < 3; j++)
+                        {
+                            table.Rows[i + 2].Cells[j + 1].Range.Text = reader[j].ToString();
+                        }
+                        i++;
+                    }
+                }
+                catch (Exception ex) { }
+                finally
+                {
+                    sqlconn.Close();
+                }
+
+                object missing = System.Reflection.Missing.Value;
+                wordDoc.Save();
+                wordApp.Visible = true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Не удалось сформировать отчет" + Environment.NewLine + e.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+        private void ReplaceWordStub(string stub, string text, Word.Document wordDoc)
+        {
+            var range = wordDoc.Content;
+            range.Find.ClearFormatting();
+            range.Find.Execute(FindText: stub, ReplaceWith: text);
+        }
 
         private void SuppliesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -701,11 +774,20 @@ namespace supplyGood
         }
         private void PredictGoodToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var NextForm = new PredictForm();
+            var NextForm = new ForecastForm();
             NextForm.ShowDialog();
+        }
+        private void PriceListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintPricelist();
+        }
+        private void ReturnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             Application.Exit();
         }
         private void BtnSearchNext_Click(object sender, EventArgs e)

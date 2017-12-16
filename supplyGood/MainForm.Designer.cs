@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.returnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.suppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +45,8 @@
             this.прогнозToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.predictGoodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.priceListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMain = new System.Windows.Forms.Label();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.mainDBDataSet = new supplyGood.MainDBDataSet();
@@ -111,34 +114,45 @@
             // 
             this.mainMenuStrip.BackColor = System.Drawing.SystemColors.Control;
             this.mainMenuStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.mainMenuStrip.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.mainMenuStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.managementToolStripMenuItem,
             this.usersToolStripMenuItem,
             this.прогнозToolStripMenuItem,
-            this.statisticsToolStripMenuItem});
+            this.statisticsToolStripMenuItem,
+            this.печатьToolStripMenuItem});
             this.mainMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
             this.mainMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mainMenuStrip.Size = new System.Drawing.Size(1094, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(1094, 28);
             this.mainMenuStrip.TabIndex = 0;
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.returnToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Image = global::supplyGood.Properties.Resources.file;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.fileToolStripMenuItem.Text = "Файл";
+            // 
+            // returnToolStripMenuItem
+            // 
+            this.returnToolStripMenuItem.Image = global::supplyGood.Properties.Resources.exit;
+            this.returnToolStripMenuItem.Name = "returnToolStripMenuItem";
+            this.returnToolStripMenuItem.Size = new System.Drawing.Size(255, 24);
+            this.returnToolStripMenuItem.Text = "Выход из учетной записи";
+            this.returnToolStripMenuItem.Click += new System.EventHandler(this.ReturnToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Image = global::supplyGood.Properties.Resources.exit;
+            this.exitToolStripMenuItem.Image = global::supplyGood.Properties.Resources._return;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(255, 24);
             this.exitToolStripMenuItem.Text = "Выход";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -153,14 +167,14 @@
             this.carsToolStripMenuItem});
             this.managementToolStripMenuItem.Image = global::supplyGood.Properties.Resources.view;
             this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
-            this.managementToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.managementToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.managementToolStripMenuItem.Text = "Просмотр";
             // 
             // suppliesToolStripMenuItem
             // 
             this.suppliesToolStripMenuItem.Image = global::supplyGood.Properties.Resources.supply;
             this.suppliesToolStripMenuItem.Name = "suppliesToolStripMenuItem";
-            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.suppliesToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
             this.suppliesToolStripMenuItem.Text = "Поставки";
             this.suppliesToolStripMenuItem.Click += new System.EventHandler(this.SuppliesToolStripMenuItem_Click);
             // 
@@ -168,7 +182,7 @@
             // 
             this.employeeToolStripMenuItem.Image = global::supplyGood.Properties.Resources.employee;
             this.employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
-            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
             this.employeeToolStripMenuItem.Text = "Сотрудники";
             this.employeeToolStripMenuItem.Click += new System.EventHandler(this.EmployeeToolStripMenuItem_Click);
             // 
@@ -176,7 +190,7 @@
             // 
             this.goodsToolStripMenuItem.Image = global::supplyGood.Properties.Resources.good;
             this.goodsToolStripMenuItem.Name = "goodsToolStripMenuItem";
-            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.goodsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
             this.goodsToolStripMenuItem.Text = "Товары";
             this.goodsToolStripMenuItem.Click += new System.EventHandler(this.GoodsToolStripMenuItem_Click);
             // 
@@ -184,7 +198,7 @@
             // 
             this.clientsToolStripMenuItem.Image = global::supplyGood.Properties.Resources.client;
             this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
-            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
             this.clientsToolStripMenuItem.Text = "Заказчики";
             this.clientsToolStripMenuItem.Click += new System.EventHandler(this.ClientToolStripMenuItem_Click);
             // 
@@ -192,7 +206,7 @@
             // 
             this.storagesToolStripMenuItem.Image = global::supplyGood.Properties.Resources.storage;
             this.storagesToolStripMenuItem.Name = "storagesToolStripMenuItem";
-            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.storagesToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
             this.storagesToolStripMenuItem.Text = "Склады";
             this.storagesToolStripMenuItem.Click += new System.EventHandler(this.StorageToolStripMenuItem_Click);
             // 
@@ -200,7 +214,7 @@
             // 
             this.carsToolStripMenuItem.Image = global::supplyGood.Properties.Resources.car;
             this.carsToolStripMenuItem.Name = "carsToolStripMenuItem";
-            this.carsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.carsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
             this.carsToolStripMenuItem.Text = "Машины";
             this.carsToolStripMenuItem.Click += new System.EventHandler(this.CarsToolStripMenuItem_Click);
             // 
@@ -209,7 +223,7 @@
             this.usersToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.usersToolStripMenuItem.Image = global::supplyGood.Properties.Resources.user;
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(113, 20);
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(136, 24);
             this.usersToolStripMenuItem.Text = "Пользователи";
             this.usersToolStripMenuItem.Click += new System.EventHandler(this.UsersToolStripMenuItem_Click);
             // 
@@ -219,14 +233,14 @@
             this.predictGoodToolStripMenuItem});
             this.прогнозToolStripMenuItem.Image = global::supplyGood.Properties.Resources.forecast;
             this.прогнозToolStripMenuItem.Name = "прогнозToolStripMenuItem";
-            this.прогнозToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.прогнозToolStripMenuItem.Size = new System.Drawing.Size(97, 24);
             this.прогнозToolStripMenuItem.Text = "Прогноз";
             // 
             // predictGoodToolStripMenuItem
             // 
-            this.predictGoodToolStripMenuItem.Image = global::supplyGood.Properties.Resources.forecast;
+            this.predictGoodToolStripMenuItem.Image = global::supplyGood.Properties.Resources.supplygood;
             this.predictGoodToolStripMenuItem.Name = "predictGoodToolStripMenuItem";
-            this.predictGoodToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.predictGoodToolStripMenuItem.Size = new System.Drawing.Size(131, 24);
             this.predictGoodToolStripMenuItem.Text = "Товары";
             this.predictGoodToolStripMenuItem.Click += new System.EventHandler(this.PredictGoodToolStripMenuItem_Click);
             // 
@@ -234,15 +248,32 @@
             // 
             this.statisticsToolStripMenuItem.Image = global::supplyGood.Properties.Resources.statistics;
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
-            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(112, 24);
             this.statisticsToolStripMenuItem.Text = "Статистика";
             this.statisticsToolStripMenuItem.Click += new System.EventHandler(this.statisticsToolStripMenuItem_Click);
+            // 
+            // печатьToolStripMenuItem
+            // 
+            this.печатьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.priceListToolStripMenuItem});
+            this.печатьToolStripMenuItem.Image = global::supplyGood.Properties.Resources.printer;
+            this.печатьToolStripMenuItem.Name = "печатьToolStripMenuItem";
+            this.печатьToolStripMenuItem.Size = new System.Drawing.Size(86, 24);
+            this.печатьToolStripMenuItem.Text = "Печать";
+            // 
+            // priceListToolStripMenuItem
+            // 
+            this.priceListToolStripMenuItem.Image = global::supplyGood.Properties.Resources.good;
+            this.priceListToolStripMenuItem.Name = "priceListToolStripMenuItem";
+            this.priceListToolStripMenuItem.Size = new System.Drawing.Size(158, 24);
+            this.priceListToolStripMenuItem.Text = "Прайс-лист";
+            this.priceListToolStripMenuItem.Click += new System.EventHandler(this.PriceListToolStripMenuItem_Click);
             // 
             // lblMain
             // 
             this.lblMain.AutoSize = true;
             this.lblMain.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMain.Location = new System.Drawing.Point(65, 27);
+            this.lblMain.Location = new System.Drawing.Point(65, 36);
             this.lblMain.Name = "lblMain";
             this.lblMain.Size = new System.Drawing.Size(330, 47);
             this.lblMain.TabIndex = 3;
@@ -335,7 +366,7 @@
             this.btnSort.BackColor = System.Drawing.Color.LightCyan;
             this.btnSort.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSort.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSort.Location = new System.Drawing.Point(867, 27);
+            this.btnSort.Location = new System.Drawing.Point(867, 31);
             this.btnSort.Name = "btnSort";
             this.btnSort.Size = new System.Drawing.Size(217, 25);
             this.btnSort.TabIndex = 6;
@@ -357,7 +388,7 @@
             this.cbxSearch.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbxSearch.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbxSearch.FormattingEnabled = true;
-            this.cbxSearch.Location = new System.Drawing.Point(636, 27);
+            this.cbxSearch.Location = new System.Drawing.Point(636, 32);
             this.cbxSearch.Name = "cbxSearch";
             this.cbxSearch.Size = new System.Drawing.Size(189, 25);
             this.cbxSearch.TabIndex = 18;
@@ -584,10 +615,10 @@
             // pictureMain
             // 
             this.pictureMain.InitialImage = null;
-            this.pictureMain.Location = new System.Drawing.Point(12, 27);
+            this.pictureMain.Location = new System.Drawing.Point(12, 36);
             this.pictureMain.Name = "pictureMain";
             this.pictureMain.Size = new System.Drawing.Size(47, 47);
-            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureMain.TabIndex = 23;
             this.pictureMain.TabStop = false;
             // 
@@ -598,9 +629,9 @@
             this.btnSearchPrev.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnSearchPrev.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSearchPrev.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSearchPrev.Location = new System.Drawing.Point(600, 28);
+            this.btnSearchPrev.Location = new System.Drawing.Point(600, 31);
             this.btnSearchPrev.Name = "btnSearchPrev";
-            this.btnSearchPrev.Size = new System.Drawing.Size(30, 55);
+            this.btnSearchPrev.Size = new System.Drawing.Size(30, 52);
             this.btnSearchPrev.TabIndex = 16;
             this.btnSearchPrev.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSearchPrev.UseVisualStyleBackColor = false;
@@ -613,9 +644,9 @@
             this.btnSearchNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnSearchNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSearchNext.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSearchNext.Location = new System.Drawing.Point(831, 28);
+            this.btnSearchNext.Location = new System.Drawing.Point(831, 31);
             this.btnSearchNext.Name = "btnSearchNext";
-            this.btnSearchNext.Size = new System.Drawing.Size(30, 55);
+            this.btnSearchNext.Size = new System.Drawing.Size(30, 52);
             this.btnSearchNext.TabIndex = 15;
             this.btnSearchNext.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSearchNext.UseVisualStyleBackColor = false;
@@ -647,7 +678,6 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "p";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.mainMenuStrip.ResumeLayout(false);
@@ -675,7 +705,7 @@
 
         private System.Windows.Forms.MenuStrip mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem returnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem managementToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem employeeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem suppliesToolStripMenuItem;
@@ -734,5 +764,8 @@
         private System.Windows.Forms.BindingSource clientBindingSource;
         private MainDBDataSetTableAdapters.ClientTableAdapter clientTableAdapter;
         private System.Windows.Forms.PictureBox pictureMain;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem печатьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem priceListToolStripMenuItem;
     }
 }

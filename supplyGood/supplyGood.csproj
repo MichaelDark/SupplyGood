@@ -73,11 +73,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainDBDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="PredictForm.cs">
+    <Compile Include="ForecastForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PredictForm.Designer.cs">
-      <DependentUpon>PredictForm.cs</DependentUpon>
+    <Compile Include="ForecastForm.Designer.cs">
+      <DependentUpon>ForecastForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FilterForm.cs">
       <SubType>Form</SubType>
@@ -144,8 +144,8 @@
     <EmbeddedResource Include="ChooseGoodForm.resx">
       <DependentUpon>ChooseGoodForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PredictForm.resx">
-      <DependentUpon>PredictForm.cs</DependentUpon>
+    <EmbeddedResource Include="ForecastForm.resx">
+      <DependentUpon>ForecastForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FilterForm.resx">
       <DependentUpon>FilterForm.cs</DependentUpon>
@@ -208,10 +208,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="reports\pricelist.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="reports\report_forecast.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="reports\report_good_profit.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="reports\report_good_selling.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="reports\supply.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -240,6 +249,11 @@
     <None Include="ico.png" />
     <None Include="img\filter.png" />
     <None Include="img\user.png" />
+    <None Include="img\return.png" />
+    <None Include="img\printer.png" />
+    <None Include="img\supplygood.png" />
+    <None Include="img\stat_popularity.png" />
+    <None Include="img\stat_profit.png" />
     <Content Include="MainDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

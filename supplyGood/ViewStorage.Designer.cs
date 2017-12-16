@@ -37,15 +37,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.dgvGoods = new System.Windows.Forms.DataGridView();
-            this.idstorageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.goodDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stockBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mainDBDataSet = new supplyGood.MainDBDataSet();
             this.btnGoodAdd = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtGoodName = new System.Windows.Forms.TextBox();
+            this.btnGoodDelete = new System.Windows.Forms.Button();
             this.btnGoodSave = new System.Windows.Forms.Button();
+            this.txtGoodName = new System.Windows.Forms.TextBox();
             this.lblUnit = new System.Windows.Forms.TextBox();
             this.goodBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label10 = new System.Windows.Forms.Label();
@@ -58,6 +56,10 @@
             this.stockUFTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StockUFTableAdapter();
             this.storageTableAdapter = new supplyGood.MainDBDataSetTableAdapters.StorageTableAdapter();
             this.pictureMain = new System.Windows.Forms.PictureBox();
+            this.id_storage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_good = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.good = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoods)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
@@ -139,9 +141,10 @@
             this.dgvGoods.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvGoods.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGoods.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idstorageDataGridViewTextBoxColumn,
-            this.goodDataGridViewTextBoxColumn,
-            this.amountDataGridViewTextBoxColumn});
+            this.id_storage,
+            this.id_good,
+            this.good,
+            this.amount});
             this.dgvGoods.DataSource = this.stockBindingSource;
             this.dgvGoods.Location = new System.Drawing.Point(441, 106);
             this.dgvGoods.MultiSelect = false;
@@ -157,27 +160,6 @@
             this.dgvGoods.TabIndex = 9;
             this.dgvGoods.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvGoods_DefaultValuesNeeded);
             this.dgvGoods.SelectionChanged += new System.EventHandler(this.dgvGoods_SelectionChanged);
-            // 
-            // idstorageDataGridViewTextBoxColumn
-            // 
-            this.idstorageDataGridViewTextBoxColumn.DataPropertyName = "id_storage";
-            this.idstorageDataGridViewTextBoxColumn.HeaderText = "ID склада";
-            this.idstorageDataGridViewTextBoxColumn.Name = "idstorageDataGridViewTextBoxColumn";
-            this.idstorageDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // goodDataGridViewTextBoxColumn
-            // 
-            this.goodDataGridViewTextBoxColumn.DataPropertyName = "good";
-            this.goodDataGridViewTextBoxColumn.HeaderText = "Товар";
-            this.goodDataGridViewTextBoxColumn.Name = "goodDataGridViewTextBoxColumn";
-            this.goodDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // amountDataGridViewTextBoxColumn
-            // 
-            this.amountDataGridViewTextBoxColumn.DataPropertyName = "amount";
-            this.amountDataGridViewTextBoxColumn.HeaderText = "В наличии, ед.";
-            this.amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
-            this.amountDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // stockBindingSource
             // 
@@ -204,8 +186,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.txtGoodName);
+            this.groupBox1.Controls.Add(this.btnGoodDelete);
             this.groupBox1.Controls.Add(this.btnGoodSave);
+            this.groupBox1.Controls.Add(this.txtGoodName);
             this.groupBox1.Controls.Add(this.lblUnit);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.txtAmount);
@@ -217,6 +200,32 @@
             this.groupBox1.TabIndex = 55;
             this.groupBox1.TabStop = false;
             // 
+            // btnGoodDelete
+            // 
+            this.btnGoodDelete.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnGoodDelete.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnGoodDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnGoodDelete.Location = new System.Drawing.Point(403, 72);
+            this.btnGoodDelete.Name = "btnGoodDelete";
+            this.btnGoodDelete.Size = new System.Drawing.Size(75, 33);
+            this.btnGoodDelete.TabIndex = 63;
+            this.btnGoodDelete.Text = "Удалить";
+            this.btnGoodDelete.UseVisualStyleBackColor = false;
+            this.btnGoodDelete.Click += new System.EventHandler(this.btnGoodDelete_Click);
+            // 
+            // btnGoodSave
+            // 
+            this.btnGoodSave.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnGoodSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnGoodSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnGoodSave.Location = new System.Drawing.Point(484, 72);
+            this.btnGoodSave.Name = "btnGoodSave";
+            this.btnGoodSave.Size = new System.Drawing.Size(75, 33);
+            this.btnGoodSave.TabIndex = 62;
+            this.btnGoodSave.Text = "Сохранить";
+            this.btnGoodSave.UseVisualStyleBackColor = false;
+            this.btnGoodSave.Visible = false;
+            // 
             // txtGoodName
             // 
             this.txtGoodName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.stockBindingSource, "good", true));
@@ -226,27 +235,13 @@
             this.txtGoodName.Size = new System.Drawing.Size(319, 33);
             this.txtGoodName.TabIndex = 60;
             // 
-            // btnGoodSave
-            // 
-            this.btnGoodSave.BackColor = System.Drawing.Color.Gainsboro;
-            this.btnGoodSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnGoodSave.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnGoodSave.Location = new System.Drawing.Point(414, 72);
-            this.btnGoodSave.Name = "btnGoodSave";
-            this.btnGoodSave.Size = new System.Drawing.Size(145, 34);
-            this.btnGoodSave.TabIndex = 56;
-            this.btnGoodSave.Text = "Сохранить";
-            this.btnGoodSave.UseVisualStyleBackColor = false;
-            this.btnGoodSave.Visible = false;
-            this.btnGoodSave.Click += new System.EventHandler(this.btnGoodSave_Click);
-            // 
             // lblUnit
             // 
             this.lblUnit.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.goodBindingSource, "g_unit", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblUnit.Location = new System.Drawing.Point(414, 32);
+            this.lblUnit.Location = new System.Drawing.Point(403, 32);
             this.lblUnit.Name = "lblUnit";
             this.lblUnit.ReadOnly = true;
-            this.lblUnit.Size = new System.Drawing.Size(145, 33);
+            this.lblUnit.Size = new System.Drawing.Size(156, 33);
             this.lblUnit.TabIndex = 59;
             // 
             // goodBindingSource
@@ -323,6 +318,36 @@
             this.pictureMain.TabIndex = 57;
             this.pictureMain.TabStop = false;
             // 
+            // id_storage
+            // 
+            this.id_storage.DataPropertyName = "id_storage";
+            this.id_storage.HeaderText = "ID склада";
+            this.id_storage.Name = "id_storage";
+            this.id_storage.ReadOnly = true;
+            this.id_storage.Visible = false;
+            // 
+            // id_good
+            // 
+            this.id_good.DataPropertyName = "id_good";
+            this.id_good.HeaderText = "id_good";
+            this.id_good.Name = "id_good";
+            this.id_good.ReadOnly = true;
+            this.id_good.Visible = false;
+            // 
+            // good
+            // 
+            this.good.DataPropertyName = "good";
+            this.good.HeaderText = "Товар";
+            this.good.Name = "good";
+            this.good.ReadOnly = true;
+            // 
+            // amount
+            // 
+            this.amount.DataPropertyName = "amount";
+            this.amount.HeaderText = "В наличии, ед.";
+            this.amount.Name = "amount";
+            this.amount.ReadOnly = true;
+            // 
             // ViewStorage
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -378,16 +403,18 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox lblUnit;
         private System.Windows.Forms.BindingSource goodAddBindingSource;
-        private System.Windows.Forms.Button btnGoodSave;
         private System.Windows.Forms.TextBox txtGoodName;
         private System.Windows.Forms.ComboBox cbxStorekeeper;
         private System.Windows.Forms.BindingSource stockBindingSource;
         private MainDBDataSetTableAdapters.StockTableAdapter stockTableAdapter;
         private MainDBDataSetTableAdapters.StockUFTableAdapter stockUFTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idstorageDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn goodDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn amountDataGridViewTextBoxColumn;
         private MainDBDataSetTableAdapters.StorageTableAdapter storageTableAdapter;
         private System.Windows.Forms.PictureBox pictureMain;
+        private System.Windows.Forms.Button btnGoodDelete;
+        private System.Windows.Forms.Button btnGoodSave;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_storage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_good;
+        private System.Windows.Forms.DataGridViewTextBoxColumn good;
+        private System.Windows.Forms.DataGridViewTextBoxColumn amount;
     }
 }

@@ -38,20 +38,20 @@ namespace supplyGood
                 if (loginExists > 0)
                 {
                     int userCount;
-                    using (SqlCommand sqlCommand = new SqlCommand("SELECT COUNT(*) from [User] where login like @login AND password like @password", myConnection))
+                    using (SqlCommand sqlSubCommand = new SqlCommand("SELECT COUNT(*) from [User] where login like @login AND password like @password", myConnection))
                     {
-                        sqlCommand.Parameters.AddWithValue("@login", _login);
-                        sqlCommand.Parameters.AddWithValue("@password", _passw);
-                        userCount = (int)sqlCommand.ExecuteScalar();
+                        sqlSubCommand.Parameters.AddWithValue("@login", _login);
+                        sqlSubCommand.Parameters.AddWithValue("@password", _passw);
+                        userCount = (int)sqlSubCommand.ExecuteScalar();
                     }
                     if (userCount > 0)
                     {
                         Rights rights;
-                        using (SqlCommand sqlCommand = new SqlCommand("SELECT * from [User] where login like @login AND password like @password", myConnection))
+                        using (SqlCommand sqlSubSubCommand = new SqlCommand("SELECT * from [User] where login like @login AND password like @password", myConnection))
                         {
-                            sqlCommand.Parameters.AddWithValue("@login", _login);
-                            sqlCommand.Parameters.AddWithValue("@password", _passw);
-                            SqlDataReader reader = sqlCommand.ExecuteReader();
+                            sqlSubSubCommand.Parameters.AddWithValue("@login", _login);
+                            sqlSubSubCommand.Parameters.AddWithValue("@password", _passw);
+                            SqlDataReader reader = sqlSubSubCommand.ExecuteReader();
                             reader.Read();
                             switch (reader["rights"].ToString())
                             {
@@ -79,9 +79,12 @@ namespace supplyGood
                         }
                         var NextForm = new MainForm(rights);
                         NextForm.Owner = this;
-                        NextForm.Show();
                         this.Hide();
+                        NextForm.ShowDialog();
+                        this.Show();
+                        txtPassword.Text = "";
                         lblError.Text = "";
+                        txtPassword.Focus();
                     }
                     else
                     {

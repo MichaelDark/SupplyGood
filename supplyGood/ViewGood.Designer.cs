@@ -46,16 +46,16 @@
             // 
             this.txtPrice.Location = new System.Drawing.Point(19, 217);
             this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(258, 33);
+            this.txtPrice.Size = new System.Drawing.Size(324, 33);
             this.txtPrice.TabIndex = 46;
             // 
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.Color.Gainsboro;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSave.Location = new System.Drawing.Point(19, 256);
+            this.btnSave.Location = new System.Drawing.Point(153, 259);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(258, 46);
+            this.btnSave.Size = new System.Drawing.Size(190, 46);
             this.btnSave.TabIndex = 55;
             this.btnSave.Text = "Редактировать";
             this.btnSave.UseVisualStyleBackColor = false;
@@ -85,7 +85,7 @@
             // 
             this.txtUnit.Location = new System.Drawing.Point(19, 161);
             this.txtUnit.Name = "txtUnit";
-            this.txtUnit.Size = new System.Drawing.Size(258, 33);
+            this.txtUnit.Size = new System.Drawing.Size(324, 33);
             this.txtUnit.TabIndex = 43;
             // 
             // label2
@@ -103,7 +103,7 @@
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblTitle.Location = new System.Drawing.Point(98, 9);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(184, 76);
+            this.lblTitle.Size = new System.Drawing.Size(245, 76);
             this.lblTitle.TabIndex = 41;
             this.lblTitle.Text = "Информация о товаре";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -112,7 +112,7 @@
             // 
             this.txtName.Location = new System.Drawing.Point(19, 105);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(258, 33);
+            this.txtName.Size = new System.Drawing.Size(324, 33);
             this.txtName.TabIndex = 40;
             // 
             // goodTableAdapter
@@ -134,7 +134,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(294, 317);
+            this.ClientSize = new System.Drawing.Size(355, 317);
             this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.btnSave);

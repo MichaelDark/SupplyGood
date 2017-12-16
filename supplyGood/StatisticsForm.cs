@@ -38,10 +38,12 @@ namespace supplyGood
             cbxOptions.Items.Add("За все время");
             cbxOptions.SelectedIndex = 0;
         }
-        private void UnsetOptions()
+        private int UnsetOptions()
         {
+            int curr = cbxOptions.SelectedIndex;
             cbxOptions.Items.Clear();
             cbxOptions.Visible = false;
+            return curr == -1 ? 0 : curr;
         }
         private double GetTotal(string command, string table, string attr)
         {
@@ -75,43 +77,40 @@ namespace supplyGood
         }
         private DataTable GetTable()
         {
+            int period = -1;
+
+            if (cbxOptions.SelectedIndex == 0)
+            {
+                period = -1;
+            }
+            else if (cbxOptions.SelectedIndex == 1)
+            {
+                period = -3;
+            }
+            else if (cbxOptions.SelectedIndex == 2)
+            {
+                period = -12;
+            }
+
             switch (_Mode)
             {
                 case StatisticMode.GoodSelling:
                     {
-                        string tableName = "GoodSellingByMonth";
-                        if (cbxOptions.SelectedIndex == 1)
-                        {
-                            tableName = "GoodSellingByQuarter";
-                        }
-                        else if (cbxOptions.SelectedIndex == 2)
-                        {
-                            tableName = "GoodSellingByYear";
-                        }
-                        else if (cbxOptions.SelectedIndex == 3)
-                        {
-                            tableName = "GoodSellingAll";
-                        }
-                        lblTotal.Text = "Общее количество товара, ед.: " + GetFormattedNumber(GetTotal("SUM", tableName, "Amount"), false);
-                        return ExecuteQuery(string.Format(@"SELECT Good, Amount FROM {0}", tableName));
+                        string query =
+                            @"SELECT g.g_name as Good, SUM(con_amount) as Amount " +
+                            @"FROM Consignment con FULL JOIN Supply s ON  con.id_supply = s.id FULL JOIN Good g ON  con.id_good = g.id " +
+                            (cbxOptions.SelectedIndex == cbxOptions.Items.Count - 1 ? "" : "WHERE s_contract >= DATEADD(month, " + period.ToString() + ", CAST(GETDATE() As date)) ") +
+                            @"GROUP BY g.g_name ORDER BY Amount DESC";
+                        return ExecuteQuery(query);
                     }
                 case StatisticMode.GoodProfit:
                     {
-                        string tableName = "GoodProfitByMonth";
-                        if (cbxOptions.SelectedIndex == 1)
-                        {
-                            tableName = "GoodProfitByQuarter";
-                        }
-                        else if (cbxOptions.SelectedIndex == 2)
-                        {
-                            tableName = "GoodProfitByYear";
-                        }
-                        else if (cbxOptions.SelectedIndex == 3)
-                        {
-                            tableName = "GoodProfitAll";
-                        }
-                        lblTotal.Text = "Общая прибыль, грн.: " + GetFormattedNumber(GetTotal("SUM", tableName, "Amount"));
-                        return ExecuteQuery(string.Format(@"SELECT Good, Amount FROM {0}", tableName));
+                        string query =
+                            @"SELECT g.g_name as Good, COALESCE(ROUND(SUM(con_amount * con_price), 2), 0) as Amount  " +
+                            @"FROM Consignment con FULL JOIN Supply s ON  con.id_supply = s.id FULL JOIN Good g ON  con.id_good = g.id " +
+                            (cbxOptions.SelectedIndex == cbxOptions.Items.Count - 1 ? "" : "WHERE s_contract >= DATEADD(month, " + period.ToString() + ", CAST(GETDATE() As date)) ") +
+                            @"GROUP BY g.g_name ORDER BY Amount DESC";
+                        return ExecuteQuery(query);
                     }
                 default:
                     {
@@ -137,6 +136,21 @@ namespace supplyGood
                 return null;
             }
         }
+        private double ExecuteNonQuery(string query)
+        {
+            try
+            {
+                string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
+                SqlConnection sqlconn = new SqlConnection(ConnectionString);
+                sqlconn.Open();
+                SqlCommand oda = new SqlCommand(query, sqlconn);
+                return Convert.ToDouble(oda.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
         private void FormatReport()
         {
             var wordApp = new Word.Application();
@@ -159,12 +173,12 @@ namespace supplyGood
                 }
 
                 reportPath = 
-                    Application.StartupPath + @"\report" +
-                    DateTime.Now.Year +
-                    DateTime.Now.Month +
-                    DateTime.Now.Day +
-                    DateTime.Now.Hour +
-                    DateTime.Now.Minute +
+                    Application.StartupPath + @"\report" + "_" +
+                    DateTime.Now.Year + "_" + 
+                    DateTime.Now.Month + "_" +
+                    DateTime.Now.Day + "_" +
+                    DateTime.Now.Hour + "_" +
+                    DateTime.Now.Minute + "_" +
                     DateTime.Now.Second +
                     ".docx";
                 File.Copy(reportSourcePath, reportPath);
@@ -179,8 +193,6 @@ namespace supplyGood
                         {
                             ReplaceWordStub("{title}", lblCaption.Text, wordDoc);
                             ReplaceWordStub("{date_to}", DateTime.Today.Date.ToShortDateString(), wordDoc);
-                            ReplaceWordStub("{title_total}", lblTotal.Text.Split(':')[0], wordDoc);
-                            ReplaceWordStub("{total_val}", lblTotal.Text.Split(':')[1], wordDoc);
 
                             DateTime today = DateTime.Today.Date;
                             string res = "";
@@ -244,9 +256,10 @@ namespace supplyGood
 
         private void GoodSellToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UnsetOptions();
+            int currIndex = UnsetOptions();
             SetGoodOptions();
             _Mode = StatisticMode.GoodSelling;
+            cbxOptions.SelectedIndex = currIndex;
 
             ShowGoodSelling();
         }
@@ -254,11 +267,11 @@ namespace supplyGood
         {
             try
             {
-                lblCaption.Text = "Самые популярные товары";
+                lblCaption.Text = "Товары: Популярность";
                 string[] header = new string[]
                 {
                     "Наименование",
-                    "Количество проданных единиц товара, ед."
+                    "Количество проданных единиц, ед."
                 };
 
                 DataTable dt = GetTable();
@@ -274,9 +287,10 @@ namespace supplyGood
         }
         private void GoodProfitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UnsetOptions();
+            int currIndex = UnsetOptions();
             SetGoodOptions();
             _Mode = StatisticMode.GoodProfit;
+            cbxOptions.SelectedIndex = currIndex;
 
             ShowGoodProfit();
         }
@@ -284,7 +298,7 @@ namespace supplyGood
         {
             try
             {
-                lblCaption.Text = "Самые прибыльные товары";
+                lblCaption.Text = "Товары: Прибыльность";
                 string[] header = new string[]
                 {
                     "Наименование",

@@ -244,7 +244,7 @@ namespace supplyGood
         {
             if (dgvGoods.SelectedRows.Count != 0)
             {
-                txtAmount.Text = dgvGoods.SelectedRows[0].Cells[2].Value.ToString();
+                txtAmount.Text = dgvGoods.SelectedRows[0].Cells["amount"].Value.ToString();
             }
         }
 
@@ -283,7 +283,7 @@ namespace supplyGood
         {
             if (dgvGoods.SelectedRows.Count != 0)
             {
-                if (txtAmount.Text == dgvGoods.SelectedRows[0].Cells[2].Value.ToString())
+                if (txtAmount.Text == dgvGoods.SelectedRows[0].Cells["amount"].Value.ToString())
                 {
                     btnGoodSave.Visible = false;
                 }
@@ -292,6 +292,14 @@ namespace supplyGood
                     btnGoodSave.Visible = true;
                 }
             }
+        }
+
+        private void btnGoodDelete_Click(object sender, EventArgs e)
+        {
+            stockTableAdapter.DeleteQuery(_ID, Convert.ToInt32(dgvGoods.SelectedRows[0].Cells["id_good"].Value));
+
+            stockBindingSource.EndEdit();
+            stockUFTableAdapter.Fill(mainDBDataSet.StockUF);
         }
     }
 }

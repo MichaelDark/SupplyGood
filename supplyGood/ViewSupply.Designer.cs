@@ -38,8 +38,6 @@
             this.dateContract = new System.Windows.Forms.DateTimePicker();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtAddress = new System.Windows.Forms.TextBox();
-            this.employeeTableAdapter = new supplyGood.MainDBDataSetTableAdapters.EmployeeTableAdapter();
-            this.personalInfoTableAdapter = new supplyGood.MainDBDataSetTableAdapters.PersonalInfoTableAdapter();
             this.cbxClient = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbxCar = new System.Windows.Forms.ComboBox();
@@ -51,37 +49,42 @@
             this.cbxDelivered = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.dgvGoods = new System.Windows.Forms.DataGridView();
-            this.goodDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.good = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_good = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.consignmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mainDBDataSet = new supplyGood.MainDBDataSet();
-            this.consignmentTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ConsignmentTableAdapter();
             this.lblTotalSum = new System.Windows.Forms.Label();
-            this.supplyTableAdapter = new supplyGood.MainDBDataSetTableAdapters.SupplyTableAdapter();
-            this.consignmentUFTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ConsignmentUFTableAdapter();
-            this.goodBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.goodTableAdapter = new supplyGood.MainDBDataSetTableAdapters.GoodTableAdapter();
             this.btnGoodAdd = new System.Windows.Forms.Button();
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnGoodDelete = new System.Windows.Forms.Button();
             this.txtGoodName = new System.Windows.Forms.TextBox();
             this.btnGoodSave = new System.Windows.Forms.Button();
             this.lblUnit = new System.Windows.Forms.TextBox();
+            this.goodBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label10 = new System.Windows.Forms.Label();
             this.txtAmount = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.goodAddBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pictureMain = new System.Windows.Forms.PictureBox();
+            this.employeeTableAdapter = new supplyGood.MainDBDataSetTableAdapters.EmployeeTableAdapter();
+            this.personalInfoTableAdapter = new supplyGood.MainDBDataSetTableAdapters.PersonalInfoTableAdapter();
+            this.consignmentTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ConsignmentTableAdapter();
+            this.supplyTableAdapter = new supplyGood.MainDBDataSetTableAdapters.SupplyTableAdapter();
+            this.consignmentUFTableAdapter = new supplyGood.MainDBDataSetTableAdapters.ConsignmentUFTableAdapter();
+            this.goodTableAdapter = new supplyGood.MainDBDataSetTableAdapters.GoodTableAdapter();
+            this.goodAddBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnReport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoods)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.consignmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.goodAddBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodAddBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -152,14 +155,6 @@
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(391, 85);
             this.txtAddress.TabIndex = 4;
-            // 
-            // employeeTableAdapter
-            // 
-            this.employeeTableAdapter.ClearBeforeFill = true;
-            // 
-            // personalInfoTableAdapter
-            // 
-            this.personalInfoTableAdapter.ClearBeforeFill = true;
             // 
             // cbxClient
             // 
@@ -263,6 +258,7 @@
             // dgvGoods
             // 
             this.dgvGoods.AllowUserToAddRows = false;
+            this.dgvGoods.AllowUserToDeleteRows = false;
             this.dgvGoods.AllowUserToResizeRows = false;
             this.dgvGoods.AutoGenerateColumns = false;
             this.dgvGoods.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -272,10 +268,11 @@
             this.dgvGoods.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvGoods.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGoods.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.goodDataGridViewTextBoxColumn,
-            this.amountDataGridViewTextBoxColumn,
-            this.priceDataGridViewTextBoxColumn,
-            this.totalDataGridViewTextBoxColumn});
+            this.good,
+            this.amount,
+            this.price,
+            this.total,
+            this.id_good});
             this.dgvGoods.DataSource = this.consignmentBindingSource;
             this.dgvGoods.Location = new System.Drawing.Point(441, 106);
             this.dgvGoods.MultiSelect = false;
@@ -294,33 +291,41 @@
             this.dgvGoods.SelectionChanged += new System.EventHandler(this.dgvGoods_SelectionChanged);
             this.dgvGoods.Leave += new System.EventHandler(this.dgvGoods_Leave);
             // 
-            // goodDataGridViewTextBoxColumn
+            // good
             // 
-            this.goodDataGridViewTextBoxColumn.DataPropertyName = "good";
-            this.goodDataGridViewTextBoxColumn.HeaderText = "Товар";
-            this.goodDataGridViewTextBoxColumn.Name = "goodDataGridViewTextBoxColumn";
-            this.goodDataGridViewTextBoxColumn.ReadOnly = true;
+            this.good.DataPropertyName = "good";
+            this.good.HeaderText = "Товар";
+            this.good.Name = "good";
+            this.good.ReadOnly = true;
             // 
-            // amountDataGridViewTextBoxColumn
+            // amount
             // 
-            this.amountDataGridViewTextBoxColumn.DataPropertyName = "amount";
-            this.amountDataGridViewTextBoxColumn.HeaderText = "Количество";
-            this.amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
-            this.amountDataGridViewTextBoxColumn.ReadOnly = true;
+            this.amount.DataPropertyName = "amount";
+            this.amount.HeaderText = "Количество";
+            this.amount.Name = "amount";
+            this.amount.ReadOnly = true;
             // 
-            // priceDataGridViewTextBoxColumn
+            // price
             // 
-            this.priceDataGridViewTextBoxColumn.DataPropertyName = "price";
-            this.priceDataGridViewTextBoxColumn.HeaderText = "Цена";
-            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
+            this.price.DataPropertyName = "price";
+            this.price.HeaderText = "Цена";
+            this.price.Name = "price";
+            this.price.ReadOnly = true;
             // 
-            // totalDataGridViewTextBoxColumn
+            // total
             // 
-            this.totalDataGridViewTextBoxColumn.DataPropertyName = "total";
-            this.totalDataGridViewTextBoxColumn.HeaderText = "Итого";
-            this.totalDataGridViewTextBoxColumn.Name = "totalDataGridViewTextBoxColumn";
-            this.totalDataGridViewTextBoxColumn.ReadOnly = true;
+            this.total.DataPropertyName = "total";
+            this.total.HeaderText = "Итого";
+            this.total.Name = "total";
+            this.total.ReadOnly = true;
+            // 
+            // id_good
+            // 
+            this.id_good.DataPropertyName = "id_good";
+            this.id_good.HeaderText = "id_good";
+            this.id_good.Name = "id_good";
+            this.id_good.ReadOnly = true;
+            this.id_good.Visible = false;
             // 
             // consignmentBindingSource
             // 
@@ -332,10 +337,6 @@
             this.mainDBDataSet.DataSetName = "MainDBDataSet";
             this.mainDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // consignmentTableAdapter
-            // 
-            this.consignmentTableAdapter.ClearBeforeFill = true;
-            // 
             // lblTotalSum
             // 
             this.lblTotalSum.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -346,31 +347,14 @@
             this.lblTotalSum.Text = "Общая сумма:";
             this.lblTotalSum.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // supplyTableAdapter
-            // 
-            this.supplyTableAdapter.ClearBeforeFill = true;
-            // 
-            // consignmentUFTableAdapter
-            // 
-            this.consignmentUFTableAdapter.ClearBeforeFill = true;
-            // 
-            // goodBindingSource
-            // 
-            this.goodBindingSource.DataMember = "Good";
-            this.goodBindingSource.DataSource = this.mainDBDataSet;
-            // 
-            // goodTableAdapter
-            // 
-            this.goodTableAdapter.ClearBeforeFill = true;
-            // 
             // btnGoodAdd
             // 
             this.btnGoodAdd.BackColor = System.Drawing.Color.Gainsboro;
             this.btnGoodAdd.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnGoodAdd.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnGoodAdd.Location = new System.Drawing.Point(441, 66);
+            this.btnGoodAdd.Location = new System.Drawing.Point(715, 66);
             this.btnGoodAdd.Name = "btnGoodAdd";
-            this.btnGoodAdd.Size = new System.Drawing.Size(565, 33);
+            this.btnGoodAdd.Size = new System.Drawing.Size(291, 33);
             this.btnGoodAdd.TabIndex = 52;
             this.btnGoodAdd.Text = "Добавить товар";
             this.btnGoodAdd.UseVisualStyleBackColor = false;
@@ -386,6 +370,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnGoodDelete);
             this.groupBox1.Controls.Add(this.txtGoodName);
             this.groupBox1.Controls.Add(this.btnGoodSave);
             this.groupBox1.Controls.Add(this.lblUnit);
@@ -401,6 +386,19 @@
             this.groupBox1.TabIndex = 55;
             this.groupBox1.TabStop = false;
             // 
+            // btnGoodDelete
+            // 
+            this.btnGoodDelete.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnGoodDelete.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnGoodDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnGoodDelete.Location = new System.Drawing.Point(403, 72);
+            this.btnGoodDelete.Name = "btnGoodDelete";
+            this.btnGoodDelete.Size = new System.Drawing.Size(75, 33);
+            this.btnGoodDelete.TabIndex = 61;
+            this.btnGoodDelete.Text = "Удалить";
+            this.btnGoodDelete.UseVisualStyleBackColor = false;
+            this.btnGoodDelete.Click += new System.EventHandler(this.btnGoodDelete_Click);
+            // 
             // txtGoodName
             // 
             this.txtGoodName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.consignmentBindingSource, "good", true));
@@ -414,10 +412,10 @@
             // 
             this.btnGoodSave.BackColor = System.Drawing.Color.Gainsboro;
             this.btnGoodSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnGoodSave.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnGoodSave.Location = new System.Drawing.Point(414, 72);
+            this.btnGoodSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnGoodSave.Location = new System.Drawing.Point(484, 72);
             this.btnGoodSave.Name = "btnGoodSave";
-            this.btnGoodSave.Size = new System.Drawing.Size(145, 34);
+            this.btnGoodSave.Size = new System.Drawing.Size(75, 33);
             this.btnGoodSave.TabIndex = 56;
             this.btnGoodSave.Text = "Сохранить";
             this.btnGoodSave.UseVisualStyleBackColor = false;
@@ -427,11 +425,16 @@
             // lblUnit
             // 
             this.lblUnit.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.goodBindingSource, "g_unit", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblUnit.Location = new System.Drawing.Point(414, 32);
+            this.lblUnit.Location = new System.Drawing.Point(403, 32);
             this.lblUnit.Name = "lblUnit";
             this.lblUnit.ReadOnly = true;
-            this.lblUnit.Size = new System.Drawing.Size(145, 33);
+            this.lblUnit.Size = new System.Drawing.Size(156, 33);
             this.lblUnit.TabIndex = 59;
+            // 
+            // goodBindingSource
+            // 
+            this.goodBindingSource.DataMember = "Good";
+            this.goodBindingSource.DataSource = this.mainDBDataSet;
             // 
             // label10
             // 
@@ -469,11 +472,6 @@
             this.label8.TabIndex = 55;
             this.label8.Text = "Цена";
             // 
-            // goodAddBindingSource
-            // 
-            this.goodAddBindingSource.DataMember = "Good";
-            this.goodAddBindingSource.DataSource = this.mainDBDataSet;
-            // 
             // pictureMain
             // 
             this.pictureMain.Image = global::supplyGood.Properties.Resources.supply;
@@ -485,11 +483,54 @@
             this.pictureMain.TabIndex = 56;
             this.pictureMain.TabStop = false;
             // 
+            // employeeTableAdapter
+            // 
+            this.employeeTableAdapter.ClearBeforeFill = true;
+            // 
+            // personalInfoTableAdapter
+            // 
+            this.personalInfoTableAdapter.ClearBeforeFill = true;
+            // 
+            // consignmentTableAdapter
+            // 
+            this.consignmentTableAdapter.ClearBeforeFill = true;
+            // 
+            // supplyTableAdapter
+            // 
+            this.supplyTableAdapter.ClearBeforeFill = true;
+            // 
+            // consignmentUFTableAdapter
+            // 
+            this.consignmentUFTableAdapter.ClearBeforeFill = true;
+            // 
+            // goodTableAdapter
+            // 
+            this.goodTableAdapter.ClearBeforeFill = true;
+            // 
+            // goodAddBindingSource
+            // 
+            this.goodAddBindingSource.DataMember = "Good";
+            this.goodAddBindingSource.DataSource = this.mainDBDataSet;
+            // 
+            // btnReport
+            // 
+            this.btnReport.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnReport.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnReport.Location = new System.Drawing.Point(441, 67);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(268, 33);
+            this.btnReport.TabIndex = 57;
+            this.btnReport.Text = "Сформировать отчет";
+            this.btnReport.UseVisualStyleBackColor = false;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
             // ViewSupply
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1019, 565);
+            this.Controls.Add(this.btnReport);
             this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.lblTotalSum);
             this.Controls.Add(this.dgvGoods);
@@ -523,11 +564,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoods)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.consignmentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.goodAddBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodAddBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -573,10 +614,13 @@
         private System.Windows.Forms.BindingSource goodAddBindingSource;
         private System.Windows.Forms.Button btnGoodSave;
         private System.Windows.Forms.TextBox txtGoodName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn goodDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn amountDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn;
         private System.Windows.Forms.PictureBox pictureMain;
+        private System.Windows.Forms.Button btnGoodDelete;
+        private System.Windows.Forms.Button btnReport;
+        private System.Windows.Forms.DataGridViewTextBoxColumn good;
+        private System.Windows.Forms.DataGridViewTextBoxColumn amount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn price;
+        private System.Windows.Forms.DataGridViewTextBoxColumn total;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_good;
     }
 }

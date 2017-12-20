@@ -72,6 +72,7 @@ namespace supplyGood
                 goodsToolStripMenuItem.Visible = false;
                 clientsToolStripMenuItem.Visible = false;
                 usersToolStripMenuItem.Visible = false;
+                printToolStripMenuItem.Visible = false;
             }
             else if (_Rights == Rights.Manager)
             {
@@ -85,6 +86,7 @@ namespace supplyGood
                 clientsToolStripMenuItem.Visible = false;
                 employeeToolStripMenuItem.Visible = false;
                 usersToolStripMenuItem.Visible = false;
+                printToolStripMenuItem.Visible = false;
             }
         }
 
@@ -681,13 +683,14 @@ namespace supplyGood
                 table.Rows[1].Cells[1].Range.Text = "Наименование";
                 table.Rows[1].Cells[2].Range.Text = "Ед. измерения";
                 table.Rows[1].Cells[3].Range.Text = "Цена";
+                table.Rows[1].Cells[4].Range.Text = "Наличие";
 
                 string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
                 SqlConnection sqlconn = new SqlConnection(ConnectionString);
                 try
                 {
                     sqlconn.Open();
-                    SqlCommand command = new SqlCommand("SELECT g_name, g_unit, g_price FROM Good ORDER BY g_name", sqlconn);
+                    SqlCommand command = new SqlCommand("SELECT g_name, g_unit, g_price, COALESCE(SUM(st_amount), 0) as Amount FROM Good FULL JOIN Stock ON Stock.id_good=Good.id GROUP BY g_name, g_unit, g_price ORDER BY Amount DESC, g_name DESC, g_unit DESC", sqlconn);
                     SqlDataReader reader = command.ExecuteReader();
                     int i = 0;
                     while(reader.Read())
@@ -697,6 +700,7 @@ namespace supplyGood
                         {
                             table.Rows[i + 2].Cells[j + 1].Range.Text = reader[j].ToString();
                         }
+                        table.Rows[i + 2].Cells[4].Range.Text = Convert.ToInt32(reader["Amount"]) > 0 ? "Есть в наличии" : "Нет в наличии";
                         i++;
                     }
                 }

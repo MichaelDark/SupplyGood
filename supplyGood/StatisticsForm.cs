@@ -15,7 +15,7 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace supplyGood
 {
-    public enum StatisticMode { Empty, GoodProfit, GoodSelling }
+    public enum StatisticMode { Empty, GoodProfit, GoodSelling, Employment, ClientSumSupply }
     public partial class StatisticsForm : Form
     {
         StatisticMode _Mode = StatisticMode.Empty;
@@ -29,7 +29,7 @@ namespace supplyGood
         }
 
 
-        private void SetGoodOptions()
+        private void SetOptions()
         {
             cbxOptions.Visible = true;
             cbxOptions.Items.Add("За последний месяц");
@@ -44,36 +44,6 @@ namespace supplyGood
             cbxOptions.Items.Clear();
             cbxOptions.Visible = false;
             return curr == -1 ? 0 : curr;
-        }
-        private double GetTotal(string command, string table, string attr)
-        {
-            double sum = 0;
-            try
-            {
-                string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
-                SqlConnection sqlconn = new SqlConnection(ConnectionString);
-                sqlconn.Open();
-                SqlCommand comm = new SqlCommand(string.Format(@"SELECT {0}({1}) FROM {2}", command, attr, table), sqlconn);
-                sum = Math.Round(Convert.ToDouble(comm.ExecuteScalar()), 2);
-                sqlconn.Close();
-            }
-            catch (Exception ex) { }
-            return sum;
-        }
-        private string GetFormattedNumber(double n, bool hasComa = true)
-        {
-            string tmp = n.ToString();
-            string number = tmp.Contains(",") ? tmp.Split(',')[0] : tmp;
-            string res = tmp.Contains(",") ? (tmp.Split(',')[1].Length < 2 ? "," + tmp.Split(',')[1] + "0" : "," + tmp.Split(',')[1]) : (hasComa ? ",00" : "");
-            for (int i = number.Length; i > 0; i--)
-            {
-                if ((number.Length - i) % 3 == 0)
-                {
-                    res = " " + res;
-                }
-                res = number[i - 1] + res;
-            }
-            return res;
         }
         private DataTable GetTable()
         {
@@ -112,6 +82,24 @@ namespace supplyGood
                             @"GROUP BY g.g_name ORDER BY Amount DESC";
                         return ExecuteQuery(query);
                     }
+                case StatisticMode.Employment:
+                    {
+                        string query =
+                            @"SELECT COALESCE(NULLIF(CONCAT(em.em_surname, ' ', em.em_name, ' ', em.em_patron), '  '), N'Нет закрепленных сотрудников') as Name,  COUNT(s.id) as StorageAmount, COUNT(c.id) as CarAmount, COUNT(s.id) + Count(c.id) as Total " +
+                            @"FROM Employee em FULL JOIN Storage s ON  em.id = s.id_storekeeper FULL JOIN Car c ON  em.id = c.id_driver " +
+                            @"WHERE em.em_discharge is null " +
+                            @"GROUP BY em.id, em.em_surname, em.em_name, em.em_patron ORDER BY Name DESC";
+                        return ExecuteQuery(query);
+                    }
+                case StatisticMode.ClientSumSupply:
+                    {
+                        string query =
+                            @"SELECT cl.cl_company as Name,  COUNT(distinct s.id) as Amount, ROUND(SUM(con_price * con_amount), 2) as Price  " +
+                            @"FROM Supply s FULL JOIN Client cl ON  s.id_client=cl.id FULL JOIN Consignment c ON  c.id_supply = s.id " +
+                            (cbxOptions.SelectedIndex == cbxOptions.Items.Count - 1 ? "" : "WHERE s_contract >= DATEADD(month, " + period.ToString() + ", CAST(GETDATE() As date)) ") +
+                            @"GROUP BY cl.cl_company ORDER BY Price DESC";
+                        return ExecuteQuery(query);
+                    }
                 default:
                     {
                         return null;
@@ -134,21 +122,6 @@ namespace supplyGood
             catch (Exception ex)
             {
                 return null;
-            }
-        }
-        private double ExecuteNonQuery(string query)
-        {
-            try
-            {
-                string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
-                SqlConnection sqlconn = new SqlConnection(ConnectionString);
-                sqlconn.Open();
-                SqlCommand oda = new SqlCommand(query, sqlconn);
-                return Convert.ToDouble(oda.ExecuteScalar());
-            }
-            catch (Exception ex)
-            {
-                return 0;
             }
         }
         private void FormatReport()
@@ -257,9 +230,12 @@ namespace supplyGood
         private void GoodSellToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int currIndex = UnsetOptions();
-            SetGoodOptions();
+            SetOptions();
             _Mode = StatisticMode.GoodSelling;
             cbxOptions.SelectedIndex = currIndex;
+
+            btnReport.Visible = true;
+            cbxOptions.Visible = true;
 
             ShowGoodSelling();
         }
@@ -288,9 +264,12 @@ namespace supplyGood
         private void GoodProfitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int currIndex = UnsetOptions();
-            SetGoodOptions();
+            SetOptions();
             _Mode = StatisticMode.GoodProfit;
             cbxOptions.SelectedIndex = currIndex;
+
+            btnReport.Visible = true;
+            cbxOptions.Visible = true;
 
             ShowGoodProfit();
         }
@@ -316,6 +295,93 @@ namespace supplyGood
             }
             catch (Exception ex) { }
         }
+
+        private void EmploymentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int currIndex = UnsetOptions();
+            SetOptions();
+            _Mode = StatisticMode.Employment;
+            cbxOptions.SelectedIndex = currIndex;
+
+            btnReport.Visible = false;
+            cbxOptions.Visible = false;
+
+            ShowEmployment();
+        }
+        private void ShowEmployment()
+        {
+            try
+            {
+                lblCaption.Text = "Сотрудники: Занятость";
+                string[] header = new string[]
+                {
+                    "Сотрудник",
+                    "Кол-во закрепленных складов",
+                    "Кол-во закрепленных машин",
+                    "Всего ответственен за"
+                };
+
+                DataTable dt = GetTable();
+                dgvMain.DataSource = dt;
+
+                for (int i = 0; i < header.Length; i++)
+                {
+                    dgvMain.Columns[i].HeaderText = header[i];
+                }
+
+                for (int i = 0; i < dgvMain.Rows.Count; i++)
+                {
+                    int storage = Convert.ToInt32(dgvMain.Rows[i].Cells[1].Value);
+                    int car = Convert.ToInt32(dgvMain.Rows[i].Cells[2].Value);
+                    if (car + storage == 0)
+                    {
+                        dgvMain.Rows[i].DefaultCellStyle.BackColor = Color.MistyRose;
+                    }
+                    if (dgvMain.Rows[i].Cells[0].Value.ToString() == "Нет закрепленных сотрудников")
+                    {
+                        dgvMain.Rows[i].DefaultCellStyle.BackColor = Color.PapayaWhip;
+                    }
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void ClientSumSupplyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int currIndex = UnsetOptions();
+            SetOptions();
+            _Mode = StatisticMode.ClientSumSupply;
+            cbxOptions.SelectedIndex = currIndex;
+
+            btnReport.Visible = false;
+            cbxOptions.Visible = true;
+
+            ShowClientSumSupply();
+        }
+
+        private void ShowClientSumSupply()
+        {
+            try
+            {
+                lblCaption.Text = "Заказчики: Сумма поставок";
+                string[] header = new string[]
+                {
+                    "Заказчик",
+                    "Кол-во заказов",
+                    "Общая сумма поставок"
+                };
+
+                DataTable dt = GetTable();
+                dgvMain.DataSource = dt;
+
+                for (int i = 0; i < header.Length; i++)
+                {
+                    dgvMain.Columns[i].HeaderText = header[i];
+                }
+            }
+            catch (Exception ex) { }
+        }
+
         private void CbxOptions_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (_Mode)
@@ -330,6 +396,11 @@ namespace supplyGood
                         ShowGoodProfit();
                         break;
                     }
+                case StatisticMode.ClientSumSupply:
+                    {
+                        ShowClientSumSupply();
+                        break;
+                    }
             }
         }
         private void Statistics_Load(object sender, EventArgs e)
@@ -340,6 +411,26 @@ namespace supplyGood
         private void btnReport_Click(object sender, EventArgs e)
         {
             FormatReport();
+        }
+
+        private void dgvMain_Sorted(object sender, EventArgs e)
+        {
+            if (_Mode == StatisticMode.Employment)
+            {
+                for (int i = 0; i < dgvMain.Rows.Count; i++)
+                {
+                    int storage = Convert.ToInt32(dgvMain.Rows[i].Cells[1].Value);
+                    int car = Convert.ToInt32(dgvMain.Rows[i].Cells[2].Value);
+                    if (car + storage == 0)
+                    {
+                        dgvMain.Rows[i].DefaultCellStyle.BackColor = Color.MistyRose;
+                    }
+                    if (dgvMain.Rows[i].Cells[0].Value.ToString() == "Нет закрепленных сотрудников")
+                    {
+                        dgvMain.Rows[i].DefaultCellStyle.BackColor = Color.PapayaWhip;
+                    }
+                }
+            }
         }
     }
 }

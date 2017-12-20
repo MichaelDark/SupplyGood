@@ -34,6 +34,10 @@
             this.goodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goodSellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goodProfitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сотрудникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.employmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.заказчикToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientSumSupplyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.cbxOptions = new System.Windows.Forms.ComboBox();
             this.lblCaption = new System.Windows.Forms.Label();
@@ -50,7 +54,9 @@
             this.mainMenuStrip.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.mainMenuStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.goodToolStripMenuItem});
+            this.goodToolStripMenuItem,
+            this.сотрудникиToolStripMenuItem,
+            this.заказчикToolStripMenuItem});
             this.mainMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
@@ -84,6 +90,40 @@
             this.goodProfitToolStripMenuItem.Text = "Прибыльность";
             this.goodProfitToolStripMenuItem.Click += new System.EventHandler(this.GoodProfitToolStripMenuItem_Click);
             // 
+            // сотрудникиToolStripMenuItem
+            // 
+            this.сотрудникиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.employmentToolStripMenuItem});
+            this.сотрудникиToolStripMenuItem.Image = global::supplyGood.Properties.Resources.employee;
+            this.сотрудникиToolStripMenuItem.Name = "сотрудникиToolStripMenuItem";
+            this.сотрудникиToolStripMenuItem.Size = new System.Drawing.Size(143, 29);
+            this.сотрудникиToolStripMenuItem.Text = "Сотрудники";
+            // 
+            // employmentToolStripMenuItem
+            // 
+            this.employmentToolStripMenuItem.Image = global::supplyGood.Properties.Resources.stat_employment;
+            this.employmentToolStripMenuItem.Name = "employmentToolStripMenuItem";
+            this.employmentToolStripMenuItem.Size = new System.Drawing.Size(171, 30);
+            this.employmentToolStripMenuItem.Text = "Занятость";
+            this.employmentToolStripMenuItem.Click += new System.EventHandler(this.EmploymentToolStripMenuItem_Click);
+            // 
+            // заказчикToolStripMenuItem
+            // 
+            this.заказчикToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clientSumSupplyToolStripMenuItem});
+            this.заказчикToolStripMenuItem.Image = global::supplyGood.Properties.Resources.client;
+            this.заказчикToolStripMenuItem.Name = "заказчикToolStripMenuItem";
+            this.заказчикToolStripMenuItem.Size = new System.Drawing.Size(118, 29);
+            this.заказчикToolStripMenuItem.Text = "Заказчик";
+            // 
+            // clientSumSupplyToolStripMenuItem
+            // 
+            this.clientSumSupplyToolStripMenuItem.Image = global::supplyGood.Properties.Resources.stat_profit;
+            this.clientSumSupplyToolStripMenuItem.Name = "clientSumSupplyToolStripMenuItem";
+            this.clientSumSupplyToolStripMenuItem.Size = new System.Drawing.Size(225, 30);
+            this.clientSumSupplyToolStripMenuItem.Text = "Сумма поставок";
+            this.clientSumSupplyToolStripMenuItem.Click += new System.EventHandler(this.ClientSumSupplyToolStripMenuItem_Click);
+            // 
             // dgvMain
             // 
             this.dgvMain.AllowUserToAddRows = false;
@@ -106,6 +146,7 @@
             this.dgvMain.ShowCellToolTips = false;
             this.dgvMain.Size = new System.Drawing.Size(760, 436);
             this.dgvMain.TabIndex = 4;
+            this.dgvMain.Sorted += new System.EventHandler(this.dgvMain_Sorted);
             // 
             // cbxOptions
             // 
@@ -195,5 +236,9 @@
         private System.Windows.Forms.Label lblCaption;
         private System.Windows.Forms.Button btnReport;
         private System.Windows.Forms.PictureBox pictureMain;
+        private System.Windows.Forms.ToolStripMenuItem сотрудникиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem employmentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem заказчикToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clientSumSupplyToolStripMenuItem;
     }
 }

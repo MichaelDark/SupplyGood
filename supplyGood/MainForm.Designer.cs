@@ -45,7 +45,7 @@
             this.прогнозToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.predictGoodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.priceListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMain = new System.Windows.Forms.Label();
             this.dgvMain = new System.Windows.Forms.DataGridView();
@@ -94,6 +94,7 @@
             this.pictureMain = new System.Windows.Forms.PictureBox();
             this.btnSearchPrev = new System.Windows.Forms.Button();
             this.btnSearchNext = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).BeginInit();
@@ -108,6 +109,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.storageBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -122,7 +124,7 @@
             this.usersToolStripMenuItem,
             this.прогнозToolStripMenuItem,
             this.statisticsToolStripMenuItem,
-            this.печатьToolStripMenuItem});
+            this.printToolStripMenuItem});
             this.mainMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
@@ -254,12 +256,12 @@
             // 
             // печатьToolStripMenuItem
             // 
-            this.печатьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.printToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.priceListToolStripMenuItem});
-            this.печатьToolStripMenuItem.Image = global::supplyGood.Properties.Resources.printer;
-            this.печатьToolStripMenuItem.Name = "печатьToolStripMenuItem";
-            this.печатьToolStripMenuItem.Size = new System.Drawing.Size(86, 24);
-            this.печатьToolStripMenuItem.Text = "Печать";
+            this.printToolStripMenuItem.Image = global::supplyGood.Properties.Resources.printer;
+            this.printToolStripMenuItem.Name = "печатьToolStripMenuItem";
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(86, 24);
+            this.printToolStripMenuItem.Text = "Печать";
             // 
             // priceListToolStripMenuItem
             // 
@@ -354,10 +356,10 @@
             // 
             // lblHint
             // 
-            this.lblHint.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblHint.Location = new System.Drawing.Point(12, 544);
+            this.lblHint.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblHint.Location = new System.Drawing.Point(68, 547);
             this.lblHint.Name = "lblHint";
-            this.lblHint.Size = new System.Drawing.Size(828, 63);
+            this.lblHint.Size = new System.Drawing.Size(772, 60);
             this.lblHint.TabIndex = 11;
             this.lblHint.Text = "Подсказка";
             // 
@@ -652,11 +654,23 @@
             this.btnSearchNext.UseVisualStyleBackColor = false;
             this.btnSearchNext.Click += new System.EventHandler(this.BtnSearchNext_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::supplyGood.Properties.Resources.hint;
+            this.pictureBox1.InitialImage = null;
+            this.pictureBox1.Location = new System.Drawing.Point(15, 544);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(47, 47);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 24;
+            this.pictureBox1.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1094, 616);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureMain);
             this.Controls.Add(this.btnClearFilters);
             this.Controls.Add(this.btnFilter);
@@ -696,6 +710,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.storageBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -765,7 +780,8 @@
         private MainDBDataSetTableAdapters.ClientTableAdapter clientTableAdapter;
         private System.Windows.Forms.PictureBox pictureMain;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem печатьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem priceListToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

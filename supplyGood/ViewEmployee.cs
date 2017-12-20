@@ -175,6 +175,18 @@ namespace supplyGood
                         dateO,
                         (float)Convert.ToDouble(txtSalary.Text),
                         _ID);
+
+                    if (cbxDischarged.Checked)
+                    {
+                        string ConnectionString = ConfigurationManager.ConnectionStrings["supplyGood.Properties.Settings.MainDBConnectionString"].ConnectionString;
+                        SqlConnection sqlconn = new SqlConnection(ConnectionString);
+                        sqlconn.Open();
+                        SqlCommand oda = new SqlCommand("UPDATE Storage SET id_storekeeper=null WHERE id_storekeeper=" + _ID.ToString(), sqlconn);
+                        oda.ExecuteNonQuery();
+                        oda = new SqlCommand("UPDATE Car SET id_driver=null WHERE id_driver=" + _ID.ToString(), sqlconn);
+                        oda.ExecuteNonQuery();
+                        sqlconn.Close();
+                    }
                 }
                 else
                 {

@@ -38,7 +38,7 @@ namespace supplyGood
                     }
                     catch (Exception ex) { }
                 }
-                return Math.Round((double)d, 2).ToString();
+                return Math.Round(d, 2).ToString();
             }
         }
         int GetIDByAllAttributes

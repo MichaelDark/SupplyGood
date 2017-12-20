@@ -254,6 +254,8 @@
     <None Include="img\supplygood.png" />
     <None Include="img\stat_popularity.png" />
     <None Include="img\stat_profit.png" />
+    <None Include="img\hint.png" />
+    <None Include="img\stat_employment.png" />
     <Content Include="MainDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

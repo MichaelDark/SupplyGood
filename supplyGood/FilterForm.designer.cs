@@ -89,7 +89,7 @@
             this.MaximizeBox = false;
             this.Name = "FilterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Администратор";
+            this.Text = "Фильтры";
             ((System.ComponentModel.ISupportInitialize)(this.mainDBDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureMain)).EndInit();
             this.ResumeLayout(false);
